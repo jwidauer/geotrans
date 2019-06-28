@@ -4,46 +4,41 @@
 #define GEOREFCoordinates_H
 
 #include "geotrans/dtcc/CoordinateTuples/CoordinateTuple.h"
-#include "geotrans/dtcc/Enumerations/Precision.h"
 #include "geotrans/dtcc/DtccApi.h"
+#include "geotrans/dtcc/Enumerations/Precision.h"
 
+namespace MSP {
+namespace CCS {
+class MSP_DTCC_API GEOREFCoordinates : public CoordinateTuple {
+ public:
+  GEOREFCoordinates();
+  GEOREFCoordinates(CoordinateType::Enum _coordinateType);
+  GEOREFCoordinates(CoordinateType::Enum _coordinateType,
+                    const char* __GEOREFString);
+  GEOREFCoordinates(CoordinateType::Enum _coordinateType,
+                    const char* __GEOREFString, Precision::Enum __precision);
+  GEOREFCoordinates(CoordinateType::Enum _coordinateType,
+                    const char* __warningMessage, const char* __GEOREFString,
+                    Precision::Enum __precision);
+  GEOREFCoordinates(const GEOREFCoordinates& gc);
 
+  ~GEOREFCoordinates();
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class MSP_DTCC_API GEOREFCoordinates : public CoordinateTuple
-    {
-    public:
+  GEOREFCoordinates& operator=(const GEOREFCoordinates& gc);
 
-      GEOREFCoordinates();
-      GEOREFCoordinates( CoordinateType::Enum _coordinateType );
-      GEOREFCoordinates( CoordinateType::Enum _coordinateType, const char* __GEOREFString );
-      GEOREFCoordinates( CoordinateType::Enum _coordinateType, const char* __GEOREFString, Precision::Enum __precision );
-      GEOREFCoordinates( CoordinateType::Enum _coordinateType, const char* __warningMessage, const char* __GEOREFString, Precision::Enum __precision );
-      GEOREFCoordinates( const GEOREFCoordinates& gc );
+  void set(char __GEOREFString[21]);
 
-      ~GEOREFCoordinates();
+  char* GEOREFString();
 
-      GEOREFCoordinates& operator=( const GEOREFCoordinates &gc );
+  Precision::Enum precision() const;
 
-      void set( char __GEOREFString[21] );
+ private:
+  char _GEOREFString[21];
+  Precision::Enum _precision;
+};
+}  // namespace CCS
+}  // namespace MSP
 
-      char* GEOREFString();
-
-      Precision::Enum precision() const;
-
-    private:
-
-      char _GEOREFString[21];
-      Precision::Enum _precision;
-
-    };
-  }
-}
-	
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

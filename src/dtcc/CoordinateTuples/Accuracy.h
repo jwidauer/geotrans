@@ -5,44 +5,38 @@
 
 #include "geotrans/dtcc/DtccApi.h"
 
+namespace MSP {
+namespace CCS {
+class MSP_DTCC_API Accuracy {
+ public:
+  Accuracy();
+  Accuracy(double __circularError90, double __linearError90,
+           double __sphericalError90);
+  Accuracy(const Accuracy &a);
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class MSP_DTCC_API Accuracy
-    {
-    public:
+  ~Accuracy(void);
 
-      Accuracy();
-      Accuracy( double __circularError90, double __linearError90, double __sphericalError90 );
-      Accuracy( const Accuracy &a );
+  Accuracy &operator=(const Accuracy &a);
 
-      ~Accuracy( void );
+  void set(double __circularError90, double __linearError90,
+           double __sphericalError90);
 
-      Accuracy& operator=( const Accuracy &a );
+  void setCircularError90(double __circularError90);
+  void setLinearError90(double __linearError90);
+  void setSphericalError90(double __sphericalError90);
 
-      void set( double __circularError90, double __linearError90, double __sphericalError90 );
+  double circularError90();
+  double linearError90();
+  double sphericalError90();
 
-      void setCircularError90( double __circularError90 );
-      void setLinearError90( double __linearError90 );
-      void setSphericalError90( double __sphericalError90 );
+ private:
+  double _circularError90;
+  double _linearError90;
+  double _sphericalError90;
+};
+}  // namespace CCS
+}  // namespace MSP
 
-      double circularError90();
-      double linearError90();
-      double sphericalError90();
-
-    private:
-
-      double _circularError90;
-      double _linearError90;
-      double _sphericalError90;
-
-    };
-  }
-}
-	
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

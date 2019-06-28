@@ -6,45 +6,45 @@
 #include "CoordinateSystemParameters.h"
 #include "geotrans/dtcc/DtccApi.h"
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class MSP_DTCC_API PolarStereographicStandardParallelParameters : public CoordinateSystemParameters
-    {
-    public:
+namespace MSP {
+namespace CCS {
+class MSP_DTCC_API PolarStereographicStandardParallelParameters
+    : public CoordinateSystemParameters {
+ public:
+  PolarStereographicStandardParallelParameters();
+  PolarStereographicStandardParallelParameters(
+      CoordinateType::Enum _coordinateType);
+  PolarStereographicStandardParallelParameters(
+      CoordinateType::Enum _coordinateType, double __longitudeDownFromPole,
+      double __latitudeOfTrueScale, double __falseEasting,
+      double __falseNorthing);
+  PolarStereographicStandardParallelParameters(
+      const PolarStereographicStandardParallelParameters& p);
 
-      PolarStereographicStandardParallelParameters();
-      PolarStereographicStandardParallelParameters( CoordinateType::Enum _coordinateType );
-      PolarStereographicStandardParallelParameters( CoordinateType::Enum _coordinateType, double __longitudeDownFromPole, double __latitudeOfTrueScale, double __falseEasting, double __falseNorthing );
-      PolarStereographicStandardParallelParameters( const PolarStereographicStandardParallelParameters& p );
+  ~PolarStereographicStandardParallelParameters();
 
-      ~PolarStereographicStandardParallelParameters();
+  PolarStereographicStandardParallelParameters& operator=(
+      const PolarStereographicStandardParallelParameters& p);
 
-      PolarStereographicStandardParallelParameters& operator=( const PolarStereographicStandardParallelParameters &p );
+  void setCentralMeridian(double __centralMeridian);
+  void setStandardParallel(double __standardParallel);
+  void setFalseEasting(double __falseEasting);
+  void setFalseNorthing(double __falseNorthing);
 
-      void setCentralMeridian( double __centralMeridian );
-      void setStandardParallel( double __standardParallel );
-      void setFalseEasting( double __falseEasting );
-      void setFalseNorthing( double __falseNorthing );
+  double centralMeridian() const;
+  double standardParallel() const;
+  double falseEasting() const;
+  double falseNorthing() const;
 
-      double centralMeridian() const;
-      double standardParallel() const;
-      double falseEasting() const;
-      double falseNorthing() const;
+ private:
+  double _centralMeridian;
+  double _standardParallel;
+  double _falseEasting;
+  double _falseNorthing;
+};
+}  // namespace CCS
+}  // namespace MSP
 
-    private:
-
-      double _centralMeridian;
-      double _standardParallel;
-      double _falseEasting;
-      double _falseNorthing;
-
-    };
-  }
-}
-	
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

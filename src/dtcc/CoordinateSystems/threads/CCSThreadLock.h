@@ -5,30 +5,27 @@
 
 #include "geotrans/dtcc/DtccApi.h"
 
-namespace MSP
-{
-    class CCSThreadMutex;
+namespace MSP {
+class CCSThreadMutex;
 }
 
-namespace MSP
-{
-    class MSP_DTCC_API CCSThreadLock
-    {
-    public:
-        /// Default Constructor.
-        CCSThreadLock(const CCSThreadMutex *mutex);
+namespace MSP {
+class MSP_DTCC_API CCSThreadLock {
+ public:
+  /// Default Constructor.
+  CCSThreadLock(const CCSThreadMutex *mutex);
 
-        /// Destructor.
-        ~CCSThreadLock();
+  /// Destructor.
+  ~CCSThreadLock();
 
-    private:
-        // no copy operators
-        CCSThreadLock(const CCSThreadLock&);
-        CCSThreadLock &operator=( const CCSThreadLock&);
+ private:
+  // no copy operators
+  CCSThreadLock(const CCSThreadLock &);
+  CCSThreadLock &operator=(const CCSThreadLock &);
 
-        const CCSThreadMutex *mutex;
-    };
-}
+  const CCSThreadMutex *mutex;
+};
+}  // namespace MSP
 #endif
 
 // CLASSIFICATION: UNCLASSIFIED

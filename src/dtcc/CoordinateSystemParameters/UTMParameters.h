@@ -6,43 +6,35 @@
 #include "CoordinateSystemParameters.h"
 #include "geotrans/dtcc/DtccApi.h"
 
+namespace MSP {
+namespace CCS {
+class MSP_DTCC_API UTMParameters : public CoordinateSystemParameters {
+ public:
+  UTMParameters();
+  UTMParameters(CoordinateType::Enum _coordinateType);
+  UTMParameters(CoordinateType::Enum _coordinateType, long __override);
+  UTMParameters(CoordinateType::Enum _coordinateType, long __zone,
+                long __override);
+  UTMParameters(const UTMParameters& p);
 
+  ~UTMParameters();
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class MSP_DTCC_API UTMParameters : public CoordinateSystemParameters
-    {
-    public:
+  UTMParameters& operator=(const UTMParameters& p);
 
-      UTMParameters();
-      UTMParameters( CoordinateType::Enum _coordinateType );
-      UTMParameters( CoordinateType::Enum _coordinateType, long __override );
-      UTMParameters( CoordinateType::Enum _coordinateType, long __zone, long __override );
-      UTMParameters( const UTMParameters& p );
+  void set(long __zone, long __override);
+  void setZone(long __zone);
+  void setOverride(long __override);
 
-      ~UTMParameters();
+  long zone() const;
+  long override() const;
 
-      UTMParameters& operator=( const UTMParameters &p );
+ private:
+  long _zone;
+  long _override;
+};
+}  // namespace CCS
+}  // namespace MSP
 
-      void set( long __zone, long __override );
-      void setZone( long __zone );
-      void setOverride( long __override );
-
-      long zone() const;
-      long override() const;
-
-    private:
-
-      long _zone;
-      long _override;
-
-    };
-  }
-}
-	
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

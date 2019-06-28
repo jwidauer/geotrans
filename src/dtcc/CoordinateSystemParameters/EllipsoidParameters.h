@@ -5,45 +5,35 @@
 
 #include "geotrans/dtcc/DtccApi.h"
 
+namespace MSP {
+namespace CCS {
+class MSP_DTCC_API EllipsoidParameters {
+ public:
+  EllipsoidParameters();
+  EllipsoidParameters(double __semiMajorAxis, double __flattening,
+                      const char* __ellipsoidCode);
+  EllipsoidParameters(const EllipsoidParameters& ecp);
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class MSP_DTCC_API EllipsoidParameters
-    {
-    public:
+  ~EllipsoidParameters();
 
-      EllipsoidParameters();
-      EllipsoidParameters(
-         double      __semiMajorAxis,
-         double      __flattening,
-         const char* __ellipsoidCode );
-      EllipsoidParameters( const EllipsoidParameters& ecp );
+  EllipsoidParameters& operator=(const EllipsoidParameters& ecp);
 
-      ~EllipsoidParameters();
+  void setSemiMajorAxis(double __semiMajorAxis);
+  void setFlattening(double __flattening);
+  void setEllipsoidCode(char __ellipsoidCode[4]);
 
-      EllipsoidParameters& operator=( const EllipsoidParameters &ecp );
+  double semiMajorAxis() const;
+  double flattening() const;
+  char* ellipsoidCode();
 
-      void setSemiMajorAxis( double __semiMajorAxis );
-      void setFlattening( double __flattening );
-      void setEllipsoidCode( char __ellipsoidCode[4] );
+ private:
+  double _semiMajorAxis;
+  double _flattening;
+  char _ellipsoidCode[4];
+};
+}  // namespace CCS
+}  // namespace MSP
 
-      double semiMajorAxis() const;
-      double flattening() const;
-      char* ellipsoidCode();
-
-    private:
-
-      double _semiMajorAxis;
-      double _flattening;
-      char _ellipsoidCode[4];
-
-    };
-  }
-}
-  
 #endif
-
 
 // CLASSIFICATION: UNCLASSIFIED

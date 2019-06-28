@@ -31,7 +31,7 @@
  *                                     (depends on ellipsoid and projection
  *                                     parameters)
  *       NEYS_FIRST_STDP_ERROR   : First standard parallel outside of valid
- *                                     range (ê71 or ê74 degrees)
+ *                                     range (ÔøΩ71 or ÔøΩ74 degrees)
  *       NEYS_ORIGIN_LAT_ERROR   : Origin latitude outside of valid range
  *                                     (-89 59 59.0 to 89 59 59.0 degrees)
  *       NEYS_CENT_MER_ERROR     : Central meridian outside of valid range
@@ -43,8 +43,8 @@
  *
  * REUSE NOTES
  *
- *    NEYS is intended for reuse by any application that performs a Ney's (Modified
- *    Lambert Conformal Conic) projection or its inverse.
+ *    NEYS is intended for reuse by any application that performs a Ney's
+ * (Modified Lambert Conformal Conic) projection or its inverse.
  *
  * REFERENCES
  *
@@ -82,123 +82,114 @@
  *
  */
 
-
 #include "CoordinateSystem.h"
 
+namespace MSP {
+namespace CCS {
+class NeysParameters;
+class LambertConformalConic;
+class MapProjectionCoordinates;
+class GeodeticCoordinates;
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class NeysParameters;
-    class LambertConformalConic;
-    class MapProjectionCoordinates;
-    class GeodeticCoordinates;
+/***************************************************************************/
+/*
+ *                              DEFINES
+ */
 
+class Neys : public CoordinateSystem {
+ public:
+  /*
+   * The constructor receives the ellipsoid parameters and
+   * Ney's (Modified Lambert Conformal Conic) projection parameters as inputs,
+   * and sets the corresponding state variables.  If any errors occur, an
+   * exception is thrown with a description of the error.
+   *
+   *   ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters (input)
+   *   ellipsoidFlattening     : Flattening of ellipsoid (input) centralMeridian
+   * : Longitude of origin, in radians           (input) originLatitude :
+   * Latitude of origin, in radians            (input) standardParallel        :
+   * First standard parallel, in radians       (input) falseEasting            :
+   * False easting, in meters                  (input) falseNorthing           :
+   * False northing, in meters                 (input)
+   */
 
-    /***************************************************************************/
-    /*
-     *                              DEFINES
-     */
+  Neys(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
+       double centralMeridian, double originLatitude, double standardParallel,
+       double falseEasting, double falseNorthing);
 
-    class Neys : public CoordinateSystem
-    {
-    public:
+  Neys(const Neys& n);
 
-      /*
-       * The constructor receives the ellipsoid parameters and
-       * Ney's (Modified Lambert Conformal Conic) projection parameters as inputs, and sets the
-       * corresponding state variables.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *   ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
-       *   ellipsoidFlattening     : Flattening of ellipsoid                   (input)
-       *   centralMeridian         : Longitude of origin, in radians           (input)
-       *   originLatitude          : Latitude of origin, in radians            (input)
-       *   standardParallel        : First standard parallel, in radians       (input)
-       *   falseEasting            : False easting, in meters                  (input)
-       *   falseNorthing           : False northing, in meters                 (input)
-       */
+  ~Neys(void);
 
-	    Neys( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double originLatitude, double standardParallel, double falseEasting, double falseNorthing );
+  Neys& operator=(const Neys& n);
 
+  /*
+   * The function getParameters returns the current ellipsoid
+   * parameters and Ney's (Modified Lambert Conformal Conic) projection
+   * parameters.
+   *
+   *   ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters
+   * (output) ellipsoidFlattening     : Flattening of ellipsoid (output)
+   *   centralMeridian         : Longitude of origin, in radians (output)
+   *   originLatitude          : Latitude of origin, in radians (output)
+   *   standardParallel        : First standard parallel, in radians (output)
+   *   falseEasting            : False easting, in meters (output) falseNorthing
+   * : False northing, in meters                 (output)
+   */
 
-      Neys( const Neys &n );
+  NeysParameters* getParameters() const;
 
+  /*
+   * The function convertFromGeodetic converts Geodetic (latitude and
+   * longitude) coordinates to Ney's (Modified Lambert Conformal Conic)
+   * projection (easting and northing) coordinates, according to the current
+   * ellipsoid and Ney's (Modified Lambert Conformal Conic) projection
+   * parameters.  If any errors occur, an exception is thrown with a description
+   * of the error.
+   *
+   *    longitude        : Longitude, in radians                        (input)
+   *    latitude         : Latitude, in radians                         (input)
+   *    easting          : Easting (X), in meters                       (output)
+   *    northing         : Northing (Y), in meters                      (output)
+   */
 
-	    ~Neys( void );
+  MSP::CCS::MapProjectionCoordinates* convertFromGeodetic(
+      MSP::CCS::GeodeticCoordinates* geodeticCoordinates);
 
+  /*
+   * The function convertToGeodetic converts Ney's (Modified Lambert Conformal
+   * Conic) projection (easting and northing) coordinates to Geodetic (latitude)
+   * and longitude) coordinates, according to the current ellipsoid and Ney's
+   * (Modified Lambert Conformal Conic) projection parameters.  If any errors
+   * occur, an exception is thrown with a description f the error.
+   *
+   *    easting          : Easting (X), in meters                       (input)
+   *    northing         : Northing (Y), in meters                      (input)
+   *    longitude        : Longitude, in radians                        (output)
+   *    latitude         : Latitude, in radians                         (output)
+   */
 
-      Neys& operator=( const Neys &n );
+  MSP::CCS::GeodeticCoordinates* convertToGeodetic(
+      MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates);
 
+ private:
+  LambertConformalConic* lambertConformalConic2;
 
-      /*
-       * The function getParameters returns the current ellipsoid
-       * parameters and Ney's (Modified Lambert Conformal Conic) projection parameters.
-       *
-       *   ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (output)
-       *   ellipsoidFlattening     : Flattening of ellipsoid                   (output)
-       *   centralMeridian         : Longitude of origin, in radians           (output)
-       *   originLatitude          : Latitude of origin, in radians            (output)
-       *   standardParallel        : First standard parallel, in radians       (output)
-       *   falseEasting            : False easting, in meters                  (output)
-       *   falseNorthing           : False northing, in meters                 (output)
-       */
+  /* Ney's projection Parameters */
+  double Neys_Std_Parallel_1; /* Lower std. parallel, in radians */
+  double Neys_Std_Parallel_2; /* Upper std. parallel, in radians */
+  double Neys_Origin_Lat;     /* Latitude of origin, in radians */
+  double Neys_Origin_Long;    /* Longitude of origin, in radians */
+  double Neys_False_Northing; /* False northing, in meters */
+  double Neys_False_Easting;  /* False easting, in meters */
 
-      NeysParameters* getParameters() const;
+  /* Maximum variance for easting and northing values for WGS 84. */
+  double Neys_Delta_Easting;
+  double Neys_Delta_Northing;
+};
+}  // namespace CCS
+}  // namespace MSP
 
-
-      /*
-       * The function convertFromGeodetic converts Geodetic (latitude and
-       * longitude) coordinates to Ney's (Modified Lambert Conformal Conic) projection
-       * (easting and northing) coordinates, according to the current ellipsoid and
-       * Ney's (Modified Lambert Conformal Conic) projection parameters.  If any errors occur, an exception  
-       * is thrown with a description of the error.
-       *
-       *    longitude        : Longitude, in radians                        (input)
-       *    latitude         : Latitude, in radians                         (input)
-       *    easting          : Easting (X), in meters                       (output)
-       *    northing         : Northing (Y), in meters                      (output)
-       */
-
-      MSP::CCS::MapProjectionCoordinates* convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates );
-
-
-      /*
-       * The function convertToGeodetic converts Ney's (Modified Lambert Conformal
-       * Conic) projection (easting and northing) coordinates to Geodetic (latitude)
-       * and longitude) coordinates, according to the current ellipsoid and Ney's
-       * (Modified Lambert Conformal Conic) projection parameters.  If any errors occur,  
-       * an exception is thrown with a description f the error.
-       *
-       *    easting          : Easting (X), in meters                       (input)
-       *    northing         : Northing (Y), in meters                      (input)
-       *    longitude        : Longitude, in radians                        (output)
-       *    latitude         : Latitude, in radians                         (output)
-       */
-
-      MSP::CCS::GeodeticCoordinates* convertToGeodetic( MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates );
-
-    private:
-
-      LambertConformalConic* lambertConformalConic2;
-
-      /* Ney's projection Parameters */
-      double Neys_Std_Parallel_1;             /* Lower std. parallel, in radians */
-      double Neys_Std_Parallel_2;             /* Upper std. parallel, in radians */
-      double Neys_Origin_Lat;                 /* Latitude of origin, in radians */
-      double Neys_Origin_Long;                /* Longitude of origin, in radians */
-      double Neys_False_Northing;             /* False northing, in meters */
-      double Neys_False_Easting;              /* False easting, in meters */
-
-      /* Maximum variance for easting and northing values for WGS 84. */
-      double Neys_Delta_Easting;
-      double Neys_Delta_Northing;
-    };
-  }
-}
-
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

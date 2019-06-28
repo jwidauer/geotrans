@@ -114,219 +114,207 @@
  *    11/20/08          Original Code
  *    05/26/10          S. Gillis, BAEts26674, Added Validate Datum to the API
  *                      in MSP Geotrans 3.0
- *    07/01/10          S. Gillis, BAEts26676, Fixed the error always returned 
+ *    07/01/10          S. Gillis, BAEts26676, Fixed the error always returned
  *                      when calling CCS API getDatumParamters
  */
-
 
 #include "DatumType.h"
 #include "geotrans/dtcc/DtccApi.h"
 
+namespace MSP {
+namespace CCS {
+class DatumLibraryImplementation;
 
+class MSP_DTCC_API DatumLibrary {
+ public:
+  /*
+   * The constructor creates an empty list to store the datum information
+   * contained in two external files, 3_param.dat and 7_param.dat.
+   */
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class DatumLibraryImplementation;
+  DatumLibrary(DatumLibraryImplementation *__datumLibraryImplementation);
 
-    class MSP_DTCC_API DatumLibrary
-    {
-    public:
+  DatumLibrary(const DatumLibrary &d);
 
-      /*
-       * The constructor creates an empty list to store the datum information
-       * contained in two external files, 3_param.dat and 7_param.dat.  
-       */
+  DatumLibrary &operator=(const DatumLibrary &d);
 
-	    DatumLibrary( DatumLibraryImplementation* __datumLibraryImplementation );
+  ~DatumLibrary(void);
 
+  /* The function defineDatum creates a new local (3 or 7-parameter) datum with
+   * the specified code, name, shift values, and standard error values or
+   * rotation and scale factor values. If the datum table has not been
+   * initialized, the specified code is already in use, or a new version of the
+   * 3-param.dat or 7-param.dat file cannot be created, an exception is thrown.
+   * Note that the indexes of all datums in the datum table may be changed by
+   * this function.
+   *
+   *   datumType     : Specifies 3 parameter or 7 parameter datum    (input)
+   *   datumCode     : 5-letter new datum code.                      (input)
+   *   datumName     : Name of the new datum                         (input)
+   *   ellipsoidCode : 2-letter code for the associated ellipsoid    (input)
+   *   deltaX        : X translation to WGS84 in meters              (input)
+   *   deltaY        : Y translation to WGS84 in meters              (input)
+   *   deltaZ        : Z translation to WGS84 in meters              (input)
+   *   sigmaX        : Standard error in X in meters                 (input)
+   *   sigmaY        : Standard error in Y in meters                 (input)
+   *   sigmaZ        : Standard error in Z in meters                 (input)
+   *   westLongitude : Western edge of validity rectangle in radians (input)
+   *   eastLongitude : Eastern edge of validity rectangle in radians (input)
+   *   southLatitude : Southern edge of validity rectangle in radians(input)
+   *   northLatitude : Northern edge of validity rectangle in radians(input)
+   *   rotationX     : X rotation to WGS84 in arc seconds            (input)
+   *   rotationY     : Y rotation to WGS84 in arc seconds            (input)
+   *   rotationZ     : Z rotation to WGS84 in arc seconds            (input)
+   *   scalefactor   : Scale factor                                  (input)
+   *
+   */
 
-      DatumLibrary( const DatumLibrary &d );
+  void defineDatum(const int datumType, const char *datumCode,
+                   const char *datumName, const char *ellipsoidCode,
+                   double deltaX, double deltaY, double deltaZ, double sigmaX,
+                   double sigmaY, double sigmaZ, double westLongitude,
+                   double eastLongitude, double southLatitude,
+                   double northLatitude, double rotationX, double rotationY,
+                   double rotationZ, double scaleFactor);
 
+  /*
+   * The function removeDatum deletes a local (3-parameter) datum with the
+   * specified code.  If the datum table has not been initialized or a new
+   * version of the 3-param.dat file cannot be created, an exception is thrown.
+   * Note that the indexes of all datums
+   * in the datum table may be changed by this function.
+   *
+   *   code           : 5-letter datum code.                      (input)
+   *
+   */
 
-      DatumLibrary& operator=( const DatumLibrary &d );
+  void removeDatum(const char *code);
 
+  /*
+   *  The function datumCode returns the 5-letter code of the datum
+   *  referenced by index.
+   *
+   *  index   : The index of a given datum in the datum table.        (input)
+   *  code    : The datum Code of the datum referenced by Index.      (output)
+   */
 
-	    ~DatumLibrary( void );
+  void datumCode(const long index, char *code);
 
+  /*
+   *  The function getDatumCount returns the number of Datums in the table
+   *  if the table was initialized without error.
+   *
+   *  count        : number of datums in the datum table     (output)
+   */
 
-      /* The function defineDatum creates a new local (3 or 7-parameter) datum with the
-       * specified code, name, shift values, and standard error values or rotation and scale factor values.  
-       * If the datum table has not been initialized, the specified code is already in use,
-       * or a new version of the 3-param.dat or 7-param.dat file cannot be created, an 
-       * exception is thrown.  Note that the indexes
-       * of all datums in the datum table may be changed by this function.
-       *
-       *   datumType     : Specifies 3 parameter or 7 parameter datum    (input)
-       *   datumCode     : 5-letter new datum code.                      (input)
-       *   datumName     : Name of the new datum                         (input)
-       *   ellipsoidCode : 2-letter code for the associated ellipsoid    (input)
-       *   deltaX        : X translation to WGS84 in meters              (input)
-       *   deltaY        : Y translation to WGS84 in meters              (input)
-       *   deltaZ        : Z translation to WGS84 in meters              (input)
-       *   sigmaX        : Standard error in X in meters                 (input)
-       *   sigmaY        : Standard error in Y in meters                 (input)
-       *   sigmaZ        : Standard error in Z in meters                 (input)
-       *   westLongitude : Western edge of validity rectangle in radians (input)
-       *   eastLongitude : Eastern edge of validity rectangle in radians (input)
-       *   southLatitude : Southern edge of validity rectangle in radians(input)
-       *   northLatitude : Northern edge of validity rectangle in radians(input)
-       *   rotationX     : X rotation to WGS84 in arc seconds            (input)
-       *   rotationY     : Y rotation to WGS84 in arc seconds            (input)
-       *   rotationZ     : Z rotation to WGS84 in arc seconds            (input)
-       *   scalefactor   : Scale factor                                  (input)
-       *
-       */
+  void getDatumCount(long *count);
 
-      void defineDatum( const int datumType, const char *datumCode, const char *datumName, const char *ellipsoidCode,
-                         double deltaX, double deltaY, double deltaZ,
-                         double sigmaX, double sigmaY,  double sigmaZ,
-                         double westLongitude, double eastLongitude, double southLatitude, double northLatitude,
-                         double rotationX, double rotationY,  double rotationZ, double scaleFactor);
+  /*
+   *  The function getDatumIndex returns the index of the datum with the
+   *  specified code.
+   *
+   *  code    : The datum code being searched for.                    (input)
+   *  index   : The index of the datum in the table with the          (output)
+   *              specified code.
+   */
 
+  void getDatumIndex(const char *code, long *index);
 
-      /*
-       * The function removeDatum deletes a local (3-parameter) datum with the
-       * specified code.  If the datum table has not been initialized or a new
-       * version of the 3-param.dat file cannot be created, an exception is thrown.
-       * Note that the indexes of all datums
-       * in the datum table may be changed by this function.
-       *
-       *   code           : 5-letter datum code.                      (input)
-       *
-       */
+  /*
+   *  The function getDatumInfo returns the 5-letter code, name and
+   *  2-letter ellipsoid code of the datum referenced by index.
+   *
+   *  index            : The index of a given datum in the datum table. (input)
+   *  code             : The datum Code of the datum referenced by Index.
+   * (output) name             : The datum Name of the datum referenced by
+   * Index.      (output) ellipsoidCode    : The ellipsoid code for the
+   * ellipsoid associated with  (output) the datum referenced by index.
+   */
 
-      void removeDatum( const char* code );
+  void getDatumInfo(const long index, char *code, char *name,
+                    char *ellipsoidCode);
 
+  /*
+   *  The function getDatumParameters returns the following datum parameters
+   *  (specified as output parameters below): datumType, deltaX, deltaY,
+   *  deltaZ, sigmaX, sigmaY, sigmaZ, westLongitude, eastLongitude,
+   *  southLatitude, northLatitude, rotationX, rotationY, rotationZ, and
+   *  scaleFactor.
+   *
+   *  sigmaX, sigmaY, and sigmaZ only apply to 3 parameter datum and will be
+   *  set to 0 if the datum type is a 7 parameter datum.
+   *
+   *  rotationX, rotationY, rotationZ, and scaleFactor only apply to 7
+   *  parameter datum and will be set to 0 if the datum type is a 3
+   *  parameter datum.
+   *
+   *  If the datum type is neither a 3 parameter datum nor a 7 parameter
+   *  datum, a CoordinateConversionException will be thrown.
+   *
+   *  index         : The index of a given datum in the datum table   (input)
+   *  datumType     : Specifies datum type                            (output)
+   *  deltaX        : X translation to WGS84 in meters                (output)
+   *  deltaY        : Y translation to WGS84 in meters                (output)
+   *  deltaZ        : Z translation to WGS84 in meters                (output)
+   *  sigmaX        : Standard error in X in meters                   (output)
+   *  sigmaY        : Standard error in Y in meters                   (output)
+   *  sigmaZ        : Standard error in Z in meters                   (output)
+   *  westLongitude : Western edge of validity rectangle in radians   (output)
+   *  eastLongitude : Eastern edge of validity rectangle in radians   (output)
+   *  southLatitude : Southern edge of validity rectangle in radians  (output)
+   *  northLatitude : Northern edge of validity rectangle in radians  (output)
+   *  rotationX     : X rotation to WGS84 in arc seconds              (output)
+   *  rotationY     : Y rotation to WGS84 in arc seconds              (output)
+   *  rotationZ     : Z rotation to WGS84 in arc seconds              (output)
+   *  scaleFactor   : Scale factor                                    (output)
+   */
 
-      /*
-       *  The function datumCode returns the 5-letter code of the datum
-       *  referenced by index.
-       *
-       *  index   : The index of a given datum in the datum table.        (input)
-       *  code    : The datum Code of the datum referenced by Index.      (output)
-       */
+  void getDatumParameters(const long index, DatumType::Enum *datumType,
+                          double *deltaX, double *deltaY, double *deltaZ,
+                          double *sigmaX, double *sigmaY, double *sigmaZ,
+                          double *westLongitude, double *eastLongitude,
+                          double *southLatitude, double *northLatitude,
+                          double *rotationX, double *rotationY,
+                          double *rotationZ, double *scaleFactor);
 
-      void datumCode( const long index, char *code );
+  /*
+   *   The function datumValidRectangle returns the edges of the validity
+   *   rectangle for the datum referenced by index.
+   *
+   *   index          : The index of a given datum in the datum table   (input)
+   *   westLongitude : Western edge of validity rectangle in radians   (output)
+   *   eastLongitude : Eastern edge of validity rectangle in radians   (output)
+   *   southLatitude : Southern edge of validity rectangle in radians  (output)
+   *   northLatitude : Northern edge of validity rectangle in radians  (output)
+   *
+   */
 
+  void getDatumValidRectangle(const long index, double *westLongitude,
+                              double *eastLongitude, double *southLatitude,
+                              double *northLatitude);
 
-      /*
-       *  The function getDatumCount returns the number of Datums in the table
-       *  if the table was initialized without error.
-       *
-       *  count        : number of datums in the datum table     (output)
-       */
+  /*
+   *  The function validDatum checks whether or not the specified location
+   *  is within the validity rectangle for the specified datum.  It returns
+   *  zero if the specified location is NOT within the validity rectangle,
+   *  and returns 1 otherwise.
+   *
+   *   index     : The index of a given datum in the datum table      (input)
+   *   latitude  : Latitude of the location to be checked in radians  (input)
+   *   longitude : Longitude of the location to be checked in radians (input)
+   *   result    : Indicates whether location is inside (1) or outside (0)
+   *               of the validity rectangle of the specified datum   (output)
+   */
 
-      void getDatumCount( long *count );
+  void validDatum(const long index, double longitude, double latitude,
+                  long *result);
 
-
-      /*
-       *  The function getDatumIndex returns the index of the datum with the
-       *  specified code.
-       *
-       *  code    : The datum code being searched for.                    (input)
-       *  index   : The index of the datum in the table with the          (output)
-       *              specified code.
-       */
-
-      void getDatumIndex( const char *code, long *index );
-
-
-      /*
-       *  The function getDatumInfo returns the 5-letter code, name and
-       *  2-letter ellipsoid code of the datum referenced by index.
-       *
-       *  index            : The index of a given datum in the datum table.        (input)
-       *  code             : The datum Code of the datum referenced by Index.      (output)
-       *  name             : The datum Name of the datum referenced by Index.      (output)
-       *  ellipsoidCode    : The ellipsoid code for the ellipsoid associated with  (output)
-       *                     the datum referenced by index.
-       */
-
-      void getDatumInfo( const long index, char *code, char *name, char *ellipsoidCode );
-
-
-      /*
-       *  The function getDatumParameters returns the following datum parameters 
-       *  (specified as output parameters below): datumType, deltaX, deltaY,
-       *  deltaZ, sigmaX, sigmaY, sigmaZ, westLongitude, eastLongitude,  
-       *  southLatitude, northLatitude, rotationX, rotationY, rotationZ, and
-       *  scaleFactor. 
-       *
-       *  sigmaX, sigmaY, and sigmaZ only apply to 3 parameter datum and will be
-       *  set to 0 if the datum type is a 7 parameter datum. 
-       *
-       *  rotationX, rotationY, rotationZ, and scaleFactor only apply to 7
-       *  parameter datum and will be set to 0 if the datum type is a 3 
-       *  parameter datum. 
-       *
-       *  If the datum type is neither a 3 parameter datum nor a 7 parameter
-       *  datum, a CoordinateConversionException will be thrown. 
-       *
-       *  index         : The index of a given datum in the datum table   (input)
-       *  datumType     : Specifies datum type                            (output)
-       *  deltaX        : X translation to WGS84 in meters                (output)
-       *  deltaY        : Y translation to WGS84 in meters                (output)
-       *  deltaZ        : Z translation to WGS84 in meters                (output)
-       *  sigmaX        : Standard error in X in meters                   (output)
-       *  sigmaY        : Standard error in Y in meters                   (output)
-       *  sigmaZ        : Standard error in Z in meters                   (output)
-       *  westLongitude : Western edge of validity rectangle in radians   (output)
-       *  eastLongitude : Eastern edge of validity rectangle in radians   (output)
-       *  southLatitude : Southern edge of validity rectangle in radians  (output)
-       *  northLatitude : Northern edge of validity rectangle in radians  (output)
-       *  rotationX     : X rotation to WGS84 in arc seconds              (output)
-       *  rotationY     : Y rotation to WGS84 in arc seconds              (output)
-       *  rotationZ     : Z rotation to WGS84 in arc seconds              (output)
-       *  scaleFactor   : Scale factor                                    (output)
-       */
-
-      void getDatumParameters( const long index, DatumType::Enum *datumType, double *deltaX, double *deltaY, double *deltaZ,
-                               double *sigmaX, double *sigmaY, double *sigmaZ,
-                               double *westLongitude, double *eastLongitude, double *southLatitude, double *northLatitude,
-                               double *rotationX, double *rotationY, double *rotationZ, double *scaleFactor );
-
-
-      /*
-       *   The function datumValidRectangle returns the edges of the validity
-       *   rectangle for the datum referenced by index.
-       *
-       *   index          : The index of a given datum in the datum table   (input)
-       *   westLongitude : Western edge of validity rectangle in radians   (output)
-       *   eastLongitude : Eastern edge of validity rectangle in radians   (output)
-       *   southLatitude : Southern edge of validity rectangle in radians  (output)
-       *   northLatitude : Northern edge of validity rectangle in radians  (output)
-       *
-       */
-
-      void getDatumValidRectangle( const long index, double *westLongitude, double *eastLongitude, double *southLatitude, double *northLatitude );
-
-      /*
-       *  The function validDatum checks whether or not the specified location 
-       *  is within the validity rectangle for the specified datum.  It returns 
-       *  zero if the specified location is NOT within the validity rectangle, 
-       *  and returns 1 otherwise.
-       *
-       *   index     : The index of a given datum in the datum table      (input)
-       *   latitude  : Latitude of the location to be checked in radians  (input)
-       *   longitude : Longitude of the location to be checked in radians (input)
-       *   result    : Indicates whether location is inside (1) or outside (0)
-       *               of the validity rectangle of the specified datum   (output)
-       */
-
-      void validDatum( const long index, double longitude, double latitude, 
-                       long *result );
-
-    private:
-
-      DatumLibraryImplementation* _datumLibraryImplementation;
-
-    };
-  }
-}
+ private:
+  DatumLibraryImplementation *_datumLibraryImplementation;
+};
+}  // namespace CCS
+}  // namespace MSP
 
 #endif
-
 
 // CLASSIFICATION: UNCLASSIFIED

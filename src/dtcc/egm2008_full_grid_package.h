@@ -40,75 +40,63 @@
 // THIS DERIVED CLASS IMPLEMENTS COMPUTATIONAL
 // DETAILS SPECIFIC TO THE EGM 2008 FULL-GRID ALGORITHM.
 
-#include "geotrans/dtcc/DtccApi.h"
 #include "egm2008_geoid_grid.h"
+#include "geotrans/dtcc/DtccApi.h"
 
-namespace MSP
-{
-   class MSP_DTCC_API Egm2008FullGrid : public Egm2008GeoidGrid {
-      
-      protected:
+namespace MSP {
+class MSP_DTCC_API Egm2008FullGrid : public Egm2008GeoidGrid {
+ protected:
+  // heightGrid:         A pointer to a
+  //                     one-dimensional array containing
+  //                     the reformatted geoid-height grid.
 
-      // heightGrid:         A pointer to a
-      //                     one-dimensional array containing
-      //                     the reformatted geoid-height grid.
+  float* _heightGrid;
 
-      float*                 _heightGrid;
+ public:
+  // Basic functions .....
 
-      public:
+  Egm2008FullGrid(void);
 
-      // Basic functions .....
+  Egm2008FullGrid(const std::string& gridFname);  // new 5/30/2013
 
-      Egm2008FullGrid( void );
+  Egm2008FullGrid(const Egm2008FullGrid& oldGrid);
 
-      Egm2008FullGrid( const std::string  &gridFname );  // new 5/30/2013
- 
-      Egm2008FullGrid( const Egm2008FullGrid& oldGrid );
+  ~Egm2008FullGrid(void);
 
-      ~Egm2008FullGrid( void );
+  Egm2008FullGrid& operator=(const Egm2008FullGrid& oldGrid);
 
-      Egm2008FullGrid&
-      operator = ( const Egm2008FullGrid& oldGrid );
+  // User functions .....
 
-      // User functions .....
- 
-      // geoidHeight:        A function that interpolates
-      //                     local geoid height (meters) from
-      //                     a reformatted geoid height grid;
-      //                     it uses bi-cubic spline interpolation.
+  // geoidHeight:        A function that interpolates
+  //                     local geoid height (meters) from
+  //                     a reformatted geoid height grid;
+  //                     it uses bi-cubic spline interpolation.
 
-      virtual int
-      geoidHeight(
-         int     wSize,                     // input
-         double  latitude,                  // input
-         double  longitude,                 // input
-         double& gHeight );                 // output
+  virtual int geoidHeight(int wSize,         // input
+                          double latitude,   // input
+                          double longitude,  // input
+                          double& gHeight);  // output
 
-      protected:
- 
-      // geoidHeight:        A function that interpolates
-      //                     local geoid height (meters) from
-      //                     a reformatted geoid height grid;
-      //                     it uses bilinear interpolation.
+ protected:
+  // geoidHeight:        A function that interpolates
+  //                     local geoid height (meters) from
+  //                     a reformatted geoid height grid;
+  //                     it uses bilinear interpolation.
 
-      virtual int
-      geoidHeight(
-         double  latitude,                  // input
-         double  longitude,                 // input
-         double& gHeight );                 // output
+  virtual int geoidHeight(double latitude,   // input
+                          double longitude,  // input
+                          double& gHeight);  // output
 
-      // loadGrid:           A function that 
-      //                     retrieves a reformatted
-      //                     EGM 2008 worldwide geoid height grid.
+  // loadGrid:           A function that
+  //                     retrieves a reformatted
+  //                     EGM 2008 worldwide geoid height grid.
 
-      int
-      loadGrid( void );
+  int loadGrid(void);
 
-   }; // End of Egm2008FullGrid class declaration
+};  // End of Egm2008FullGrid class declaration
 
-}  // End of namespace block
+}  // namespace MSP
 
 #endif
 
 // CLASSIFICATION: UNCLASSIFIED
-

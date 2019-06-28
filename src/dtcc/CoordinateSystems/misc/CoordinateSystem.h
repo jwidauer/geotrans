@@ -6,57 +6,46 @@
 #include "CoordinateSystem.h"
 #include "geotrans/dtcc/DtccApi.h"
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class MSP_DTCC_API CoordinateSystem
-    {
-    public:
+namespace MSP {
+namespace CCS {
+class MSP_DTCC_API CoordinateSystem {
+ public:
+  /*
+   * The constructor defaults the ellipsoid parameters to WGS84.
+   *
+   */
 
-      /*
-       * The constructor defaults the ellipsoid parameters to WGS84.
-       *
-       */
+  CoordinateSystem();
 
-      CoordinateSystem();
+  /*
+   * The constructor receives the ellipsoid parameters and
+   * as inputs.
+   *
+   *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters
+   * (input) ellipsoidFlattening     : Flattening of ellipsoid (input)
+   */
 
+  CoordinateSystem(double _semiMajorAxis, double _flattening);
 
-      /*
-       * The constructor receives the ellipsoid parameters and
-       * as inputs.
-       *
-       *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
-       *    ellipsoidFlattening     : Flattening of ellipsoid                   (input)
-       */
+  ~CoordinateSystem();
 
-      CoordinateSystem( double _semiMajorAxis, double _flattening );
+  /*
+   * The function getParameters returns the current ellipsoid
+   * parameters.
+   *
+   *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters
+   * (output) ellipsoidFlattening     : Flattening of ellipsoid (output)
+   */
 
+  void getEllipsoidParameters(double* _semiMajorAxis, double* _flattening);
 
-      ~CoordinateSystem();
+ protected:
+  double semiMajorAxis;
+  double flattening;
+};
+}  // namespace CCS
+}  // namespace MSP
 
-
-      /*
-       * The function getParameters returns the current ellipsoid
-       * parameters.
-       *
-       *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (output)
-       *    ellipsoidFlattening     : Flattening of ellipsoid                   (output)
-       */
-
-      void getEllipsoidParameters( double* _semiMajorAxis, double* _flattening );
-
-    protected:
-
-      double semiMajorAxis;
-      double flattening;
-
-    };
-  }
-}
-
-#endif 
-
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

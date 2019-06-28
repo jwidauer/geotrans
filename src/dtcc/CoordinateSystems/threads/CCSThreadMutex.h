@@ -4,39 +4,36 @@
 #define MSP_CCSTHREADMUTEX_H
 
 #ifndef WIN32
-#   include <pthread.h>
+#include <pthread.h>
 #endif
 
 #include "geotrans/dtcc/DtccApi.h"
 
-namespace MSP
-{
-    class MSP_DTCC_API CCSThreadMutex
-    {
-    public:
-        /// Default Constructor.
-        CCSThreadMutex();
+namespace MSP {
+class MSP_DTCC_API CCSThreadMutex {
+ public:
+  /// Default Constructor.
+  CCSThreadMutex();
 
-        /// Destructor.
-        ~CCSThreadMutex();
+  /// Destructor.
+  ~CCSThreadMutex();
 
-        void lock() const;
+  void lock() const;
 
-        void unlock() const;
+  void unlock() const;
 
-    private:
-        // no copy operators
-        CCSThreadMutex(const CCSThreadMutex&);
-        CCSThreadMutex &operator=( const CCSThreadMutex&);
+ private:
+  // no copy operators
+  CCSThreadMutex(const CCSThreadMutex &);
+  CCSThreadMutex &operator=(const CCSThreadMutex &);
 
 #ifdef WIN32
-        void *mutex;
+  void *mutex;
 #else
-        mutable pthread_mutex_t   mutex;
+  mutable pthread_mutex_t mutex;
 #endif
-
-    };
-}
+};
+}  // namespace MSP
 #endif
 
 // CLASSIFICATION: UNCLASSIFIED

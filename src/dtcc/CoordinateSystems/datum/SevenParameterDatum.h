@@ -3,47 +3,42 @@
 #ifndef SevenParameterDatum_H
 #define SevenParameterDatum_H
 
-
 #include "Datum.h"
 
+namespace MSP {
+namespace CCS {
+class SevenParameterDatum : public Datum {
+ public:
+  SevenParameterDatum();
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class SevenParameterDatum : public Datum
-    {
-    public:
+  SevenParameterDatum(long __index, char* __code, char* __ellipsoidCode,
+                      char* __name, DatumType::Enum __datumType,
+                      double __deltaX, double __deltaY, double __deltaZ,
+                      double __westLongitude, double __eastLongitude,
+                      double __southLatitude, double __northLatitude,
+                      double __rotationX, double __rotationY,
+                      double __rotationZ, double __scaleFactor,
+                      bool __userDefined);
 
-	    SevenParameterDatum();
+  ~SevenParameterDatum(void);
 
-	    SevenParameterDatum( long __index, char* __code,  char* __ellipsoidCode,  char* __name, DatumType::Enum __datumType, double __deltaX, double __deltaY, double __deltaZ, 
-                           double __westLongitude, double __eastLongitude, double __southLatitude, double __northLatitude, 
-                           double __rotationX, double __rotationY, double __rotationZ, double __scaleFactor, bool __userDefined );
+  double rotationX() const;
 
-	    ~SevenParameterDatum( void );
+  double rotationY() const;
 
-      double rotationX() const;
+  double rotationZ() const;
 
-      double rotationY() const;
+  double scaleFactor() const;
 
-      double rotationZ() const;
+ private:
+  double _rotationX;
+  double _rotationY;
+  double _rotationZ;
+  double _scaleFactor;
+};
+}  // namespace CCS
+}  // namespace MSP
 
-      double scaleFactor() const;
-
-
-    private:
-
-      double _rotationX;
-      double _rotationY;
-      double _rotationZ;
-      double _scaleFactor;
-
-    };
-  }
-}
-	
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

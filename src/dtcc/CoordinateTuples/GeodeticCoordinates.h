@@ -6,46 +6,40 @@
 #include "geotrans/dtcc/CoordinateTuples/CoordinateTuple.h"
 #include "geotrans/dtcc/DtccApi.h"
 
+namespace MSP {
+namespace CCS {
+class MSP_DTCC_API GeodeticCoordinates : public CoordinateTuple {
+ public:
+  GeodeticCoordinates();
+  GeodeticCoordinates(CoordinateType::Enum _coordinateType);
+  GeodeticCoordinates(CoordinateType::Enum _coordinateType, double __longitude,
+                      double __latitude, double __height = 0);
+  GeodeticCoordinates(CoordinateType::Enum _coordinateType,
+                      const char* __warningMessage, double __longitude,
+                      double __latitude, double __height = 0);
+  GeodeticCoordinates(const GeodeticCoordinates& gc);
 
+  ~GeodeticCoordinates();
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class MSP_DTCC_API GeodeticCoordinates : public CoordinateTuple
-    {
-    public:
+  GeodeticCoordinates& operator=(const GeodeticCoordinates& gc);
 
-      GeodeticCoordinates();
-      GeodeticCoordinates( CoordinateType::Enum _coordinateType );
-      GeodeticCoordinates( CoordinateType::Enum _coordinateType, double __longitude, double __latitude, double __height = 0 );
-      GeodeticCoordinates( CoordinateType::Enum _coordinateType, const char* __warningMessage, double __longitude, double __latitude, double __height = 0 );
-      GeodeticCoordinates( const GeodeticCoordinates& gc );
+  void set(double __longitude, double __latitude, double __height = 0);
+  void setLongitude(double __longitude);
+  void setLatitude(double __latitude);
+  void setHeight(double __height);
 
-      ~GeodeticCoordinates();
+  double longitude() const;
+  double latitude() const;
+  double height() const;
 
-      GeodeticCoordinates& operator=( const GeodeticCoordinates &gc );
+ private:
+  double _longitude;
+  double _latitude;
+  double _height;
+};
+}  // namespace CCS
+}  // namespace MSP
 
-      void set( double __longitude, double __latitude, double __height = 0 );
-      void setLongitude( double __longitude );
-      void setLatitude( double __latitude );
-      void setHeight( double __height );
-
-      double longitude() const;
-      double latitude() const;
-      double height() const;
-
-    private:
-
-      double _longitude;
-      double _latitude;
-      double _height;
-
-    };
-  }
-}
-	
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

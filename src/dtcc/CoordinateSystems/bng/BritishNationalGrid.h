@@ -8,13 +8,13 @@
  *
  * ABSTRACT
  *
- *    This component provides conversions between Geodetic coordinates 
+ *    This component provides conversions between Geodetic coordinates
  *    (latitude and longitude) and British National Grid coordinates.
  *
  * ERROR HANDLING
  *
  *    This component checks parameters for valid values.  If an invalid value
- *    is found the error code is combined with the current error code using 
+ *    is found the error code is combined with the current error code using
  *    the bitwise or.  This combining allows multiple error codes to be
  *    returned. The possible error codes are:
  *
@@ -36,15 +36,15 @@
  *
  * REUSE NOTES
  *
- *    BRITISH NATIONAL GRID is intended for reuse by any application that 
+ *    BRITISH NATIONAL GRID is intended for reuse by any application that
  *    performs a British National Grid projection or its inverse.
- *    
+ *
  * REFERENCES
  *
- *    Further information on BRITISH NATIONAL GRID can be found in the 
+ *    Further information on BRITISH NATIONAL GRID can be found in the
  *    Reuse Manual.
  *
- *    BRITISH NATIONAL GRID originated from :  
+ *    BRITISH NATIONAL GRID originated from :
  *                      U.S. Army Topographic Engineering Center
  *                      Geospatial Information Division
  *                      7701 Telegraph Road
@@ -60,7 +60,7 @@
  *
  * ENVIRONMENT
  *
- *    BRITISH NATIONAL GRID was tested and certified in the following 
+ *    BRITISH NATIONAL GRID was tested and certified in the following
  *    environments:
  *
  *    1. Solaris 2.5 with GCC, version 2.8.1
@@ -76,132 +76,118 @@
  *
  */
 
-#include "geotrans/dtcc/DtccApi.h"
 #include "CoordinateSystem.h"
+#include "geotrans/dtcc/DtccApi.h"
 
+namespace MSP {
+namespace CCS {
+class EllipsoidParameters;
+class TransverseMercator;
+class BNGCoordinates;
+class GeodeticCoordinates;
 
+/***************************************************************************/
+/*
+ *                              DEFINES
+ */
+class MSP_DTCC_API BritishNationalGrid : public CoordinateSystem {
+ public:
+  /*
+   * The constructor receives the ellipsoid code and sets
+   * the corresponding state variables. If any errors occur, an exception is
+   * thrown with a description of the error.
+   *
+   *   ellipsoidCode : 2-letter code for ellipsoid           (input)
+   */
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class EllipsoidParameters;
-    class TransverseMercator;
-    class BNGCoordinates;
-    class GeodeticCoordinates;
+  BritishNationalGrid(char* ellipsoidCode);
 
+  BritishNationalGrid(const BritishNationalGrid& bng);
 
-    /***************************************************************************/
-    /*
-     *                              DEFINES
-     */
-    class MSP_DTCC_API BritishNationalGrid : public CoordinateSystem
-    {
-    public:
+  ~BritishNationalGrid(void);
 
-      /*
-       * The constructor receives the ellipsoid code and sets
-       * the corresponding state variables. If any errors occur, an exception is thrown 
-       * with a description of the error.
-       *
-       *   ellipsoidCode : 2-letter code for ellipsoid           (input)
-       */
+  BritishNationalGrid& operator=(const BritishNationalGrid& bng);
 
-	    BritishNationalGrid( char *ellipsoidCode );
+  /*
+   * The function getParameters returns the current ellipsoid
+   * code.
+   *
+   *   ellipsoidCode : 2-letter code for ellipsoid          (output)
+   */
 
+  EllipsoidParameters* getParameters() const;
 
-      BritishNationalGrid( const BritishNationalGrid &bng );
+  /*
+   * The function convertFromGeodetic converts geodetic (latitude and
+   * longitude) coordinates to a BNG coordinate string, according to the
+   * current ellipsoid parameters.  If any errors occur, an exception is thrown
+   * with a description of the error.
+   *
+   *    longitude  : Longitude, in radians                   (input)
+   *    latitude   : Latitude, in radians                    (input)
+   *    precision  : Precision level of BNG string           (input)
+   *    BNGString  : British National Grid coordinate string (output)
+   *
+   */
 
+  MSP::CCS::BNGCoordinates* convertFromGeodetic(
+      MSP::CCS::GeodeticCoordinates* geodeticCoordinates, long precision);
 
-	    ~BritishNationalGrid( void );
+  /*
+   * The function convertToGeodetic converts a BNG coordinate string
+   * to geodetic (latitude and longitude) coordinates, according to the current
+   * ellipsoid parameters. If any errors occur, an exception is thrown
+   * with a description of the error.
+   *
+   *    BNGString  : British National Grid coordinate string (input)
+   *    longitude  : Longitude, in radians                   (output)
+   *    latitude   : Latitude, in radians                    (output)
+   *
+   */
 
+  MSP::CCS::GeodeticCoordinates* convertToGeodetic(
+      MSP::CCS::BNGCoordinates* bngCoordinates);
 
-      BritishNationalGrid& operator=( const BritishNationalGrid &bng );
+  /*
+   * The function convertFromTransverseMercator converts Transverse Mercator
+   * (easting and northing) coordinates to a BNG coordinate string, according
+   * to the current ellipsoid parameters.  If any errors occur, an exception is
+   * thrown with a description of the error.
+   *
+   *    easting    : Easting (X), in meters                  (input)
+   *    northing   : Northing (Y), in meters                 (input)
+   *    precision  : Precision level of BNG string           (input)
+   *    BNGString  : British National Grid coordinate string (output)
+   */
 
+  MSP::CCS::BNGCoordinates* convertFromTransverseMercator(
+      MapProjectionCoordinates* mapProjectionCoordinates, long precision);
 
-      /*                         
-       * The function getParameters returns the current ellipsoid
-       * code.
-       *
-       *   ellipsoidCode : 2-letter code for ellipsoid          (output)
-       */
+  /*
+   * The function convertToTransverseMercator converts a BNG coordinate string
+   * to Transverse Mercator projection (easting and northing) coordinates
+   * according to the current ellipsoid parameters.  If any errors occur, an
+   * exception is thrown with a description of the error.
+   *
+   *    BNGString  : British National Grid coordinate string (input)
+   *    easting    : Easting (X), in meters                  (output)
+   *    northing   : Northing (Y), in meters                 (output)
+   */
 
-      EllipsoidParameters* getParameters() const;
+  MSP::CCS::MapProjectionCoordinates* convertToTransverseMercator(
+      MSP::CCS::BNGCoordinates* bngCoordinates);
 
+ private:
+  TransverseMercator* transverseMercator;
 
-      /*
-       * The function convertFromGeodetic converts geodetic (latitude and
-       * longitude) coordinates to a BNG coordinate string, according to the 
-       * current ellipsoid parameters.  If any errors occur, an exception is thrown 
-       * with a description of the error.
-       * 
-       *    longitude  : Longitude, in radians                   (input)
-       *    latitude   : Latitude, in radians                    (input)
-       *    precision  : Precision level of BNG string           (input)
-       *    BNGString  : British National Grid coordinate string (output)
-       *  
-       */
+  char BNG_Letters[3];
+  double BNG_Easting;
+  double BNG_Northing;
+  char BNG_Ellipsoid_Code[3];
+};
+}  // namespace CCS
+}  // namespace MSP
 
-      MSP::CCS::BNGCoordinates* convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates, long precision );
-
-
-      /*
-       * The function convertToGeodetic converts a BNG coordinate string 
-       * to geodetic (latitude and longitude) coordinates, according to the current
-       * ellipsoid parameters. If any errors occur, an exception is thrown 
-       * with a description of the error.
-       * 
-       *    BNGString  : British National Grid coordinate string (input)
-       *    longitude  : Longitude, in radians                   (output)
-       *    latitude   : Latitude, in radians                    (output)
-       *  
-       */
-
-      MSP::CCS::GeodeticCoordinates* convertToGeodetic( MSP::CCS::BNGCoordinates* bngCoordinates );
-
-
-      /*
-       * The function convertFromTransverseMercator converts Transverse Mercator
-       * (easting and northing) coordinates to a BNG coordinate string, according
-       * to the current ellipsoid parameters.  If any errors occur, an exception is thrown 
-       * with a description of the error.
-       *
-       *    easting    : Easting (X), in meters                  (input)
-       *    northing   : Northing (Y), in meters                 (input)
-       *    precision  : Precision level of BNG string           (input)
-       *    BNGString  : British National Grid coordinate string (output)
-       */
-
-      MSP::CCS::BNGCoordinates* convertFromTransverseMercator( MapProjectionCoordinates* mapProjectionCoordinates, long precision );
-
-
-      /*
-       * The function convertToTransverseMercator converts a BNG coordinate string
-       * to Transverse Mercator projection (easting and northing) coordinates 
-       * according to the current ellipsoid parameters.  If any errors occur, an exception is thrown 
-       * with a description of the error.
-       *
-       *    BNGString  : British National Grid coordinate string (input)
-       *    easting    : Easting (X), in meters                  (output)
-       *    northing   : Northing (Y), in meters                 (output)
-       */
-
-      MSP::CCS::MapProjectionCoordinates* convertToTransverseMercator( MSP::CCS::BNGCoordinates* bngCoordinates );
-
-    private:
-
-      TransverseMercator* transverseMercator;
-    
-      char BNG_Letters[3];
-      double BNG_Easting;
-      double BNG_Northing;
-      char BNG_Ellipsoid_Code[3];
-
-    };
-  }
-}
-
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

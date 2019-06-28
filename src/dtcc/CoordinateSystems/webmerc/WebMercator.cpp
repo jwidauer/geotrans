@@ -4,13 +4,13 @@
  *
  * ABSTRACT
  *
- *    This component provides conversions between Geodetic coordinates 
+ *    This component provides conversions between Geodetic coordinates
  *    (latitude and longitude) and Web Mercator coordinates
  *    (easting and northing).
  *
  * REFERENCES
  *
- *    Further information on Web Mercator can be found in the NGA document 
+ *    Further information on Web Mercator can be found in the NGA document
  *    "Implementation Practice Web Mercator Map Projection", 2014-02-18.
  *
  * LICENSES
@@ -25,14 +25,14 @@
  *
  */
 
-#include <string.h>
-#include <math.h>
 #include "WebMercator.h"
-#include "EllipsoidParameters.h"
-#include "MapProjectionCoordinates.h"
-#include "GeodeticCoordinates.h"
+#include <math.h>
+#include <string.h>
 #include "CoordinateConversionException.h"
+#include "EllipsoidParameters.h"
 #include "ErrorMessages.h"
+#include "GeodeticCoordinates.h"
+#include "MapProjectionCoordinates.h"
 
 /*
  *    string.h    - Standard C string handling library
@@ -44,70 +44,60 @@
  *    ErrorMessages.h  - Contains exception messages
  */
 
-
 using namespace MSP::CCS;
-
 
 //                               DEFINES
 const double PI = 3.14159265358979323e0;
 
+WebMercator::WebMercator(char* ellipsoidCode)
+    : CoordinateSystem(6378137.0, 0.0) {
+  /*
+   * The constructor receives the ellipsoid code which must be "WE"
+   *
+   *   ellipsoidCode : 2-letter code for ellipsoid       (input)
+   */
 
-WebMercator::WebMercator( char* ellipsoidCode ) :
-  CoordinateSystem( 6378137.0, 0.0 )
-{
-   /*
-    * The constructor receives the ellipsoid code which must be "WE"
-    *
-    *   ellipsoidCode : 2-letter code for ellipsoid       (input)
-    */
-
-  if (strcmp(ellipsoidCode, "WE") != 0)
-  { /* Ellipsoid must be WGS84 */
-     throw CoordinateConversionException( ErrorMessages::webmEllipsoid );
+  if (strcmp(ellipsoidCode, "WE") != 0) { /* Ellipsoid must be WGS84 */
+    throw CoordinateConversionException(ErrorMessages::webmEllipsoid);
   }
 }
 
+EllipsoidParameters* WebMercator::getParameters() const {
+  /*
+   * The function getParameters returns the current ellipsoid code.
+   *
+   *   ellipsoidCode : 2-letter code for ellipsoid          (output)
+   */
 
-EllipsoidParameters* WebMercator::getParameters() const
-{
-/*                         
- * The function getParameters returns the current ellipsoid code.
- *
- *   ellipsoidCode : 2-letter code for ellipsoid          (output)
- */
-
-  return new EllipsoidParameters(
-     semiMajorAxis, flattening, "WE" ); // Always WGS84 radius
+  return new EllipsoidParameters(semiMajorAxis, flattening,
+                                 "WE");  // Always WGS84 radius
 }
 
 MSP::CCS::MapProjectionCoordinates* WebMercator::convertFromGeodetic(
-   MSP::CCS::GeodeticCoordinates* geodeticCoordinates )
-{
-   double longitude = geodeticCoordinates->longitude();
-   double latitude = geodeticCoordinates->latitude();
+    MSP::CCS::GeodeticCoordinates* geodeticCoordinates) {
+  double longitude = geodeticCoordinates->longitude();
+  double latitude = geodeticCoordinates->latitude();
 
-   double easting  = longitude * semiMajorAxis;
-   double northing = semiMajorAxis * log( tan( PI/4.0 + latitude / 2.0 ) );
+  double easting = longitude * semiMajorAxis;
+  double northing = semiMajorAxis * log(tan(PI / 4.0 + latitude / 2.0));
 
-   // Always throw an error because NGA does not want to allow
-   // conversions to Web Mecator
-   throw CoordinateConversionException( ErrorMessages::webmConversionTo  );
+  // Always throw an error because NGA does not want to allow
+  // conversions to Web Mecator
+  throw CoordinateConversionException(ErrorMessages::webmConversionTo);
 
-  return new MapProjectionCoordinates(
-     CoordinateType::webMercator, easting, northing );
+  return new MapProjectionCoordinates(CoordinateType::webMercator, easting,
+                                      northing);
 }
 
 MSP::CCS::GeodeticCoordinates* WebMercator::convertToGeodetic(
-   MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates )
-{
-  double easting  = mapProjectionCoordinates->easting();
+    MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates) {
+  double easting = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
   double longitude = easting / semiMajorAxis;
-  double latitude  = 2.0 * atan( exp( northing / semiMajorAxis ) ) - PI/2.0;
+  double latitude = 2.0 * atan(exp(northing / semiMajorAxis)) - PI / 2.0;
 
-  return new GeodeticCoordinates(
-     CoordinateType::geodetic, longitude, latitude );
+  return new GeodeticCoordinates(CoordinateType::geodetic, longitude, latitude);
 }
 
 // CLASSIFICATION: UNCLASSIFIED

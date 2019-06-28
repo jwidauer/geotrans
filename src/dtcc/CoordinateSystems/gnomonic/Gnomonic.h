@@ -10,8 +10,8 @@
  *
  *    This component provides conversions between Geodetic coordinates
  *    (latitude and longitude in radians) and Gnomonic
- *    projection coordinates (easting and northing in meters).  This projection 
- *    employs a spherical Earth model.  The spherical radius used is the radius 
+ *    projection coordinates (easting and northing in meters).  This projection
+ *    employs a spherical Earth model.  The spherical radius used is the radius
  *    of the sphere having the same area as the ellipsoid.
  *
  * ERROR HANDLING
@@ -38,12 +38,13 @@
  *                                     (-180 to 360 degrees)
  *       GNOM_A_ERROR            : Semi-major axis less than or equal to zero
  *       GNOM_INV_F_ERROR        : Inverse flattening outside of valid range
- *									                   (250 to 350)
+ *									                   (250
+ *to 350)
  *
  *
  * REUSE NOTES
  *
- *    GNOMONIC is intended for reuse by any application that 
+ *    GNOMONIC is intended for reuse by any application that
  *    performs a Gnomonic projection or its inverse.
  *
  * REFERENCES
@@ -76,134 +77,118 @@
  *    ----              -----------
  *    05-22-00          Original Code
  *    03-05-07          Original C++ Code
- *    
+ *
  *
  */
 
-
 #include "CoordinateSystem.h"
 
+namespace MSP {
+namespace CCS {
+class MapProjection4Parameters;
+class MapProjectionCoordinates;
+class GeodeticCoordinates;
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class MapProjection4Parameters;
-    class MapProjectionCoordinates;
-    class GeodeticCoordinates;
+/***************************************************************************/
+/*
+ *                              DEFINES
+ */
 
+class Gnomonic : public CoordinateSystem {
+ public:
+  /*
+   * The constructor receives the ellipsoid parameters and
+   * projection parameters as inputs, and sets the corresponding state
+   * variables.  If any errors occur, an exception is thrown with a description
+   * of the error.
+   *
+   *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters
+   * (input) ellipsoidFlattening     : Flattening of ellipsoid
+   * (input) centralMeridian         : Longitude in radians at the center of
+   * (input) the projection originLatitude          : Latitude in radians at
+   * which the          (input) point scale factor is 1.0 falseEasting : A
+   * coordinate value in meters assigned to the central meridian of the
+   * projection.       (input) falseNorthing           : A coordinate value in
+   * meters assigned to the origin latitude of the projection         (input)
+   */
 
-    /***************************************************************************/
-    /*
-     *                              DEFINES
-     */
+  Gnomonic(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
+           double centralMeridian, double originLatitude, double falseEasting,
+           double falseNorthing);
 
-    class Gnomonic : public CoordinateSystem
-    {
-    public:
+  Gnomonic(const Gnomonic& g);
 
-      /*
-       * The constructor receives the ellipsoid parameters and
-       * projection parameters as inputs, and sets the corresponding state
-       * variables.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
-       *    ellipsoidFlattening     : Flattening of ellipsoid						        (input)
-       *    centralMeridian         : Longitude in radians at the center of     (input)
-       *                              the projection
-       *    originLatitude          : Latitude in radians at which the          (input)
-       *                              point scale factor is 1.0
-       *    falseEasting            : A coordinate value in meters assigned to the
-       *                              central meridian of the projection.       (input)
-       *    falseNorthing           : A coordinate value in meters assigned to the
-       *                              origin latitude of the projection         (input)
-       */
+  ~Gnomonic(void);
 
-	    Gnomonic( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double originLatitude, double falseEasting, double falseNorthing );
+  Gnomonic& operator=(const Gnomonic& g);
 
+  /*
+   * The function getParameters returns the current ellipsoid
+   * parameters and Gnomonic projection parameters.
+   *
+   *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters
+   * (output) ellipsoidFlattening     : Flattening of ellipsoid
+   * (output) centralMeridian         : Longitude in radians at the center of
+   * (output) the projection originLatitude          : Latitude in radians at
+   * which the          (output) point scale factor is 1.0 falseEasting : A
+   * coordinate value in meters assigned to the central meridian of the
+   * projection.       (output) falseNorthing           : A coordinate value in
+   * meters assigned to the origin latitude of the projection         (output)
+   */
 
-      Gnomonic( const Gnomonic &g );
+  MapProjection4Parameters* getParameters() const;
 
+  /*
+   * The function convertFromGeodetic converts geodetic (latitude and
+   * longitude) coordinates to Gnomonic projection (easting and northing)
+   * coordinates, according to the current ellipsoid and Gnomonic projection
+   * parameters.  If any errors occur, an exception is thrown with a description
+   * of the error.
+   *
+   *    longitude         : Longitude (lambda) in radians       (input)
+   *    latitude          : Latitude (phi) in radians           (input)
+   *    easting           : Easting (X) in meters               (output)
+   *    northing          : Northing (Y) in meters              (output)
+   */
 
-	    ~Gnomonic( void );
+  MSP::CCS::MapProjectionCoordinates* convertFromGeodetic(
+      MSP::CCS::GeodeticCoordinates* geodeticCoordinates);
 
+  /*
+   * The function convertToGeodetic converts Gnomonic projection
+   * (easting and northing) coordinates to geodetic (latitude and longitude)
+   * coordinates, according to the current ellipsoid and Gnomonic projection
+   * coordinates.  If any errors occur, an exception is thrown with a
+   * description of the error.
+   *
+   *    easting           : Easting (X) in meters                  (input)
+   *    northing          : Northing (Y) in meters                 (input)
+   *    longitude         : Longitude (lambda) in radians          (output)
+   *    latitude          : Latitude (phi) in radians              (output)
+   */
 
-      Gnomonic& operator=( const Gnomonic &g );
+  MSP::CCS::GeodeticCoordinates* convertToGeodetic(
+      MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates);
 
+ private:
+  /* Ellipsoid Parameters, default to WGS 84 */
+  double Ra; /* Spherical Radius */
+  double Sin_Gnom_Origin_Lat;
+  double Cos_Gnom_Origin_Lat;
 
-      /*
-       * The function getParameters returns the current ellipsoid
-       * parameters and Gnomonic projection parameters.
-       *
-       *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (output)
-       *    ellipsoidFlattening     : Flattening of ellipsoid						        (output)
-       *    centralMeridian         : Longitude in radians at the center of     (output)
-       *                              the projection
-       *    originLatitude          : Latitude in radians at which the          (output)
-       *                              point scale factor is 1.0
-       *    falseEasting            : A coordinate value in meters assigned to the
-       *                              central meridian of the projection.       (output)
-       *    falseNorthing           : A coordinate value in meters assigned to the
-       *                              origin latitude of the projection         (output)
-       */
+  /* Gnomonic projection Parameters */
+  double Gnom_Origin_Lat;     /* Latitude of origin in radians */
+  double Gnom_Origin_Long;    /* Longitude of origin in radians */
+  double Gnom_False_Northing; /* False northing in meters */
+  double Gnom_False_Easting;  /* False easting in meters */
+  double abs_Gnom_Origin_Lat;
 
-      MapProjection4Parameters* getParameters() const;
+  double Gnom_Delta_Northing;
+  double Gnom_Delta_Easting;
+};
+}  // namespace CCS
+}  // namespace MSP
 
-
-      /*
-       * The function convertFromGeodetic converts geodetic (latitude and
-       * longitude) coordinates to Gnomonic projection (easting and northing)
-       * coordinates, according to the current ellipsoid and Gnomonic projection
-       * parameters.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *    longitude         : Longitude (lambda) in radians       (input)
-       *    latitude          : Latitude (phi) in radians           (input)
-       *    easting           : Easting (X) in meters               (output)
-       *    northing          : Northing (Y) in meters              (output)
-       */
-
-      MSP::CCS::MapProjectionCoordinates* convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates );
-
-
-      /*
-       * The function convertToGeodetic converts Gnomonic projection
-       * (easting and northing) coordinates to geodetic (latitude and longitude)
-       * coordinates, according to the current ellipsoid and Gnomonic projection
-       * coordinates.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *    easting           : Easting (X) in meters                  (input)
-       *    northing          : Northing (Y) in meters                 (input)
-       *    longitude         : Longitude (lambda) in radians          (output)
-       *    latitude          : Latitude (phi) in radians              (output)
-       */
-
-      MSP::CCS::GeodeticCoordinates* convertToGeodetic( MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates );
-
-    private:
-    
-      /* Ellipsoid Parameters, default to WGS 84 */
-      double Ra;                /* Spherical Radius */
-      double Sin_Gnom_Origin_Lat;
-      double Cos_Gnom_Origin_Lat;
-
-      /* Gnomonic projection Parameters */
-      double Gnom_Origin_Lat;               /* Latitude of origin in radians */
-      double Gnom_Origin_Long;              /* Longitude of origin in radians */
-      double Gnom_False_Northing;           /* False northing in meters */
-      double Gnom_False_Easting;            /* False easting in meters */
-      double abs_Gnom_Origin_Lat;
-
-      double Gnom_Delta_Northing;
-      double Gnom_Delta_Easting;
-
-    };
-  }
-}
-
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

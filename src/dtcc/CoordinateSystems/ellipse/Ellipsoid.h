@@ -5,51 +5,45 @@
 
 #include "geotrans/dtcc/DtccApi.h"
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class MSP_DTCC_API Ellipsoid
-    {
-    public:
+namespace MSP {
+namespace CCS {
+class MSP_DTCC_API Ellipsoid {
+ public:
+  Ellipsoid();
 
-	    Ellipsoid();
+  Ellipsoid(long __index, char* __code, char* __name, double __semiMajorAxis,
+            double __semiMinorAxis, double __flattening,
+            double __eccentricitySquared, bool __userDefined);
 
-	    Ellipsoid( long __index, char* __code,  char* __name, double __semiMajorAxis, double __semiMinorAxis, double __flattening, double __eccentricitySquared, bool __userDefined );
+  ~Ellipsoid(void);
 
-	    ~Ellipsoid( void );
+  long index() const;
 
-      long index() const;
+  char* code() const;
 
-      char* code() const;
+  char* name() const;
 
-      char* name() const;
+  double semiMajorAxis() const;
 
-      double semiMajorAxis() const;
+  double semiMinorAxis() const;
 
-      double semiMinorAxis() const;
+  double flattening() const;
 
-      double flattening() const;
+  double eccentricitySquared() const;
 
-      double eccentricitySquared() const;
+  bool userDefined() const;
 
-      bool userDefined() const;
+ private:
+  long _index;
+  char* _code;
+  char* _name;
+  double _semiMajorAxis;
+  double _semiMinorAxis;
+  double _flattening;
+  double _eccentricitySquared;
+  bool _userDefined;
+};
+}  // namespace CCS
+}  // namespace MSP
 
-
-    private:
-
-      long _index;
-      char* _code;
-      char* _name;
-      double _semiMajorAxis;
-      double _semiMinorAxis;
-      double _flattening;
-      double _eccentricitySquared;
-      bool _userDefined;
-
-    };
-  }
-}
-  
-
-#endif // CLASSIFICATION: UNCLASSIFIED
+#endif  // CLASSIFICATION: UNCLASSIFIED

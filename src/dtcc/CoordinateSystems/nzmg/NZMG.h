@@ -8,14 +8,14 @@
  *
  * ABSTRACT
  *
- *    This component provides conversions between Geodetic coordinates 
+ *    This component provides conversions between Geodetic coordinates
  *    (latitude and longitude) and New Zealand Map Grid coordinates
  *    (easting and northing).
  *
  * ERROR HANDLING
  *
  *    This component checks parameters for valid values.  If an invalid value
- *    is found the error code is combined with the current error code using 
+ *    is found the error code is combined with the current error code using
  *    the bitwise or.  This combining allows multiple error codes to be
  *    returned. The possible error codes are:
  *
@@ -34,15 +34,15 @@
  *
  * REUSE NOTES
  *
- *    NEW ZEALAND MAP GRID is intended for reuse by any application that 
+ *    NEW ZEALAND MAP GRID is intended for reuse by any application that
  *    performs a New Zealand Map Grid projection or its inverse.
- *    
+ *
  * REFERENCES
  *
- *    Further information on NEW ZEALAND MAP GRID can be found in the 
+ *    Further information on NEW ZEALAND MAP GRID can be found in the
  *    Reuse Manual.
  *
- *    NEW ZEALAND MAP GRID originated from :  
+ *    NEW ZEALAND MAP GRID originated from :
  *                      U.S. Army Topographic Engineering Center
  *                      Geospatial Information Division
  *                      7701 Telegraph Road
@@ -58,7 +58,7 @@
  *
  * ENVIRONMENT
  *
- *    NEW ZEALAND MAP GRID was tested and certified in the following 
+ *    NEW ZEALAND MAP GRID was tested and certified in the following
  *    environments:
  *
  *    1. Solaris 2.5 with GCC, version 2.8.1
@@ -76,96 +76,83 @@
 
 #include "CoordinateSystem.h"
 
+namespace MSP {
+namespace CCS {
+class EllipsoidParameters;
+class MapProjectionCoordinates;
+class GeodeticCoordinates;
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class EllipsoidParameters;
-    class MapProjectionCoordinates;
-    class GeodeticCoordinates;
+/***************************************************************************/
+/*
+ *                              DEFINES
+ */
 
+class NZMG : public CoordinateSystem {
+ public:
+  /*
+   * The constructor receives the ellipsoid code and sets
+   * the corresponding state variables. If any errors occur, an exception is
+   * thrown with a description of the error.
+   *
+   *   ellipsoidCode : 2-letter code for ellipsoid           (input)
+   */
 
-    /***************************************************************************/
-    /*
-     *                              DEFINES
-     */
+  NZMG(char* ellipsoidCode);
 
-    class NZMG : public CoordinateSystem
-    {
-    public:
+  NZMG(const NZMG& n);
 
-      /*
-       * The constructor receives the ellipsoid code and sets
-       * the corresponding state variables. If any errors occur, an exception is 
-       * thrown with a description of the error.
-       *
-       *   ellipsoidCode : 2-letter code for ellipsoid           (input)
-       */
+  ~NZMG(void);
 
-	    NZMG( char* ellipsoidCode );
+  NZMG& operator=(const NZMG& n);
 
+  /*
+   * The function getParameters returns the current ellipsoid
+   * code.
+   *
+   *   ellipsoidCode : 2-letter code for ellipsoid          (output)
+   */
 
-      NZMG( const NZMG &n );
+  EllipsoidParameters* getParameters() const;
 
+  /*
+   * The function convertFromGeodetic converts geodetic (latitude and
+   * longitude) coordinates to New Zealand Map Grid projection (easting and
+   * northing) coordinates, according to the current ellipsoid and New Zealand
+   * Map Grid projection parameters.  If any errors occur, an exception is
+   * thrown with a description of the error.
+   *
+   *    longitude         : Longitude (lambda), in radians       (input)
+   *    latitude          : Latitude (phi), in radians           (input)
+   *    easting           : Easting (X), in meters               (output)
+   *    northing          : Northing (Y), in meters              (output)
+   */
 
-	    ~NZMG( void );
+  MSP::CCS::MapProjectionCoordinates* convertFromGeodetic(
+      MSP::CCS::GeodeticCoordinates* geodeticCoordinates);
 
+  /*
+   * The function convertToGeodetic converts New Zealand Map Grid projection
+   * (easting and northing) coordinates to geodetic (latitude and longitude)
+   * coordinates, according to the current ellipsoid and New Zealand Map Grid
+   * projection coordinates.  If any errors occur, an exception is thrown with a
+   * description of the error.
+   *
+   *    easting           : Easting (X), in meters                  (input)
+   *    northing          : Northing (Y), in meters                 (input)
+   *    longitude         : Longitude (lambda), in radians          (output)
+   *    latitude          : Latitude (phi), in radians              (output)
+   */
 
-      NZMG& operator=( const NZMG &n );
+  MSP::CCS::GeodeticCoordinates* convertToGeodetic(
+      MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates);
 
+ private:
+  /* Ellipsoid Parameters, must be International  */
+  char NZMGEllipsoidCode[3];
+};
+}  // namespace CCS
+}  // namespace MSP
 
-      /*                         
-       * The function getParameters returns the current ellipsoid
-       * code.
-       *
-       *   ellipsoidCode : 2-letter code for ellipsoid          (output)
-       */
-
-      EllipsoidParameters* getParameters() const;
-
-
-      /*
-       * The function convertFromGeodetic converts geodetic (latitude and
-       * longitude) coordinates to New Zealand Map Grid projection (easting and northing)
-       * coordinates, according to the current ellipsoid and New Zealand Map Grid 
-       * projection parameters.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *    longitude         : Longitude (lambda), in radians       (input)
-       *    latitude          : Latitude (phi), in radians           (input)
-       *    easting           : Easting (X), in meters               (output)
-       *    northing          : Northing (Y), in meters              (output)
-       */
-
-      MSP::CCS::MapProjectionCoordinates* convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates );
-
-
-      /*
-       * The function convertToGeodetic converts New Zealand Map Grid projection
-       * (easting and northing) coordinates to geodetic (latitude and longitude)
-       * coordinates, according to the current ellipsoid and New Zealand Map Grid projection
-       * coordinates.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *    easting           : Easting (X), in meters                  (input)
-       *    northing          : Northing (Y), in meters                 (input)
-       *    longitude         : Longitude (lambda), in radians          (output)
-       *    latitude          : Latitude (phi), in radians              (output)
-       */
-
-      MSP::CCS::GeodeticCoordinates* convertToGeodetic( MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates );
-
-    private:
-    
-      /* Ellipsoid Parameters, must be International  */
-       char NZMGEllipsoidCode[3];
-
-    };
-  }
-}
-
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

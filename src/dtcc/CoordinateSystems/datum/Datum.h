@@ -3,86 +3,69 @@
 #ifndef Datum_H
 #define Datum_H
 
-#include "geotrans/dtcc/DtccApi.h"
 #include "DatumType.h"
+#include "geotrans/dtcc/DtccApi.h"
 
-
-namespace MSP
-{
-  namespace CCS
-  {
-    class MSP_DTCC_API Datum
+namespace MSP {
+namespace CCS {
+class MSP_DTCC_API Datum
 //    class Datum
-    {
-    public:
+{
+ public:
+  Datum();
 
-	    Datum();
+  Datum(long __index, const char* __code, const char* __ellipsoidCode,
+        const char* __name, DatumType::Enum __datumType, double __deltaX,
+        double __deltaY, double __deltaZ, double __westLongitude,
+        double __eastLongitude, double __southLatitude, double __northLatitude,
+        bool __userDefined);
 
-	    Datum(
-          long __index,
-          const char* __code,
-          const char* __ellipsoidCode,
-          const char* __name,
-          DatumType::Enum __datumType,
-          double __deltaX,
-          double __deltaY,
-          double __deltaZ, 
-          double __westLongitude,
-          double __eastLongitude,
-          double __southLatitude,
-          double __northLatitude,
-          bool __userDefined );
+  ~Datum(void);
 
-	    ~Datum( void );
+  long index() const;
 
-      long index() const;
+  char* code() const;
 
-      char* code() const;
+  char* ellipsoidCode() const;
 
-      char* ellipsoidCode() const;
+  char* name() const;
 
-      char* name() const;
-  
-      DatumType::Enum datumType() const;
+  DatumType::Enum datumType() const;
 
-      double deltaX() const;
+  double deltaX() const;
 
-      double deltaY() const;
+  double deltaY() const;
 
-      double deltaZ() const;
+  double deltaZ() const;
 
-      double westLongitude() const;
+  double westLongitude() const;
 
-      double eastLongitude() const;
+  double eastLongitude() const;
 
-      double southLatitude() const;
+  double southLatitude() const;
 
-      double northLatitude() const;
+  double northLatitude() const;
 
-      bool userDefined() const;
+  bool userDefined() const;
 
+ private:
+  long _index;
+  char* _code;
+  char* _ellipsoidCode;
+  char* _name;
+  DatumType::Enum _datumType;
+  double _deltaX;
+  double _deltaY;
+  double _deltaZ;
+  double _westLongitude;
+  double _eastLongitude;
+  double _southLatitude;
+  double _northLatitude;
+  bool _userDefined;
+};
+}  // namespace CCS
+}  // namespace MSP
 
-    private:
-
-      long _index;
-      char* _code;
-      char* _ellipsoidCode;
-      char* _name;
-      DatumType::Enum _datumType;
-      double _deltaX;
-      double _deltaY;
-      double _deltaZ;
-      double _westLongitude;
-      double _eastLongitude;
-      double _southLatitude;
-      double _northLatitude;
-      bool _userDefined;
-
-    };
-  }
-}
-
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

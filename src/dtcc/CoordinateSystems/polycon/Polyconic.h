@@ -39,8 +39,8 @@
  *          POLY_A_ERROR            : Semi-major axis less than or equal to zero
  *          POLY_INV_F_ERROR        : Inverse flattening outside of valid range
  *                                      (250 to 350)
- *          POLY_LON_WARNING        : Distortion will result if longitude is more
- *                                     than 90 degrees from the Central Meridian
+ *          POLY_LON_WARNING        : Distortion will result if longitude is
+ * more than 90 degrees from the Central Meridian
  *
  * REUSE NOTES
  *
@@ -80,141 +80,126 @@
  *
  */
 
-
 #include "CoordinateSystem.h"
 
+namespace MSP {
+namespace CCS {
+class MapProjection4Parameters;
+class MapProjectionCoordinates;
+class GeodeticCoordinates;
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class MapProjection4Parameters;
-    class MapProjectionCoordinates;
-    class GeodeticCoordinates;
+/***************************************************************************/
+/*
+ *                              DEFINES
+ */
 
+class Polyconic : public CoordinateSystem {
+ public:
+  /*
+   * The constructor receives the ellipsoid parameters and
+   * Polyconic projection parameters as inputs, and sets the corresponding state
+   * variables.  If any errors occur, an exception is thrown with a description
+   * of the error.
+   *
+   *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters
+   * (input) ellipsoidFlattening     : Flattening of ellipsoid (input)
+   *    centralMeridian         : Longitude in radians at the center of (input)
+   *                              the projection
+   *    originLatitude          : Latitude in radians at which the (input) point
+   * scale factor is 1.0 falseEasting            : A coordinate value in meters
+   * assigned to the central meridian of the projection.       (input)
+   *    falseNorthing           : A coordinate value in meters assigned to the
+   *                              origin latitude of the projection (input)
+   */
 
-    /***************************************************************************/
-    /*
-     *                              DEFINES
-     */
+  Polyconic(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
+            double centralMeridian, double originLatitude, double falseEasting,
+            double falseNorthing);
 
-    class Polyconic : public CoordinateSystem
-    {
-    public:
+  Polyconic(const Polyconic& p);
 
-      /*
-       * The constructor receives the ellipsoid parameters and
-       * Polyconic projection parameters as inputs, and sets the corresponding state
-       * variables.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
-       *    ellipsoidFlattening     : Flattening of ellipsoid                   (input)
-       *    centralMeridian         : Longitude in radians at the center of     (input)
-       *                              the projection
-       *    originLatitude          : Latitude in radians at which the          (input)
-       *                              point scale factor is 1.0
-       *    falseEasting            : A coordinate value in meters assigned to the
-       *                              central meridian of the projection.       (input)
-       *    falseNorthing           : A coordinate value in meters assigned to the
-       *                              origin latitude of the projection         (input)
-       */
+  ~Polyconic(void);
 
-	    Polyconic( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double originLatitude, double falseEasting, double falseNorthing );
+  Polyconic& operator=(const Polyconic& p);
 
+  /*
+   * The function getParameters returns the current ellipsoid
+   * parameters, and Polyconic projection parameters.
+   *
+   *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters
+   * (output) ellipsoidFlattening     : Flattening of ellipsoid (output)
+   *    centralMeridian         : Longitude in radians at the center of (output)
+   *                              the projection
+   *    originLatitude          : Latitude in radians at which the (output)
+   *                              point scale factor is 1.0
+   *    falseEasting            : A coordinate value in meters assigned to the
+   *                              central meridian of the projection. (output)
+   *    falseNorthing           : A coordinate value in meters assigned to the
+   *                              origin latitude of the projection (output)
+   */
 
-      Polyconic( const Polyconic &p );
+  MapProjection4Parameters* getParameters() const;
 
+  /*
+   * The function convertFromGeodetic converts geodetic (latitude and
+   * longitude) coordinates to Polyconic projection (easting and northing)
+   * coordinates, according to the current ellipsoid and Polyconic projection
+   * parameters.  If any errors occur, an exception is thrown with a description
+   * of the error.
+   *
+   *    longitude         : Longitude (lambda) in radians       (input)
+   *    latitude          : Latitude (phi) in radians           (input)
+   *    easting           : Easting (X) in meters               (output)
+   *    northing          : Northing (Y) in meters              (output)
+   */
 
-	    ~Polyconic( void );
+  MSP::CCS::MapProjectionCoordinates* convertFromGeodetic(
+      MSP::CCS::GeodeticCoordinates* geodeticCoordinates);
 
+  /*
+   * The function convertToGeodetic converts Polyconic projection
+   * (easting and northing) coordinates to geodetic (latitude and longitude)
+   * coordinates, according to the current ellipsoid and Polyconic projection
+   * coordinates.  If any errors occur, an exception is thrown with a
+   * description of the error. easting           : Easting (X) in meters (input)
+   *    northing          : Northing (Y) in meters                 (input)
+   *    longitude         : Longitude (lambda) in radians          (output)
+   *    latitude          : Latitude (phi) in radians              (output)
+   */
 
-      Polyconic& operator=( const Polyconic &p );
+  MSP::CCS::GeodeticCoordinates* convertToGeodetic(
+      MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates);
 
+ private:
+  /* Ellipsoid Parameters, default to WGS 84 */
+  double es2; /* Eccentricity (0.08181919084262188000) squared         */
+  double es4; /* es2 * es2 */
+  double es6; /* es4 * es2 */
+  double M0;
+  double c0; /* 1 - es2 / 4.0 - 3.0 * es4 / 64.0 - 5.0 * es6 / 256.0 */
+  double c1; /* 3.0 * es2 / 8.0 + 3.0 * es4 / 32.0 + 45.0 * es6 / 1024.0 */
+  double c2; /* 15.0 * es4 / 256.0 + 45.0 * es6 / 1024.0 */
+  double c3; /* 35.0 * es6 / 3072.0 */
 
-      /*
-       * The function getParameters returns the current ellipsoid
-       * parameters, and Polyconic projection parameters.
-       *
-       *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (output)
-       *    ellipsoidFlattening     : Flattening of ellipsoid                   (output)
-       *    centralMeridian         : Longitude in radians at the center of     (output)
-       *                              the projection
-       *    originLatitude          : Latitude in radians at which the          (output)
-       *                              point scale factor is 1.0
-       *    falseEasting            : A coordinate value in meters assigned to the
-       *                              central meridian of the projection.       (output)
-       *    falseNorthing           : A coordinate value in meters assigned to the
-       *                              origin latitude of the projection         (output)
-       */
+  /* Polyconic projection Parameters */
+  double Poly_Origin_Lat;     /* Latitude of origin in radians     */
+  double Poly_Origin_Long;    /* Longitude of origin in radians    */
+  double Poly_False_Northing; /* False northing in meters          */
+  double Poly_False_Easting;  /* False easting in meters           */
 
-      MapProjection4Parameters* getParameters() const;
+  /* Maximum variance for easting and northing values for WGS 84.*/
+  double Poly_Max_Easting;
+  double Poly_Max_Northing;
+  double Poly_Min_Easting;
+  double Poly_Min_Northing;
 
+  double polyM(double c0lat, double c1s2lat, double c2s4lat, double c3s6lat);
 
-      /*
-       * The function convertFromGeodetic converts geodetic (latitude and
-       * longitude) coordinates to Polyconic projection (easting and northing)
-       * coordinates, according to the current ellipsoid and Polyconic projection
-       * parameters.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *    longitude         : Longitude (lambda) in radians       (input)
-       *    latitude          : Latitude (phi) in radians           (input)
-       *    easting           : Easting (X) in meters               (output)
-       *    northing          : Northing (Y) in meters              (output)
-       */
+  double floatEq(double x, double v, double epsilon);
+};
+}  // namespace CCS
+}  // namespace MSP
 
-      MSP::CCS::MapProjectionCoordinates* convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates );
-
-
-      /*
-       * The function convertToGeodetic converts Polyconic projection
-       * (easting and northing) coordinates to geodetic (latitude and longitude)
-       * coordinates, according to the current ellipsoid and Polyconic projection
-       * coordinates.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *    easting           : Easting (X) in meters                  (input)
-       *    northing          : Northing (Y) in meters                 (input)
-       *    longitude         : Longitude (lambda) in radians          (output)
-       *    latitude          : Latitude (phi) in radians              (output)
-       */
-
-      MSP::CCS::GeodeticCoordinates* convertToGeodetic( MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates );
-
-    private:
-    
-      /* Ellipsoid Parameters, default to WGS 84 */
-      double es2;             /* Eccentricity (0.08181919084262188000) squared         */
-      double es4;             /* es2 * es2 */
-      double es6;             /* es4 * es2 */
-      double M0;
-      double c0;              /* 1 - es2 / 4.0 - 3.0 * es4 / 64.0 - 5.0 * es6 / 256.0 */
-      double c1;              /* 3.0 * es2 / 8.0 + 3.0 * es4 / 32.0 + 45.0 * es6 / 1024.0 */
-      double c2;              /* 15.0 * es4 / 256.0 + 45.0 * es6 / 1024.0 */
-      double c3;              /* 35.0 * es6 / 3072.0 */
-
-      /* Polyconic projection Parameters */
-      double Poly_Origin_Lat;                   /* Latitude of origin in radians     */
-      double Poly_Origin_Long;                  /* Longitude of origin in radians    */
-      double Poly_False_Northing;               /* False northing in meters          */
-      double Poly_False_Easting;                /* False easting in meters           */
-
-      /* Maximum variance for easting and northing values for WGS 84.*/
-      double Poly_Max_Easting;
-      double Poly_Max_Northing;
-      double Poly_Min_Easting;
-      double Poly_Min_Northing;
-
-
-      double polyM( double c0lat, double c1s2lat, double c2s4lat, double c3s6lat );
-
-      double floatEq( double x, double v, double epsilon );
-
-    };
-  }
-}
-
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

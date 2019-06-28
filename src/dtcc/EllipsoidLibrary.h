@@ -58,9 +58,8 @@
  *
  *    Further information on Ellipsoid can be found in the Reuse Manual.
  *
- *    Ellipsoid originated from :  U.S. Army Topographic Engineering Center (USATEC)
- *                                 Geospatial Information Division (GID)
- *                                 7701 Telegraph Road
+ *    Ellipsoid originated from :  U.S. Army Topographic Engineering Center
+ * (USATEC) Geospatial Information Division (GID) 7701 Telegraph Road
  *                                 Alexandria, VA  22310-3864
  *
  * LICENSES
@@ -91,137 +90,120 @@
  *
  */
 
-
 #include "geotrans/dtcc/DtccApi.h"
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class EllipsoidLibraryImplementation;
+namespace MSP {
+namespace CCS {
+class EllipsoidLibraryImplementation;
 
+/***************************************************************************/
+/*
+ *                              DEFINES
+ */
+class MSP_DTCC_API EllipsoidLibrary {
+ public:
+  /*
+   * The constructor creates an empty list to store the ellipsoid data from
+   * ellips.dat, which is used to build the ellipsoid table.
+   */
 
-    /***************************************************************************/
-    /*
-     *                              DEFINES
-     */
-    class MSP_DTCC_API EllipsoidLibrary
-    {
-    public:
+  EllipsoidLibrary(
+      EllipsoidLibraryImplementation *__ellipsoidLibraryImplementation);
 
-      /*
-       * The constructor creates an empty list to store the ellipsoid data from ellips.dat,
-       * which is used to build the ellipsoid table.  
-       */
+  EllipsoidLibrary(const EllipsoidLibrary &e);
 
-	    EllipsoidLibrary( EllipsoidLibraryImplementation* __ellipsoidLibraryImplementation );
+  EllipsoidLibrary &operator=(const EllipsoidLibrary &e);
 
+  ~EllipsoidLibrary(void);
 
-      EllipsoidLibrary( const EllipsoidLibrary &e );
+  /*
+   * The function defineEllipsoid creates a new ellipsoid with the specified
+   * Code, name, and axes.  If the ellipsoid table has not been initialized,
+   * the specified code is already in use, or a new version of the ellips.dat
+   * file cannot be created, an exception is thrown.
+   * Note that the indexes of all ellipsoids in the ellipsoid
+   * table may be changed by this function.
+   *
+   *   code           : 2-letter ellipsoid code.                      (input)
+   *   name           : Name of the new ellipsoid                     (input)
+   *   semiMajorAxis  : Semi-major axis, in meters, of new ellipsoid  (input)
+   *   flattening     : Flattening of new ellipsoid.                  (input)
+   *
+   */
 
+  void defineEllipsoid(const char *code, const char *name, double semiMajorAxis,
+                       double flattening);
 
-      EllipsoidLibrary& operator=( const EllipsoidLibrary &e );
+  /*
+   * The function removeEllipsoid deletes a user defined ellipsoid with
+   * the specified Code.  If the ellipsoid table has not been created,
+   * the specified code is in use by a user defined datum, or a new version
+   * of the ellips.dat file cannot be created, exception is thrown.
+   * Note that the indexes of all
+   * ellipsoids in the ellipsoid table may be changed by this function.
+   *
+   *   code     : 2-letter ellipsoid code.                      (input)
+   *
+   */
 
+  void removeEllipsoid(const char *code);
 
- 	    ~EllipsoidLibrary( void );
+  /*
+   * The function getEllipsoidCount returns the number of ellipsoids in the
+   * ellipsoid table.  If the ellipsoid table has not been initialized,
+   * an exception is thrown.
+   *
+   *   count    : The number of ellipsoids in the ellipsoid table. (output)
+   *
+   */
 
+  void getEllipsoidCount(long *count);
 
-      /*
-       * The function defineEllipsoid creates a new ellipsoid with the specified
-       * Code, name, and axes.  If the ellipsoid table has not been initialized,
-       * the specified code is already in use, or a new version of the ellips.dat
-       * file cannot be created, an exception is thrown.
-       * Note that the indexes of all ellipsoids in the ellipsoid
-       * table may be changed by this function.
-       *
-       *   code           : 2-letter ellipsoid code.                      (input)
-       *   name           : Name of the new ellipsoid                     (input)
-       *   semiMajorAxis  : Semi-major axis, in meters, of new ellipsoid  (input)
-       *   flattening     : Flattening of new ellipsoid.                  (input)
-       *
-       */
+  /*
+   *  The function getEllipsoidIndex returns the index of the ellipsoid in
+   *  the ellipsoid table with the specified code.  If ellipsoid code is not
+   * found, an exception is thrown.
+   *
+   *    code     : 2-letter ellipsoid code.                      (input)
+   *    index    : Index of the ellipsoid in the ellipsoid table with the
+   *                  specified code                             (output)
+   *
+   */
 
-      void defineEllipsoid( const char* code, const char* name, double semiMajorAxis, double flattening );
+  void getEllipsoidIndex(const char *code, long *index);
 
+  /*
+   *  The Function getEllipsoidInfo returns the 2-letter code and name of the
+   *  ellipsoid in the ellipsoid table with the specified index.  If index is
+   *  invalid, an exception is thrown.
+   *
+   *    index    : Index of a given ellipsoid in the ellipsoid table (input)
+   *    code     : 2-letter ellipsoid code.                          (output)
+   *    name    : Name of the ellipsoid referencd by index       (output)
+   *
+   */
 
-      /*
-       * The function removeEllipsoid deletes a user defined ellipsoid with
-       * the specified Code.  If the ellipsoid table has not been created,
-       * the specified code is in use by a user defined datum, or a new version
-       * of the ellips.dat file cannot be created, exception is thrown.
-       * Note that the indexes of all
-       * ellipsoids in the ellipsoid table may be changed by this function.
-       *
-       *   code     : 2-letter ellipsoid code.                      (input)
-       *
-       */
+  void getEllipsoidInfo(const long index, char *code, char *name);
 
-      void removeEllipsoid( const char* code );
+  /*
+   *  The function getEllipsoidParameters returns the semi-major axis and
+   * flattening for the ellipsoid with the specified index.  If index is
+   * invalid, an exception is thrown.
+   *
+   *    index    : Index of a given ellipsoid in the ellipsoid table (input)
+   *    a        : Semi-major axis, in meters, of ellipsoid          (output)
+   *    f        : Flattening of ellipsoid.                          (output)
+   *
+   */
 
+  void getEllipsoidParameters(const long index, double *a, double *f);
 
-      /*
-       * The function getEllipsoidCount returns the number of ellipsoids in the
-       * ellipsoid table.  If the ellipsoid table has not been initialized,
-       * an exception is thrown.
-       *
-       *   count    : The number of ellipsoids in the ellipsoid table. (output)
-       *
-       */
+ private:
+  EllipsoidLibraryImplementation *_ellipsoidLibraryImplementation;
+};
+}  // namespace CCS
+}  // namespace MSP
 
-      void getEllipsoidCount ( long *count );
-
-
-      /*
-       *  The function getEllipsoidIndex returns the index of the ellipsoid in
-       *  the ellipsoid table with the specified code.  If ellipsoid code is not found,
-       *  an exception is thrown.
-       *
-       *    code     : 2-letter ellipsoid code.                      (input)
-       *    index    : Index of the ellipsoid in the ellipsoid table with the
-       *                  specified code                             (output)
-       *
-       */
-
-      void getEllipsoidIndex( const char *code, long* index );
-
-
-      /*
-       *  The Function getEllipsoidInfo returns the 2-letter code and name of the
-       *  ellipsoid in the ellipsoid table with the specified index.  If index is
-       *  invalid, an exception is thrown.
-       *
-       *    index    : Index of a given ellipsoid in the ellipsoid table (input)
-       *    code     : 2-letter ellipsoid code.                          (output)
-       *    name    : Name of the ellipsoid referencd by index       (output)
-       *
-       */
-
-      void getEllipsoidInfo( const long index, char *code, char *name );
-
-
-      /*
-       *  The function getEllipsoidParameters returns the semi-major axis and flattening
-       *  for the ellipsoid with the specified index.  If index is invalid,
-       *  an exception is thrown.
-       *
-       *    index    : Index of a given ellipsoid in the ellipsoid table (input)
-       *    a        : Semi-major axis, in meters, of ellipsoid          (output)
-       *    f        : Flattening of ellipsoid.                          (output)
-       *
-       */
-
-      void getEllipsoidParameters( const long index, double *a, double *f );
-
-
-    private:
-
-      EllipsoidLibraryImplementation* _ellipsoidLibraryImplementation;
-      
-   };
-  }
-}
-	
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

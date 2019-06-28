@@ -17,7 +17,7 @@
  * ERROR HANDLING
  *
  *    This component checks parameters for valid values.  If an invalid value
- *    is found, the error code is combined with the current error code using 
+ *    is found, the error code is combined with the current error code using
  *    the bitwise or.  This combining allows multiple error codes to be
  *    returned. The possible error codes are:
  *
@@ -36,7 +36,8 @@
  *                                      (-180 to 360 degrees)
  *          ECK6_A_ERROR            : Semi-major axis less than or equal to zero
  *          ECK6_INV_F_ERROR        : Inverse flattening outside of valid range
- *									                    (250 to 350)
+ *									                    (250
+ *to 350)
  *
  * REUSE NOTES
  *
@@ -76,126 +77,111 @@
  *
  */
 
-
 #include "CoordinateSystem.h"
 
+namespace MSP {
+namespace CCS {
+class MapProjection3Parameters;
+class MapProjectionCoordinates;
+class GeodeticCoordinates;
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class MapProjection3Parameters;
-    class MapProjectionCoordinates;
-    class GeodeticCoordinates;
+/***************************************************************************/
+/*
+ *                              DEFINES
+ */
 
+class Eckert6 : public CoordinateSystem {
+ public:
+  /*
+   * The constructor receives the ellipsoid parameters and
+   * Eckert VI projection parameters as inputs, and sets the corresponding state
+   * variables.  If any errors occur, an exception is thrown with a description
+   * of the error.
+   *
+   *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters
+   * (input) ellipsoidFlattening     : Flattening of ellipsoid
+   * (input) centralMeridian         : Longitude in radians at the center of
+   * (input) the projection falseEasting            : A coordinate value in
+   * meters assigned to the central meridian of the projection.       (input)
+   *    falseNorthing           : A coordinate value in meters assigned to the
+   *                              origin latitude of the projection (input)
+   */
 
-    /***************************************************************************/
-    /*
-     *                              DEFINES
-     */
+  Eckert6(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
+          double centralMeridian, double falseEasting, double falseNorthing);
 
-    class Eckert6 : public CoordinateSystem
-    {
-    public:
+  Eckert6(const Eckert6& e);
 
-      /*
-       * The constructor receives the ellipsoid parameters and
-       * Eckert VI projection parameters as inputs, and sets the corresponding state
-       * variables.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
-       *    ellipsoidFlattening     : Flattening of ellipsoid						        (input)
-       *    centralMeridian         : Longitude in radians at the center of     (input)
-       *                              the projection
-       *    falseEasting            : A coordinate value in meters assigned to the
-       *                              central meridian of the projection.       (input)
-       *    falseNorthing           : A coordinate value in meters assigned to the
-       *                              origin latitude of the projection         (input)
-       */
+  ~Eckert6(void);
 
-	    Eckert6( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double falseEasting, double falseNorthing );
+  Eckert6& operator=(const Eckert6& e);
 
+  /*
+   * The function getParameters returns the current ellipsoid
+   * parameters and Eckert VI projection parameters.
+   *
+   *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters
+   * (output) ellipsoidFlattening     : Flattening of ellipsoid
+   * (output) centralMeridian         : Longitude in radians at the center of
+   * (output) the projection falseEasting            : A coordinate value in
+   * meters assigned to the central meridian of the projection.       (output)
+   *    falseNorthing           : A coordinate value in meters assigned to the
+   *                              origin latitude of the projection (output)
+   */
 
-      Eckert6( const Eckert6 &e );
+  MapProjection3Parameters* getParameters() const;
 
+  /*
+   * The function convertFromGeodetic converts geodetic (latitude and
+   * longitude) coordinates to Eckert VI projection (easting and northing)
+   * coordinates, according to the current ellipsoid and Eckert VI projection
+   * parameters.  If any errors occur, an exception is thrown with a description
+   * of the error.
+   *
+   *    longitude         : Longitude (lambda) in radians       (input)
+   *    latitude          : Latitude (phi) in radians           (input)
+   *    easting           : Easting (X) in meters               (output)
+   *    northing          : Northing (Y) in meters              (output)
+   */
 
-	    ~Eckert6( void );
+  MSP::CCS::MapProjectionCoordinates* convertFromGeodetic(
+      MSP::CCS::GeodeticCoordinates* geodeticCoordinates);
 
+  /*
+   * The function convertToGeodetic converts Eckert VI projection
+   * (easting and northing) coordinates to geodetic (latitude and longitude)
+   * coordinates, according to the current ellipsoid and Eckert VI projection
+   * coordinates.  If any errors occur, an exception is thrown with a
+   * description of the error.
+   *
+   *    easting           : Easting (X) in meters                  (input)
+   *    northing          : Northing (Y) in meters                 (input)
+   *    longitude         : Longitude (lambda) in radians          (output)
+   *    latitude          : Latitude (phi) in radians              (output)
+   */
 
-      Eckert6& operator=( const Eckert6 &e );
+  MSP::CCS::GeodeticCoordinates* convertToGeodetic(
+      MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates);
 
+ private:
+  /* Ellipsoid Parameters, default to WGS 84 */
+  double es2; /* Eccentricity (0.08181919084262188000) squared */
+  double es4; /* es2 * es2	*/
+  double es6; /* es4 * es2  */
+  double Ra_Over_Sqrt_Two_Plus_PI;     /* Ra(6371007.1810824)/Sqrt(2.0 + PI) */
+  double Inv_Ra_Over_Sqrt_Two_Plus_PI; /* Sqrt(2.0 + PI)/Ra(6371007.1810824) */
 
-      /*
-       * The function getParameters returns the current ellipsoid
-       * parameters and Eckert VI projection parameters.
-       *
-       *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (output)
-       *    ellipsoidFlattening     : Flattening of ellipsoid						        (output)
-       *    centralMeridian         : Longitude in radians at the center of     (output)
-       *                              the projection
-       *    falseEasting            : A coordinate value in meters assigned to the
-       *                              central meridian of the projection.       (output)
-       *    falseNorthing           : A coordinate value in meters assigned to the
-       *                              origin latitude of the projection         (output)
-       */
+  /* Eckert6 projection Parameters */
+  double Eck6_Origin_Long; /* Longitude of origin in radians    */
+  double Eck6_False_Easting;
+  double Eck6_False_Northing;
+  double Eck6_Delta_Northing;
+  double Eck6_Max_Easting;
+  double Eck6_Min_Easting;
+};
+}  // namespace CCS
+}  // namespace MSP
 
-      MapProjection3Parameters* getParameters() const;
-
-
-      /*
-       * The function convertFromGeodetic converts geodetic (latitude and
-       * longitude) coordinates to Eckert VI projection (easting and northing)
-       * coordinates, according to the current ellipsoid and Eckert VI projection
-       * parameters.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *    longitude         : Longitude (lambda) in radians       (input)
-       *    latitude          : Latitude (phi) in radians           (input)
-       *    easting           : Easting (X) in meters               (output)
-       *    northing          : Northing (Y) in meters              (output)
-       */
-
-      MSP::CCS::MapProjectionCoordinates* convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates );
-
-
-      /*
-       * The function convertToGeodetic converts Eckert VI projection
-       * (easting and northing) coordinates to geodetic (latitude and longitude)
-       * coordinates, according to the current ellipsoid and Eckert VI projection
-       * coordinates.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *    easting           : Easting (X) in meters                  (input)
-       *    northing          : Northing (Y) in meters                 (input)
-       *    longitude         : Longitude (lambda) in radians          (output)
-       *    latitude          : Latitude (phi) in radians              (output)
-       */
-
-      MSP::CCS::GeodeticCoordinates* convertToGeodetic( MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates );
-
-    private:
-    
-      /* Ellipsoid Parameters, default to WGS 84 */
-      double es2;                             /* Eccentricity (0.08181919084262188000) squared */
-      double es4;                             /* es2 * es2	*/
-      double es6;                             /* es4 * es2  */
-      double Ra_Over_Sqrt_Two_Plus_PI;        /* Ra(6371007.1810824)/Sqrt(2.0 + PI) */
-      double Inv_Ra_Over_Sqrt_Two_Plus_PI;    /* Sqrt(2.0 + PI)/Ra(6371007.1810824) */
-
-      /* Eckert6 projection Parameters */
-      double Eck6_Origin_Long;                /* Longitude of origin in radians    */
-      double Eck6_False_Easting;
-      double Eck6_False_Northing;
-      double Eck6_Delta_Northing;
-      double Eck6_Max_Easting;
-      double Eck6_Min_Easting;
-
-    };
-  }
-}
-	
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

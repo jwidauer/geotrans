@@ -55,9 +55,8 @@
  *
  *    Further information on Ellipsoid can be found in the Reuse Manual.
  *
- *    Ellipsoid originated from :  U.S. Army Topographic Engineering Center (USATEC)
- *                                 Geospatial Information Division (GID)
- *                                 7701 Telegraph Road
+ *    Ellipsoid originated from :  U.S. Army Topographic Engineering Center
+ * (USATEC) Geospatial Information Division (GID) 7701 Telegraph Road
  *                                 Alexandria, VA  22310-3864
  *
  * LICENSES
@@ -88,7 +87,6 @@
  *
  */
 
-
 /***************************************************************************/
 /*
  *                               INCLUDES
@@ -111,151 +109,133 @@
  *    ErrorMessages.h  - Contains exception messages
  */
 
-
 using namespace MSP::CCS;
 
-
 /************************************************************************/
-/*                              FUNCTIONS     
+/*                              FUNCTIONS
  *
  */
 
-EllipsoidLibrary::EllipsoidLibrary( EllipsoidLibraryImplementation* __ellipsoidLibraryImplementation )
-{
-/*
- * The constructor creates an empty list to store the ellipsoid data from ellips.dat
- * which is used to build the ellipsoid table.  
- */
+EllipsoidLibrary::EllipsoidLibrary(
+    EllipsoidLibraryImplementation *__ellipsoidLibraryImplementation) {
+  /*
+   * The constructor creates an empty list to store the ellipsoid data from
+   * ellips.dat which is used to build the ellipsoid table.
+   */
 
   _ellipsoidLibraryImplementation = __ellipsoidLibraryImplementation;
 }
 
-
-EllipsoidLibrary::EllipsoidLibrary( const EllipsoidLibrary &el )
-{
+EllipsoidLibrary::EllipsoidLibrary(const EllipsoidLibrary &el) {
   _ellipsoidLibraryImplementation = el._ellipsoidLibraryImplementation;
 }
 
+EllipsoidLibrary::~EllipsoidLibrary() { _ellipsoidLibraryImplementation = 0; }
 
-EllipsoidLibrary::~EllipsoidLibrary()
-{
-  _ellipsoidLibraryImplementation = 0;
-}
-
-
-EllipsoidLibrary& EllipsoidLibrary::operator=( const EllipsoidLibrary &el )
-{
-  if ( &el == this )
-	  return *this;
+EllipsoidLibrary &EllipsoidLibrary::operator=(const EllipsoidLibrary &el) {
+  if (&el == this) return *this;
 
   _ellipsoidLibraryImplementation = el._ellipsoidLibraryImplementation;
 
   return *this;
 }
 
+void EllipsoidLibrary::defineEllipsoid(const char *code, const char *name,
+                                       double semiMajorAxis,
+                                       double flattening) {
+  /*
+   * The function defineEllipsoid creates a new ellipsoid with the specified
+   * Code, name, and axes.  If the ellipsoid table has not been initialized,
+   * the specified code is already in use, or a new version of the ellips.dat
+   * file cannot be created, an exception is thrown.
+   * Note that the indexes of all ellipsoids in the ellipsoid
+   * table may be changed by this function.
+   *
+   *   code           : 2-letter ellipsoid code.                      (input)
+   *   name           : Name of the new ellipsoid                     (input)
+   *   semiMajorAxis  : Semi-major axis, in meters, of new ellipsoid  (input)
+   *   flattening     : Flattening of new ellipsoid.                  (input)
+   *
+   */
 
-void EllipsoidLibrary::defineEllipsoid( const char* code, const char* name, double semiMajorAxis, double flattening )
-{ 
-/*
- * The function defineEllipsoid creates a new ellipsoid with the specified
- * Code, name, and axes.  If the ellipsoid table has not been initialized,
- * the specified code is already in use, or a new version of the ellips.dat
- * file cannot be created, an exception is thrown.
- * Note that the indexes of all ellipsoids in the ellipsoid
- * table may be changed by this function.
- *
- *   code           : 2-letter ellipsoid code.                      (input)
- *   name           : Name of the new ellipsoid                     (input)
- *   semiMajorAxis  : Semi-major axis, in meters, of new ellipsoid  (input)
- *   flattening     : Flattening of new ellipsoid.                  (input)
- *
- */
-
-  _ellipsoidLibraryImplementation->defineEllipsoid( code, name, semiMajorAxis, flattening );
-} 
-
-
-void EllipsoidLibrary::removeEllipsoid( const char* code )
-{
-/*
- * The function removeEllipsoid deletes a user defined ellipsoid with
- * the specified Code.  If the ellipsoid table has not been created,
- * the specified code is in use by a user defined datum, or a new version
- * of the ellips.dat file cannot be created, an exception is thrown.
- * Note that the indexes of all
- * ellipsoids in the ellipsoid table may be changed by this function.
- *
- *   code     : 2-letter ellipsoid code.                      (input)
- *
- */
-
-  _ellipsoidLibraryImplementation->removeEllipsoid( code );
+  _ellipsoidLibraryImplementation->defineEllipsoid(code, name, semiMajorAxis,
+                                                   flattening);
 }
 
+void EllipsoidLibrary::removeEllipsoid(const char *code) {
+  /*
+   * The function removeEllipsoid deletes a user defined ellipsoid with
+   * the specified Code.  If the ellipsoid table has not been created,
+   * the specified code is in use by a user defined datum, or a new version
+   * of the ellips.dat file cannot be created, an exception is thrown.
+   * Note that the indexes of all
+   * ellipsoids in the ellipsoid table may be changed by this function.
+   *
+   *   code     : 2-letter ellipsoid code.                      (input)
+   *
+   */
 
-void EllipsoidLibrary::getEllipsoidCount( long *count )
-{ 
-/*
- * The function getEllipsoidCount returns the number of ellipsoids in the
- * ellipsoid table.  
- *
- *   count    : The number of ellipsoids in the ellipsoid table. (output)
- *
- */
+  _ellipsoidLibraryImplementation->removeEllipsoid(code);
+}
 
-  _ellipsoidLibraryImplementation->ellipsoidCount( count );
-} 
+void EllipsoidLibrary::getEllipsoidCount(long *count) {
+  /*
+   * The function getEllipsoidCount returns the number of ellipsoids in the
+   * ellipsoid table.
+   *
+   *   count    : The number of ellipsoids in the ellipsoid table. (output)
+   *
+   */
 
+  _ellipsoidLibraryImplementation->ellipsoidCount(count);
+}
 
-void EllipsoidLibrary::getEllipsoidIndex( const char *code, long* index )
-{ 
-/*
- *  The function getEllipsoidIndex returns the index of the ellipsoid in
- *  the ellipsoid table with the specified code.  If ellipsoid code is not found,
- *  an exception is thrown.
- *
- *    code     : 2-letter ellipsoid code.                      (input)
- *    index    : Index of the ellipsoid in the ellipsoid table with the
- *                  specified code                             (output)
- *
- */
+void EllipsoidLibrary::getEllipsoidIndex(const char *code, long *index) {
+  /*
+   *  The function getEllipsoidIndex returns the index of the ellipsoid in
+   *  the ellipsoid table with the specified code.  If ellipsoid code is not
+   * found, an exception is thrown.
+   *
+   *    code     : 2-letter ellipsoid code.                      (input)
+   *    index    : Index of the ellipsoid in the ellipsoid table with the
+   *                  specified code                             (output)
+   *
+   */
 
-  _ellipsoidLibraryImplementation->ellipsoidIndex( code, index );
-} 
+  _ellipsoidLibraryImplementation->ellipsoidIndex(code, index);
+}
 
+void EllipsoidLibrary::getEllipsoidInfo(const long index, char *code,
+                                        char *name) {
+  /*
+   *  The Function getEllipsoidInfo returns the 2-letter code and name of the
+   *  ellipsoid in the ellipsoid table with the specified index.  If index is
+   *  invalid, an exception is thrown.
+   *
+   *    index    : Index of a given ellipsoid in the ellipsoid table (input)
+   *    code     : 2-letter ellipsoid code.                          (output)
+   *    name    : Name of the ellipsoid referencd by index           (output)
+   *
+   */
 
-void EllipsoidLibrary::getEllipsoidInfo( const long index, char *code, char *name  )
-{ 
-/*
- *  The Function getEllipsoidInfo returns the 2-letter code and name of the
- *  ellipsoid in the ellipsoid table with the specified index.  If index is
- *  invalid, an exception is thrown.
- *
- *    index    : Index of a given ellipsoid in the ellipsoid table (input)
- *    code     : 2-letter ellipsoid code.                          (output)
- *    name    : Name of the ellipsoid referencd by index           (output)
- *
- */
+  _ellipsoidLibraryImplementation->ellipsoidCode(index, code);
+  _ellipsoidLibraryImplementation->ellipsoidName(index, name);
+}
 
-  _ellipsoidLibraryImplementation->ellipsoidCode( index, code  );
-  _ellipsoidLibraryImplementation->ellipsoidName( index, name  );
-} 
+void EllipsoidLibrary::getEllipsoidParameters(const long index, double *a,
+                                              double *f) {
+  /*
+   *  The function getEllipsoidParameters returns the semi-major axis and
+   * flattening for the ellipsoid with the specified index.  If index is
+   * invalid, an exception is thrown.
+   *
+   *    index    : Index of a given ellipsoid in the ellipsoid table (input)
+   *    a        : Semi-major axis, in meters, of ellipsoid          (output)
+   *    f        : Flattening of ellipsoid.                          (output)
+   *
+   */
 
-
-void EllipsoidLibrary::getEllipsoidParameters( const long index, double *a, double *f )
-{ 
-/*
- *  The function getEllipsoidParameters returns the semi-major axis and flattening
- *  for the ellipsoid with the specified index.  If index is invalid,
- *  an exception is thrown.
- *
- *    index    : Index of a given ellipsoid in the ellipsoid table (input)
- *    a        : Semi-major axis, in meters, of ellipsoid          (output)
- *    f        : Flattening of ellipsoid.                          (output)
- *
- */
-
-  _ellipsoidLibraryImplementation->ellipsoidParameters( index, a, f  );
-} 
+  _ellipsoidLibraryImplementation->ellipsoidParameters(index, a, f);
+}
 
 // CLASSIFICATION: UNCLASSIFIED

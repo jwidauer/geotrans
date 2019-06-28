@@ -74,286 +74,275 @@
  *    3-1-07          Original Code (cloned from MGRS)
  */
 
-
 #include "CoordinateSystem.h"
 
+namespace MSP {
+namespace CCS {
+class UPS;
+class UTM;
+class EllipsoidParameters;
+class MGRSorUSNGCoordinates;
+class GeodeticCoordinates;
+class UPSCoordinates;
+class UTMCoordinates;
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class UPS;
-    class UTM;
-    class EllipsoidParameters;
-    class MGRSorUSNGCoordinates;
-    class GeodeticCoordinates;
-    class UPSCoordinates;
-    class UTMCoordinates;
+#define USNG_LETTERS 3
 
-    #define USNG_LETTERS 3
+/**********************************************************************/
+/*
+ *                        DEFINES
+ */
 
-    /**********************************************************************/
-    /*
-     *                        DEFINES
-     */
+class USNG : public CoordinateSystem {
+ public:
+  /*
+   * The constructor receives the ellipsoid parameters and sets
+   * the corresponding state variables. If any errors occur, an exception
+   * is thrown with a description of the error.
+   *
+   *   ellipsoidSemiMajorAxis     : Semi-major axis of ellipsoid in meters
+   * (input) ellipsoidFlattening        : Flattening of ellipsoid
+   * (input) ellipsoid_Code             : 2-letter code for ellipsoid (input)
+   */
 
-    class USNG : public CoordinateSystem
-    {
-    public:
+  USNG(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
+       char* ellipsoidCode);
 
-      /*
-       * The constructor receives the ellipsoid parameters and sets
-       * the corresponding state variables. If any errors occur, an exception 
-       * is thrown with a description of the error.
-       *
-       *   ellipsoidSemiMajorAxis     : Semi-major axis of ellipsoid in meters  (input)
-       *   ellipsoidFlattening        : Flattening of ellipsoid					        (input)
-       *   ellipsoid_Code             : 2-letter code for ellipsoid             (input)
-       */
+  USNG(const USNG& u);
 
-      USNG( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, char* ellipsoidCode );
+  ~USNG(void);
 
+  USNG& operator=(const USNG& u);
 
-      USNG( const USNG &u );
+  /*
+   * The function getParameters returns the current ellipsoid
+   * parameters.
+   *
+   *  ellipsoidSemiMajorAxis     : Semi-major axis of ellipsoid, in meters
+   * (output) ellipsoidFlattening        : Flattening of ellipsoid
+   * (output) ellipsoidCode              : 2-letter code for ellipsoid (output)
+   */
 
+  EllipsoidParameters* getParameters() const;
 
-	    ~USNG( void );
+  /*
+   * The function convertFromGeodetic converts Geodetic (latitude and
+   * longitude) coordinates to an USNG coordinate string, according to the
+   * current ellipsoid parameters.  If any errors occur, an exception is
+   * thrown with a description of the error.
+   *
+   *    latitude      : Latitude in radians              (input)
+   *    longitude     : Longitude in radians             (input)
+   *    precision     : Precision level of USNG string   (input)
+   *    USNGString    : USNG coordinate string           (output)
+   *
+   */
 
+  MSP::CCS::MGRSorUSNGCoordinates* convertFromGeodetic(
+      MSP::CCS::GeodeticCoordinates* geodeticCoordinates, long precision);
 
-      USNG& operator=( const USNG &u );
+  /*
+   * The function convertToGeodetic converts an USNG coordinate string
+   * to Geodetic (latitude and longitude) coordinates
+   * according to the current ellipsoid parameters.  If any errors occur,
+   * an exception is thrown with a description of the error.
+   *
+   *    USNG       : USNG coordinate string           (input)
+   *    latitude   : Latitude in radians              (output)
+   *    longitude  : Longitude in radians             (output)
+   *
+   */
 
+  MSP::CCS::GeodeticCoordinates* convertToGeodetic(
+      MSP::CCS::MGRSorUSNGCoordinates* mgrsCoordinates);
 
-      /*
-       * The function getParameters returns the current ellipsoid
-       * parameters.
-       *
-       *  ellipsoidSemiMajorAxis     : Semi-major axis of ellipsoid, in meters (output)
-       *  ellipsoidFlattening        : Flattening of ellipsoid					       (output)
-       *  ellipsoidCode              : 2-letter code for ellipsoid             (output)
-       */
+  /*
+   * The function convertFromUTM converts UTM (zone, easting, and
+   * northing) coordinates to an USNG coordinate string, according to the
+   * current ellipsoid parameters.  If any errors occur, an exception is
+   * thrown with a description of the error.
+   *
+   *    zone       : UTM zone                         (input)
+   *    hemisphere : North or South hemisphere        (input)
+   *    easting    : Easting (X) in meters            (input)
+   *    northing   : Northing (Y) in meters           (input)
+   *    precision  : Precision level of USNG string   (input)
+   *    USNGString : USNG coordinate string           (output)
+   */
 
-      EllipsoidParameters* getParameters() const;
+  MSP::CCS::MGRSorUSNGCoordinates* convertFromUTM(
+      UTMCoordinates* utmCoordinates, long precision);
 
+  /*
+   * The function convertToUTM converts an USNG coordinate string
+   * to UTM projection (zone, hemisphere, easting and northing) coordinates
+   * according to the current ellipsoid parameters.  If any errors occur, an
+   * exception is thrown with a description of the error.
+   *
+   *    USNGString : USNG coordinate string           (input)
+   *    zone       : UTM zone                         (output)
+   *    hemisphere : North or South hemisphere        (output)
+   *    easting    : Easting (X) in meters            (output)
+   *    northing   : Northing (Y) in meters           (output)
+   */
 
-      /*
-       * The function convertFromGeodetic converts Geodetic (latitude and
-       * longitude) coordinates to an USNG coordinate string, according to the 
-       * current ellipsoid parameters.  If any errors occur, an exception is 
-       * thrown with a description of the error.
-       *
-       *    latitude      : Latitude in radians              (input)
-       *    longitude     : Longitude in radians             (input)
-       *    precision     : Precision level of USNG string   (input)
-       *    USNGString    : USNG coordinate string           (output)
-       *  
-       */
+  MSP::CCS::UTMCoordinates* convertToUTM(
+      MSP::CCS::MGRSorUSNGCoordinates* mgrsorUSNGCoordinates);
 
-      MSP::CCS::MGRSorUSNGCoordinates* convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates, long precision );
+  /*
+   * The function convertFromUPS converts UPS (hemisphere, easting,
+   * and northing) coordinates to an USNG coordinate string according to
+   * the current ellipsoid parameters.  If any errors occur, an exception
+   * is thrown with a description of the error.
+   *
+   *    hemisphere    : Hemisphere either 'N' or 'S'     (input)
+   *    easting       : Easting/X in meters              (input)
+   *    northing      : Northing/Y in meters             (input)
+   *    precision     : Precision level of USNG string   (input)
+   *    USNGString    : USNG coordinate string           (output)
+   */
 
+  MSP::CCS::MGRSorUSNGCoordinates* convertFromUPS(
+      MSP::CCS::UPSCoordinates* upsCoordinates, long precision);
 
-      /*
-       * The function convertToGeodetic converts an USNG coordinate string
-       * to Geodetic (latitude and longitude) coordinates 
-       * according to the current ellipsoid parameters.  If any errors occur, 
-       * an exception is thrown with a description of the error.
-       *
-       *    USNG       : USNG coordinate string           (input)
-       *    latitude   : Latitude in radians              (output)
-       *    longitude  : Longitude in radians             (output)
-       *  
-       */
+  /*
+   * The function convertToUPS converts an USNG coordinate string
+   * to UPS (hemisphere, easting, and northing) coordinates, according
+   * to the current ellipsoid parameters. If any errors occur, an
+   * exception is thrown with a description of the error.
+   *
+   *    USNGString    : USNG coordinate string           (input)
+   *    hemisphere    : Hemisphere either 'N' or 'S'     (output)
+   *    easting       : Easting/X in meters              (output)
+   *    northing      : Northing/Y in meters             (output)
+   */
 
-      MSP::CCS::GeodeticCoordinates* convertToGeodetic( MSP::CCS::MGRSorUSNGCoordinates* mgrsCoordinates );
+  MSP::CCS::UPSCoordinates* convertToUPS(
+      MSP::CCS::MGRSorUSNGCoordinates* mgrsorUSNGCoordinates);
 
+ private:
+  UPS* ups;
+  UTM* utm;
 
-      /*
-       * The function convertFromUTM converts UTM (zone, easting, and
-       * northing) coordinates to an USNG coordinate string, according to the 
-       * current ellipsoid parameters.  If any errors occur, an exception is 
-       * thrown with a description of the error.
-       *
-       *    zone       : UTM zone                         (input)
-       *    hemisphere : North or South hemisphere        (input)
-       *    easting    : Easting (X) in meters            (input)
-       *    northing   : Northing (Y) in meters           (input)
-       *    precision  : Precision level of USNG string   (input)
-       *    USNGString : USNG coordinate string           (output)
-       */
+  char USNGEllipsoidCode[3];
 
-      MSP::CCS::MGRSorUSNGCoordinates* convertFromUTM( UTMCoordinates* utmCoordinates, long precision );
+  /*
+   * The function fromUTM calculates an USNG coordinate string
+   * based on the zone, latitude, easting and northing.
+   *
+   *    zone       : Zone number             (input)
+   *    latitude   : Latitude in radians     (input)
+   *    easting    : Easting                 (input)
+   *    northing   : Northing                (input)
+   *    precision  : Precision               (input)
+   *    USNGString : USNG coordinate string  (output)
+   */
 
+  MSP::CCS::MGRSorUSNGCoordinates* fromUTM(
+      MSP::CCS::UTMCoordinates* utmCoordinates, double longitude,
+      double latitude, long precision);
 
-      /*
-       * The function convertToUTM converts an USNG coordinate string
-       * to UTM projection (zone, hemisphere, easting and northing) coordinates 
-       * according to the current ellipsoid parameters.  If any errors occur, an 
-       * exception is thrown with a description of the error.
-       *
-       *    USNGString : USNG coordinate string           (input)
-       *    zone       : UTM zone                         (output)
-       *    hemisphere : North or South hemisphere        (output)
-       *    easting    : Easting (X) in meters            (output)
-       *    northing   : Northing (Y) in meters           (output)
-       */
+  /*
+   * The function toUTM converts an USNG coordinate string
+   * to UTM projection (zone, hemisphere, easting and northing) coordinates
+   * according to the current ellipsoid parameters.  If any errors occur,
+   * an exception is thrown with a description of the error.
+   *
+   *    USNGString : USNG coordinate string           (input)
+   *    zone       : UTM zone                         (output)
+   *    hemisphere : North or South hemisphere        (output)
+   *    easting    : Easting (X) in meters            (output)
+   *    northing   : Northing (Y) in meters           (output)
+   */
 
-      MSP::CCS::UTMCoordinates* convertToUTM( MSP::CCS::MGRSorUSNGCoordinates* mgrsorUSNGCoordinates );
+  UTMCoordinates* toUTM(long zone, long letters[USNG_LETTERS], double easting,
+                        double northing, long in_precision);
 
+  /*
+   * The function fromUPS converts UPS (hemisphere, easting,
+   * and northing) coordinates to an USNG coordinate string according to
+   * the current ellipsoid parameters.
+   *
+   *    hemisphere    : Hemisphere either 'N' or 'S'     (input)
+   *    easting       : Easting/X in meters              (input)
+   *    northing      : Northing/Y in meters             (input)
+   *    precision     : Precision level of USNG string   (input)
+   *    USNGString    : USNG coordinate string           (output)
+   */
 
-      /*
-       * The function convertFromUPS converts UPS (hemisphere, easting, 
-       * and northing) coordinates to an USNG coordinate string according to 
-       * the current ellipsoid parameters.  If any errors occur, an exception 
-       * is thrown with a description of the error.
-       *
-       *    hemisphere    : Hemisphere either 'N' or 'S'     (input)
-       *    easting       : Easting/X in meters              (input)
-       *    northing      : Northing/Y in meters             (input)
-       *    precision     : Precision level of USNG string   (input)
-       *    USNGString    : USNG coordinate string           (output)
-       */
+  MSP::CCS::MGRSorUSNGCoordinates* fromUPS(
+      MSP::CCS::UPSCoordinates* upsCoordinates, long precision);
 
-      MSP::CCS::MGRSorUSNGCoordinates* convertFromUPS( MSP::CCS::UPSCoordinates* upsCoordinates, long precision );
+  /*
+   * The function toUPS converts an USNG coordinate string
+   * to UPS (hemisphere, easting, and northing) coordinates, according
+   * to the current ellipsoid parameters. If any errors occur, an
+   * exception is thrown with a description of the error.
+   *
+   *    USNGString    : USNG coordinate string           (input)
+   *    hemisphere    : Hemisphere either 'N' or 'S'     (output)
+   *    easting       : Easting/X in meters              (output)
+   *    northing      : Northing/Y in meters             (output)
+   */
 
+  MSP::CCS::UPSCoordinates* toUPS(long letters[USNG_LETTERS], double easting,
+                                  double northing);
 
-      /*
-       * The function convertToUPS converts an USNG coordinate string
-       * to UPS (hemisphere, easting, and northing) coordinates, according 
-       * to the current ellipsoid parameters. If any errors occur, an 
-       * exception is thrown with a description of the error.
-       *
-       *    USNGString    : USNG coordinate string           (input)
-       *    hemisphere    : Hemisphere either 'N' or 'S'     (output)
-       *    easting       : Easting/X in meters              (output)
-       *    northing      : Northing/Y in meters             (output)
-       */
+  /*
+   * The function getGridValues sets the letter range used for
+   * the 2nd letter in the USNG coordinate string, based on the set
+   * number of the utm zone. It also sets the pattern offset using a
+   * value of A for the second letter of the grid square, based on
+   * the grid pattern and set number of the utm zone.
+   *
+   *    zone            : Zone number             (input)
+   *    ltr2_low_value  : 2nd letter low number   (output)
+   *    ltr2_high_value : 2nd letter high number  (output)
+   *    pattern_offset  : Pattern offset          (output)
+   */
 
-      MSP::CCS::UPSCoordinates* convertToUPS( MSP::CCS::MGRSorUSNGCoordinates* mgrsorUSNGCoordinates );
+  void getGridValues(long zone, long* ltr2_low_value, long* ltr2_high_value,
+                     double* pattern_offset);
 
-    private:
-    
-      UPS* ups;
-      UTM* utm;
+  /*
+   * The function getLatitudeBandMinNorthing receives a latitude band letter
+   * and uses the Latitude_Band_Table to determine the minimum northing and
+   * northing offset for that latitude band letter.
+   *
+   *   letter          : Latitude band letter             (input)
+   *   min_northing    : Minimum northing for that letter	(output)
+   *   northing_offset : Latitude band northing offset  	(output)
+   */
 
-      char USNGEllipsoidCode[3];
+  void getLatitudeBandMinNorthing(long letter, double* min_northing,
+                                  double* northing_offset);
 
+  /*
+   * The function getLatitudeRange receives a latitude band letter
+   * and uses the Latitude_Band_Table to determine the latitude band
+   * boundaries for that latitude band letter.
+   *
+   *   letter   : Latitude band letter                        (input)
+   *   north    : Northern latitude boundary for that letter	(output)
+   *   north    : Southern latitude boundary for that letter	(output)
+   */
 
-      /*
-       * The function fromUTM calculates an USNG coordinate string
-       * based on the zone, latitude, easting and northing.
-       *
-       *    zone       : Zone number             (input)
-       *    latitude   : Latitude in radians     (input)
-       *    easting    : Easting                 (input)
-       *    northing   : Northing                (input)
-       *    precision  : Precision               (input)
-       *    USNGString : USNG coordinate string  (output)
-       */
+  void getLatitudeRange(long letter, double* north, double* south);
 
-      MSP::CCS::MGRSorUSNGCoordinates* fromUTM( MSP::CCS::UTMCoordinates* utmCoordinates, double longitude, double latitude, long precision );
+  /*
+   * The function getLatitudeLetter receives a latitude value
+   * and uses the Latitude_Band_Table to determine the latitude band
+   * letter for that latitude.
+   *
+   *   latitude   : Latitude              (input)
+   *   letter     : Latitude band letter  (output)
+   */
 
+  void getLatitudeLetter(double latitude, int* letter);
+};
+}  // namespace CCS
+}  // namespace MSP
 
-      /*
-       * The function toUTM converts an USNG coordinate string
-       * to UTM projection (zone, hemisphere, easting and northing) coordinates
-       * according to the current ellipsoid parameters.  If any errors occur,
-       * an exception is thrown with a description of the error.
-       *
-       *    USNGString : USNG coordinate string           (input)
-       *    zone       : UTM zone                         (output)
-       *    hemisphere : North or South hemisphere        (output)
-       *    easting    : Easting (X) in meters            (output)
-       *    northing   : Northing (Y) in meters           (output)
-       */
-
-      UTMCoordinates* toUTM( long zone, long letters[USNG_LETTERS], double easting, double northing, long in_precision );
-
-
-      /*
-       * The function fromUPS converts UPS (hemisphere, easting, 
-       * and northing) coordinates to an USNG coordinate string according to 
-       * the current ellipsoid parameters.  
-       *
-       *    hemisphere    : Hemisphere either 'N' or 'S'     (input)
-       *    easting       : Easting/X in meters              (input)
-       *    northing      : Northing/Y in meters             (input)
-       *    precision     : Precision level of USNG string   (input)
-       *    USNGString    : USNG coordinate string           (output)
-       */
-
-      MSP::CCS::MGRSorUSNGCoordinates* fromUPS( MSP::CCS::UPSCoordinates* upsCoordinates, long precision );
-
-      /*
-       * The function toUPS converts an USNG coordinate string
-       * to UPS (hemisphere, easting, and northing) coordinates, according
-       * to the current ellipsoid parameters. If any errors occur, an
-       * exception is thrown with a description of the error.
-       *
-       *    USNGString    : USNG coordinate string           (input)
-       *    hemisphere    : Hemisphere either 'N' or 'S'     (output)
-       *    easting       : Easting/X in meters              (output)
-       *    northing      : Northing/Y in meters             (output)
-       */
-
-      MSP::CCS::UPSCoordinates* toUPS( long letters[USNG_LETTERS], double easting, double northing );
-
-  
-      /*
-       * The function getGridValues sets the letter range used for 
-       * the 2nd letter in the USNG coordinate string, based on the set 
-       * number of the utm zone. It also sets the pattern offset using a
-       * value of A for the second letter of the grid square, based on 
-       * the grid pattern and set number of the utm zone.
-       *
-       *    zone            : Zone number             (input)
-       *    ltr2_low_value  : 2nd letter low number   (output)
-       *    ltr2_high_value : 2nd letter high number  (output)
-       *    pattern_offset  : Pattern offset          (output)
-       */
-
-      void getGridValues( long zone, long* ltr2_low_value, long* ltr2_high_value, double* pattern_offset );
-
-
-      /*
-       * The function getLatitudeBandMinNorthing receives a latitude band letter
-       * and uses the Latitude_Band_Table to determine the minimum northing and northing offset
-       * for that latitude band letter.
-       *
-       *   letter          : Latitude band letter             (input)
-       *   min_northing    : Minimum northing for that letter	(output)
-       *   northing_offset : Latitude band northing offset  	(output)
-       */
-
-      void getLatitudeBandMinNorthing( long letter, double* min_northing, double* northing_offset );
-
-
-      /*
-       * The function getLatitudeRange receives a latitude band letter
-       * and uses the Latitude_Band_Table to determine the latitude band 
-       * boundaries for that latitude band letter.
-       *
-       *   letter   : Latitude band letter                        (input)
-       *   north    : Northern latitude boundary for that letter	(output)
-       *   north    : Southern latitude boundary for that letter	(output)
-       */
-
-      void getLatitudeRange( long letter, double* north, double* south );
-
-    
-      /*
-       * The function getLatitudeLetter receives a latitude value
-       * and uses the Latitude_Band_Table to determine the latitude band 
-       * letter for that latitude.
-       *
-       *   latitude   : Latitude              (input)
-       *   letter     : Latitude band letter  (output)
-       */
-
-      void getLatitudeLetter( double latitude, int* letter );
-    };
-  }
-}
-
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

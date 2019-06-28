@@ -3,60 +3,48 @@
 #ifndef CoordinateTuple_H
 #define CoordinateTuple_H
 
+#include "geotrans/dtcc/DtccApi.h"
 #include "geotrans/dtcc/Enumerations/CoordinateType.h"
 #include "geotrans/dtcc/Enumerations/Precision.h"
-#include "geotrans/dtcc/DtccApi.h"
 
+namespace MSP {
+namespace CCS {
+class MSP_DTCC_API CoordinateTuple {
+ public:
+  CoordinateTuple();
+  CoordinateTuple(MSP::CCS::CoordinateType::Enum __coordinateType);
+  CoordinateTuple(MSP::CCS::CoordinateType::Enum __coordinateType,
+                  const char* __warningMessage);
+  CoordinateTuple(const CoordinateTuple& ct);
 
-namespace MSP
-{
-   namespace CCS
-   {
-      class MSP_DTCC_API CoordinateTuple
-      {
-      public:
+  virtual ~CoordinateTuple();
 
-         CoordinateTuple();
-         CoordinateTuple( MSP::CCS::CoordinateType::Enum __coordinateType );
-         CoordinateTuple(
-            MSP::CCS::CoordinateType::Enum __coordinateType,
-            const char*                    __warningMessage );
-         CoordinateTuple( const CoordinateTuple& ct );
+  CoordinateTuple& operator=(const CoordinateTuple& ct);
 
-         virtual ~CoordinateTuple();
+  void set(MSP::CCS::CoordinateType::Enum __coordinateType,
+           const char* __warningMessage, const char* __errorMessage);
 
-         CoordinateTuple& operator=( const CoordinateTuple &ct );
+  void setCoordinateType(MSP::CCS::CoordinateType::Enum __coordinateType);
+  CoordinateType::Enum coordinateType() const;
 
-         void set(
-            MSP::CCS::CoordinateType::Enum __coordinateType,
-            const char*                    __warningMessage,
-            const char*                    __errorMessage);
+  void setErrorMessage(const char* __errorMessage);
+  const char* errorMessage() const;
 
-         void setCoordinateType(
-            MSP::CCS::CoordinateType::Enum __coordinateType );
-         CoordinateType::Enum coordinateType() const;
+  void setWarningMessage(const char* __warningMessage);
+  const char* warningMessage() const;
 
-         void setErrorMessage( const char* __errorMessage );
-         const char* errorMessage() const;
+  virtual Precision::Enum precision() const {
+    return Precision::tenThousandthOfSecond;
+  }
 
-         void setWarningMessage( const char* __warningMessage );
-         const char* warningMessage() const;
+ protected:
+  CoordinateType::Enum _coordinateType;
+  char _errorMessage[500];
+  char _warningMessage[500];
+};
+}  // namespace CCS
+}  // namespace MSP
 
-         virtual Precision::Enum precision() const
-         {
-            return Precision::tenThousandthOfSecond;
-         }
-
-      protected:
-
-         CoordinateType::Enum _coordinateType;
-         char                 _errorMessage[500];
-         char                 _warningMessage[500];
-      };
-   }
-}
-	
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

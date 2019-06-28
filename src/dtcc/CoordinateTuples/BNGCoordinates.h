@@ -4,46 +4,40 @@
 #define BNGCoordinates_H
 
 #include "geotrans/dtcc/CoordinateTuples/CoordinateTuple.h"
-#include "geotrans/dtcc/Enumerations/Precision.h"
 #include "geotrans/dtcc/DtccApi.h"
+#include "geotrans/dtcc/Enumerations/Precision.h"
 
+namespace MSP {
+namespace CCS {
+class MSP_DTCC_API BNGCoordinates : public CoordinateTuple {
+ public:
+  BNGCoordinates();
+  BNGCoordinates(CoordinateType::Enum _coordinateType);
+  BNGCoordinates(CoordinateType::Enum _coordinateType, const char* __BNGString);
+  BNGCoordinates(CoordinateType::Enum _coordinateType, const char* __BNGString,
+                 Precision::Enum __precision);
+  BNGCoordinates(CoordinateType::Enum _coordinateType,
+                 const char* __warningMessage, const char* __BNGString,
+                 Precision::Enum __precision);
+  BNGCoordinates(const BNGCoordinates& b);
 
+  ~BNGCoordinates();
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class MSP_DTCC_API BNGCoordinates : public CoordinateTuple
-    {
-    public:
+  BNGCoordinates& operator=(const BNGCoordinates& b);
 
-      BNGCoordinates();
-      BNGCoordinates( CoordinateType::Enum _coordinateType );
-      BNGCoordinates( CoordinateType::Enum _coordinateType, const char* __BNGString );
-      BNGCoordinates( CoordinateType::Enum _coordinateType, const char* __BNGString, Precision::Enum __precision );
-      BNGCoordinates( CoordinateType::Enum _coordinateType, const char* __warningMessage, const char* __BNGString, Precision::Enum __precision );
-      BNGCoordinates( const BNGCoordinates &b );
+  void set(char __BNGString[21]);
 
-      ~BNGCoordinates();
+  char* BNGString();
 
-      BNGCoordinates& operator=( const BNGCoordinates &b );
+  Precision::Enum precision() const;
 
-      void set( char __BNGString[21] );
+ private:
+  char _BNGString[21];
+  Precision::Enum _precision;
+};
+}  // namespace CCS
+}  // namespace MSP
 
-      char* BNGString();
-
-      Precision::Enum precision() const;
-
-    private:
-
-      char _BNGString[21];
-      Precision::Enum _precision;
-
-    };
-  }
-}
-	
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

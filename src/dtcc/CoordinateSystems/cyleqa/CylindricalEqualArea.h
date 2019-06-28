@@ -42,12 +42,13 @@
  *
  * REUSE NOTES
  *
- *    CYLINDRICAL EQUAL AREA is intended for reuse by any application that performs a
- *    Cylindrical Equal Area projection or its inverse.
+ *    CYLINDRICAL EQUAL AREA is intended for reuse by any application that
+ * performs a Cylindrical Equal Area projection or its inverse.
  *
  * REFERENCES
  *
- *    Further information on CYLINDRICAL EQUAL AREA can be found in the Reuse Manual.
+ *    Further information on CYLINDRICAL EQUAL AREA can be found in the Reuse
+ * Manual.
  *
  *    CYLINDRICAL EQUAL AREA originated from :
  *                                U.S. Army Topographic Engineering Center
@@ -65,7 +66,8 @@
  *
  * ENVIRONMENT
  *
- *    CYLINDRICAL EQUAL AREA was tested and certified in the following environments:
+ *    CYLINDRICAL EQUAL AREA was tested and certified in the following
+ * environments:
  *
  *    1. Solaris 2.5 with GCC 2.8.1
  *    2. MS Windows 95 with MS Visual C++ 6
@@ -79,141 +81,129 @@
  *
  */
 
-
 #include "CoordinateSystem.h"
 
+namespace MSP {
+namespace CCS {
+class MapProjection4Parameters;
+class MapProjectionCoordinates;
+class GeodeticCoordinates;
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class MapProjection4Parameters;
-    class MapProjectionCoordinates;
-    class GeodeticCoordinates;
+/***************************************************************************/
+/*
+ *                              DEFINES
+ */
 
+class CylindricalEqualArea : public CoordinateSystem {
+ public:
+  /*
+   * The constructor receives the ellipsoid parameters and
+   * Cylindrical Equal Area projcetion parameters as inputs, and sets the
+   * corresponding state variables.  If any errors occur, an exception is thrown
+   * with a description of the error.
+   *
+   *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters
+   * (input) ellipsoidFlattening     : Flattening of ellipsoid (input)
+   *    centralMeridian         : Longitude in radians at the center of (input)
+   *                              the projection
+   *    originLatitude          : Latitude in radians at which the (input) point
+   * scale factor is 1.0 falseEasting            : A coordinate value in meters
+   * assigned to the central meridian of the projection.       (input)
+   *    falseNorthing           : A coordinate value in meters assigned to the
+   *                              origin latitude of the projection (input)
+   */
 
-    /***************************************************************************/
-    /*
-     *                              DEFINES
-     */
+  CylindricalEqualArea(double ellipsoidSemiMajorAxis,
+                       double ellipsoidFlattening, double centralMeridian,
+                       double originLatitude, double falseEasting,
+                       double falseNorthing);
 
-    class CylindricalEqualArea : public CoordinateSystem
-    {
-    public:
+  CylindricalEqualArea(const CylindricalEqualArea& cea);
 
-      /*
-       * The constructor receives the ellipsoid parameters and
-       * Cylindrical Equal Area projcetion parameters as inputs, and sets the corresponding
-       * state variables.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
-       *    ellipsoidFlattening     : Flattening of ellipsoid                   (input)
-       *    centralMeridian         : Longitude in radians at the center of     (input)
-       *                              the projection
-       *    originLatitude          : Latitude in radians at which the          (input)
-       *                              point scale factor is 1.0
-       *    falseEasting            : A coordinate value in meters assigned to the
-       *                              central meridian of the projection.       (input)
-       *    falseNorthing           : A coordinate value in meters assigned to the
-       *                              origin latitude of the projection         (input)
-       */
+  ~CylindricalEqualArea(void);
 
-	    CylindricalEqualArea( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double originLatitude, double falseEasting, double falseNorthing );
+  CylindricalEqualArea& operator=(const CylindricalEqualArea& cea);
 
+  /*
+   * The function getParameters returns the current ellipsoid
+   * parameters, and Cylindrical Equal Area projection parameters.
+   *
+   *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters
+   * (output) ellipsoidFlattening     : Flattening of ellipsoid (output)
+   *    centralMeridian         : Longitude in radians at the center of (output)
+   *                              the projection
+   *    originLatitude          : Latitude in radians at which the (output)
+   *                              point scale factor is 1.0
+   *    falseEasting            : A coordinate value in meters assigned to the
+   *                              central meridian of the projection. (output)
+   *    falseNorthing           : A coordinate value in meters assigned to the
+   *                              origin latitude of the projection (output)
+   */
 
-      CylindricalEqualArea( const CylindricalEqualArea &cea );
+  MapProjection4Parameters* getParameters() const;
 
+  /*
+   * The function convertFromGeodetic converts geodetic (latitude and
+   * longitude) coordinates to Cylindrical Equal Area projection (easting and
+   * northing) coordinates, according to the current ellipsoid and Cylindrical
+   * Equal Area projection parameters.  If any errors occur, an exception is
+   * thrown with a description of the error.
+   *
+   *    longitude         : Longitude (lambda) in radians       (input)
+   *    latitude          : Latitude (phi) in radians           (input)
+   *    easting           : Easting (X) in meters               (output)
+   *    northing          : Northing (Y) in meters              (output)
+   */
 
-	    ~CylindricalEqualArea( void );
+  MSP::CCS::MapProjectionCoordinates* convertFromGeodetic(
+      MSP::CCS::GeodeticCoordinates* geodeticCoordinates);
 
+  /*
+   * The function convertToGeodetic converts
+   * Cylindrical Equal Area projection (easting and northing) coordinates
+   * to geodetic (latitude and longitude) coordinates, according to the
+   * current ellipsoid and Cylindrical Equal Area projection
+   * coordinates.  If any errors occur, an exception is thrown with a
+   * description of the error.
+   *
+   *    easting           : Easting (X) in meters                  (input)
+   *    northing          : Northing (Y) in meters                 (input)
+   *    longitude         : Longitude (lambda) in radians          (output)
+   *    latitude          : Latitude (phi) in radians              (output)
+   */
 
-      CylindricalEqualArea& operator=( const CylindricalEqualArea &cea );
+  MSP::CCS::GeodeticCoordinates* convertToGeodetic(
+      MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates);
 
+ private:
+  /* Ellipsoid Parameters, default to WGS 84 */
+  double es2; /* Eccentricity (0.08181919084262188000) squared  */
+  double es;  /* Sqrt(es2) */
+  double es4; /* es2 * es2 */
+  double es6; /* es4 * es2 */
+  double k0;
+  double Cyeq_a_k0; /* Cyeq_a * k0 */
+  double two_k0;    /* 2.0 * k0 */
+  double c0;        /* es2 / 3.0 + 31.0 * es4 / 180.0 + 517.0 * es6 / 5040.0 */
+  double c1;        /* 23.0 es4 / 360.0 + 251.0 * es6 / 3780.0 */
+  double c2;        /* 761.0 * es6 / 45360.0 */
 
-      /*
-       * The function getParameters returns the current ellipsoid
-       * parameters, and Cylindrical Equal Area projection parameters.
-       *
-       *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (output)
-       *    ellipsoidFlattening     : Flattening of ellipsoid                   (output)
-       *    centralMeridian         : Longitude in radians at the center of     (output)
-       *                              the projection
-       *    originLatitude          : Latitude in radians at which the          (output)
-       *                              point scale factor is 1.0
-       *    falseEasting            : A coordinate value in meters assigned to the
-       *                              central meridian of the projection.       (output)
-       *    falseNorthing           : A coordinate value in meters assigned to the
-       *                              origin latitude of the projection         (output)
-       */
+  /* Cylindrical Equal Area projection Parameters */
+  double Cyeq_Origin_Lat;     /* Latitude of origin in radians     */
+  double Cyeq_Origin_Long;    /* Longitude of origin in radians    */
+  double Cyeq_False_Northing; /* False northing in meters          */
+  double Cyeq_False_Easting;  /* False easting in meters           */
 
-      MapProjection4Parameters* getParameters() const;
+  /* Maximum variance for easting and northing values for WGS 84.*/
+  double Cyeq_Max_Easting;
+  double Cyeq_Min_Easting;
+  double Cyeq_Delta_Northing;
 
+  double cyleqarQ(double slat, double x);
+};
+}  // namespace CCS
+}  // namespace MSP
 
-      /*
-       * The function convertFromGeodetic converts geodetic (latitude and
-       * longitude) coordinates to Cylindrical Equal Area projection (easting and northing)
-       * coordinates, according to the current ellipsoid and Cylindrical Equal Area projection
-       * parameters.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *    longitude         : Longitude (lambda) in radians       (input)
-       *    latitude          : Latitude (phi) in radians           (input)
-       *    easting           : Easting (X) in meters               (output)
-       *    northing          : Northing (Y) in meters              (output)
-       */
-
-      MSP::CCS::MapProjectionCoordinates* convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates );
-
-
-      /*
-       * The function convertToGeodetic converts
-       * Cylindrical Equal Area projection (easting and northing) coordinates
-       * to geodetic (latitude and longitude) coordinates, according to the
-       * current ellipsoid and Cylindrical Equal Area projection
-       * coordinates.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *    easting           : Easting (X) in meters                  (input)
-       *    northing          : Northing (Y) in meters                 (input)
-       *    longitude         : Longitude (lambda) in radians          (output)
-       *    latitude          : Latitude (phi) in radians              (output)
-       */
-
-      MSP::CCS::GeodeticCoordinates* convertToGeodetic( MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates );
-
-    private:
-    
-      /* Ellipsoid Parameters, default to WGS 84 */
-      double es2;             /* Eccentricity (0.08181919084262188000) squared  */
-      double es;              /* Sqrt(es2) */
-      double es4;             /* es2 * es2 */
-      double es6;             /* es4 * es2 */
-      double k0;
-      double Cyeq_a_k0;       /* Cyeq_a * k0 */
-      double two_k0;          /* 2.0 * k0 */
-      double c0;              /* es2 / 3.0 + 31.0 * es4 / 180.0 + 517.0 * es6 / 5040.0 */
-      double c1;              /* 23.0 es4 / 360.0 + 251.0 * es6 / 3780.0 */
-      double c2;              /* 761.0 * es6 / 45360.0 */
-
-      /* Cylindrical Equal Area projection Parameters */
-      double Cyeq_Origin_Lat;                  /* Latitude of origin in radians     */
-      double Cyeq_Origin_Long;                 /* Longitude of origin in radians    */
-      double Cyeq_False_Northing;              /* False northing in meters          */
-      double Cyeq_False_Easting;               /* False easting in meters           */
-
-      /* Maximum variance for easting and northing values for WGS 84.*/
-      double Cyeq_Max_Easting;
-      double Cyeq_Min_Easting;
-      double Cyeq_Delta_Northing;
-
-
-      double cyleqarQ( double slat, double x );
-    };
-  }
-}
-
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

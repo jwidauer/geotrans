@@ -6,43 +6,37 @@
 #include "geotrans/dtcc/CoordinateTuples/CoordinateTuple.h"
 #include "geotrans/dtcc/DtccApi.h"
 
+namespace MSP {
+namespace CCS {
+class MSP_DTCC_API UPSCoordinates : public CoordinateTuple {
+ public:
+  UPSCoordinates();
+  UPSCoordinates(CoordinateType::Enum _coordinateType);
+  UPSCoordinates(CoordinateType::Enum _coordinateType, char __hemisphere,
+                 double __easting, double __northing);
+  UPSCoordinates(CoordinateType::Enum _coordinateType,
+                 const char* __warningMessage, char __hemisphere,
+                 double __easting, double __northing);
+  UPSCoordinates(const UPSCoordinates& c);
 
+  ~UPSCoordinates();
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class MSP_DTCC_API UPSCoordinates : public CoordinateTuple
-    {
-    public:
+  UPSCoordinates& operator=(const UPSCoordinates& c);
 
-      UPSCoordinates();
-      UPSCoordinates( CoordinateType::Enum _coordinateType );
-      UPSCoordinates( CoordinateType::Enum _coordinateType, char __hemisphere, double __easting, double __northing );
-      UPSCoordinates( CoordinateType::Enum _coordinateType, const char* __warningMessage, char __hemisphere, double __easting, double __northing );
-      UPSCoordinates( const UPSCoordinates& c );
+  void set(char __hemisphere, double __easting, double __northing);
 
-      ~UPSCoordinates();
+  char hemisphere() const;
+  double easting() const;
+  double northing() const;
 
-      UPSCoordinates& operator=( const UPSCoordinates &c );
+ private:
+  char _hemisphere;
+  double _easting;
+  double _northing;
+};
+}  // namespace CCS
+}  // namespace MSP
 
-      void set( char __hemisphere, double __easting, double __northing );
-
-      char hemisphere() const;
-      double easting() const;
-      double northing() const;
-
-    private:
-
-      char _hemisphere;
-      double _easting;
-      double _northing;
-
-    };
-  }
-}
-	
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

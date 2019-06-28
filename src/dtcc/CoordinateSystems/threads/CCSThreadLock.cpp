@@ -5,16 +5,10 @@
 
 using namespace MSP;
 
-CCSThreadLock::CCSThreadLock(const CCSThreadMutex *theMutex)
-    : mutex(theMutex)
-{
+CCSThreadLock::CCSThreadLock(const CCSThreadMutex *theMutex) : mutex(theMutex) {
   mutex->lock();
 }
 
-CCSThreadLock::~CCSThreadLock()
-{
-  mutex->unlock();
-}
-
+CCSThreadLock::~CCSThreadLock() { mutex->unlock(); }
 
 // CLASSIFICATION: UNCLASSIFIED

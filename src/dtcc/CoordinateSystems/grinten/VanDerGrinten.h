@@ -51,10 +51,9 @@
  *
  *    Further information on VAN DER GRINTEN can be found in the Reuse Manual.
  *
- *    VAN DER GRINTEN originated from :  U.S. Army Topographic Engineering Center
- *                                Geospatial Information Division
- *                                7701 Telegraph Road
- *                                Alexandria, VA  22310-3864
+ *    VAN DER GRINTEN originated from :  U.S. Army Topographic Engineering
+ * Center Geospatial Information Division 7701 Telegraph Road Alexandria, VA
+ * 22310-3864
  *
  * LICENSES
  *
@@ -79,125 +78,112 @@
  *
  */
 
-
 #include "CoordinateSystem.h"
 
+namespace MSP {
+namespace CCS {
+class MapProjection3Parameters;
+class MapProjectionCoordinates;
+class GeodeticCoordinates;
 
-namespace MSP
-{
-  namespace CCS
-  {
-    class MapProjection3Parameters;
-    class MapProjectionCoordinates;
-    class GeodeticCoordinates;
+/***************************************************************************/
+/*
+ *                              DEFINES
+ */
 
+class VanDerGrinten : public CoordinateSystem {
+ public:
+  /*
+   * The constructor receives the ellipsoid parameters and
+   * projection parameters as inputs, and sets the corresponding state
+   * variables.  If any errors occur, an exception is thrown with a description
+   * of the error.
+   *
+   *    ellipsoidSemiMajorAxis   : Semi-major axis of ellipsoid, in meters
+   * (input) ellipsoidFlattening      : Flattening of ellipsoid (input)
+   *    centralMeridian          : Longitude in radians at the center of (input)
+   *                               the projection
+   *    falseEasting             : A coordinate value in meters assigned to the
+   *                               central meridian of the projection. (input)
+   *    falseNorthing            : A coordinate value in meters assigned to the
+   *                               origin latitude of the projection (input)
+   */
 
-    /***************************************************************************/
-    /*
-     *                              DEFINES
-     */
+  VanDerGrinten(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
+                double centralMeridian, double falseEasting,
+                double falseNorthing);
 
-    class VanDerGrinten : public CoordinateSystem
-    {
-    public:
+  VanDerGrinten(const VanDerGrinten& v);
 
-      /*
-       * The constructor receives the ellipsoid parameters and
-       * projection parameters as inputs, and sets the corresponding state
-       * variables.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *    ellipsoidSemiMajorAxis   : Semi-major axis of ellipsoid, in meters   (input)
-       *    ellipsoidFlattening      : Flattening of ellipsoid                   (input)
-       *    centralMeridian          : Longitude in radians at the center of     (input)
-       *                               the projection
-       *    falseEasting             : A coordinate value in meters assigned to the
-       *                               central meridian of the projection.       (input)
-       *    falseNorthing            : A coordinate value in meters assigned to the
-       *                               origin latitude of the projection         (input)
-       */
+  ~VanDerGrinten(void);
 
-	    VanDerGrinten( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double falseEasting, double falseNorthing );
+  VanDerGrinten& operator=(const VanDerGrinten& v);
 
+  /*
+   * The function getParameters returns the current ellipsoid
+   * parameters, and Van Der Grinten projection parameters.
+   *
+   *    ellipsoidSemiMajorAxis     : Semi-major axis of ellipsoid, in meters
+   * (output) ellipsoidFlattening        : Flattening of ellipsoid (output)
+   *    centralMeridian            : Longitude in radians at the center of
+   * (output) the projection falseEasting               : A coordinate value in
+   * meters assigned to the central meridian of the projection.       (output)
+   *    falseNorthing              : A coordinate value in meters assigned to
+   * the origin latitude of the projection         (output)
+   */
 
-      VanDerGrinten( const VanDerGrinten &v );
+  MapProjection3Parameters* getParameters() const;
 
+  /*
+   * The function convertFromGeodetic converts geodetic (latitude and
+   * longitude) coordinates to Van Der Grinten projection (easting and northing)
+   * coordinates, according to the current ellipsoid and Van Der Grinten
+   * projection parameters.  If any errors occur, an exception is thrown with a
+   * description of the error.
+   *
+   *    longitude         : Longitude (lambda) in radians       (input)
+   *    latitude          : Latitude (phi) in radians           (input)
+   *    easting           : Easting (X) in meters               (output)
+   *    northing          : Northing (Y) in meters              (output)
+   */
 
-	    ~VanDerGrinten( void );
+  MSP::CCS::MapProjectionCoordinates* convertFromGeodetic(
+      MSP::CCS::GeodeticCoordinates* geodeticCoordinates);
 
+  /*
+   * The function convertToGeodetic converts Grinten projection
+   * (easting and northing) coordinates to geodetic (latitude and longitude)
+   * coordinates, according to the current ellipsoid and Grinten projection
+   * coordinates.  If any errors occur, an exception is thrown with a
+   * description of the error.
+   *
+   *    easting           : Easting (X) in meters                  (input)
+   *    northing          : Northing (Y) in meters                 (input)
+   *    longitude         : Longitude (lambda) in radians          (output)
+   *    latitude          : Latitude (phi) in radians              (output)
+   */
 
-      VanDerGrinten& operator=( const VanDerGrinten &v );
+  MSP::CCS::GeodeticCoordinates* convertToGeodetic(
+      MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates);
 
+ private:
+  /* Ellipsoid Parameters, default to WGS 84 */
+  double es2; /* Eccentricity (0.08181919084262188000) squared         */
+  double es4; /* es2 * es2 */
+  double es6; /* es4 * es2 */
+  double Ra;  /* Spherical Radius */
+  double PI_Ra;
 
-      /*
-       * The function getParameters returns the current ellipsoid
-       * parameters, and Van Der Grinten projection parameters.
-       *
-       *    ellipsoidSemiMajorAxis     : Semi-major axis of ellipsoid, in meters   (output)
-       *    ellipsoidFlattening        : Flattening of ellipsoid                   (output)
-       *    centralMeridian            : Longitude in radians at the center of     (output)
-       *                                 the projection
-       *    falseEasting               : A coordinate value in meters assigned to the
-       *                                 central meridian of the projection.       (output)
-       *    falseNorthing              : A coordinate value in meters assigned to the
-       *                                 origin latitude of the projection         (output)
-       */
+  /* Van Der Grinten projection Parameters */
+  double Grin_Origin_Long; /* Longitude of origin in radians    */
+  double Grin_False_Easting;
+  double Grin_False_Northing;
 
-      MapProjection3Parameters* getParameters() const;
+  double floatEq(double x, double v, double epsilon);
+};
+}  // namespace CCS
+}  // namespace MSP
 
-
-      /*
-       * The function convertFromGeodetic converts geodetic (latitude and
-       * longitude) coordinates to Van Der Grinten projection (easting and northing)
-       * coordinates, according to the current ellipsoid and Van Der Grinten projection
-       * parameters.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *    longitude         : Longitude (lambda) in radians       (input)
-       *    latitude          : Latitude (phi) in radians           (input)
-       *    easting           : Easting (X) in meters               (output)
-       *    northing          : Northing (Y) in meters              (output)
-       */
-
-      MSP::CCS::MapProjectionCoordinates* convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates );
-
-
-      /*
-       * The function convertToGeodetic converts Grinten projection
-       * (easting and northing) coordinates to geodetic (latitude and longitude)
-       * coordinates, according to the current ellipsoid and Grinten projection
-       * coordinates.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *    easting           : Easting (X) in meters                  (input)
-       *    northing          : Northing (Y) in meters                 (input)
-       *    longitude         : Longitude (lambda) in radians          (output)
-       *    latitude          : Latitude (phi) in radians              (output)
-       */
-
-      MSP::CCS::GeodeticCoordinates* convertToGeodetic( MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates );
-
-    private:
-    
-      /* Ellipsoid Parameters, default to WGS 84 */
-      double es2;              /* Eccentricity (0.08181919084262188000) squared         */
-      double es4;              /* es2 * es2 */
-      double es6;              /* es4 * es2 */
-      double Ra;               /* Spherical Radius */
-      double PI_Ra;
-
-      /* Van Der Grinten projection Parameters */
-      double Grin_Origin_Long;                  /* Longitude of origin in radians    */
-      double Grin_False_Easting;
-      double Grin_False_Northing;
-
-
-      double floatEq( double x, double v, double epsilon );
-    };
-  }
-}
-
-#endif 
-
+#endif
 
 // CLASSIFICATION: UNCLASSIFIED

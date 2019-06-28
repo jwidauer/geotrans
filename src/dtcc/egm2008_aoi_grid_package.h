@@ -14,7 +14,7 @@
 //                                                                            //
 //      This interpolator does not load an Area of Interest (AOI)             //
 //      geoid height grid until a user first requests a geoid height.         //
-//      The interpolator then loads an AOI grid centered near the point of    // 
+//      The interpolator then loads an AOI grid centered near the point of    //
 //      interest, and it interpolates local geoid height from the AOI grid.   //
 //      This interpolator re-uses the AOI grid until a subsequent point of    //
 //      interest lies outside the AOI.  The interpolator then loads a         //
@@ -43,125 +43,110 @@
 // that interpolates EGM 2008 geoid heights from a
 // reformatted version of NGA's worldwide geoid height grids.
 
-#include "geotrans/dtcc/DtccApi.h"
 #include "egm2008_geoid_grid.h"
+#include "geotrans/dtcc/DtccApi.h"
 
-namespace MSP
-{
+namespace MSP {
 
-   class MSP_DTCC_API Egm2008AoiGrid : public Egm2008GeoidGrid {
-      
-      protected:
+class MSP_DTCC_API Egm2008AoiGrid : public Egm2008GeoidGrid {
+ protected:
+  // _maxAoiColIndex:    The AOI grid's maximum column index;
+  //                     this is referenced to the worldwide grid.
 
-      // _maxAoiColIndex:    The AOI grid's maximum column index;
-      //                     this is referenced to the worldwide grid.
+  int _maxAoiColIndex;
 
-      int                    _maxAoiColIndex;
+  // _minAoiColIndex:    The AOI grid's minimum column index;
+  //                     this is referenced to the worldwide grid.
 
-      // _minAoiColIndex:    The AOI grid's minimum column index;
-      //                     this is referenced to the worldwide grid.
+  int _minAoiColIndex;
 
-      int                    _minAoiColIndex;
+  // _maxAoiRowIndex:    The AOI grid's maximum row index;
+  //                     this is referenced to the worldwide grid.
 
-      // _maxAoiRowIndex:    The AOI grid's maximum row index;
-      //                     this is referenced to the worldwide grid.
+  int _maxAoiRowIndex;
 
-      int                    _maxAoiRowIndex;
+  // _minAoiRowIndex:    The AOI grid's minimum row index;
+  //                     this is referenced to the worldwide grid.
 
-      // _minAoiRowIndex:    The AOI grid's minimum row index;
-      //                     this is referenced to the worldwide grid.
+  int _minAoiRowIndex;
 
-      int                    _minAoiRowIndex;
+  // nAoiCols:           The number of columns in the AOI grid.
 
-      // nAoiCols:           The number of columns in the AOI grid.
+  int _nAoiCols;
 
-      int                    _nAoiCols;
+  // nAoiRows:           The number of rows in the AOI grid.
 
-      // nAoiRows:           The number of rows in the AOI grid.
+  int _nAoiRows;
 
-      int                    _nAoiRows;
+  // nomAoiCols:         Nominal number of columns in the AOI
+  //                     grid; actual number is latitude dependent.
 
-      // nomAoiCols:         Nominal number of columns in the AOI 
-      //                     grid; actual number is latitude dependent.
+  int _nomAoiCols;
 
-      int                    _nomAoiCols;
+  // nomAoiRows:         Nominal number of rows in the AOI grid.
 
-      // nomAoiRows:         Nominal number of rows in the AOI grid.
+  int _nomAoiRows;
 
-      int                    _nomAoiRows;
+  // heightGrid:         A pointer to a
+  //                     one-dimensional array containing a
+  //                     part of the reformatted geoid-height grid.
 
-      // heightGrid:         A pointer to a
-      //                     one-dimensional array containing a
-      //                     part of the reformatted geoid-height grid.
+  float* _heightGrid;
 
-      float*                 _heightGrid;
+ public:
+  // Basic functions .....
 
-      public:
+  Egm2008AoiGrid(void);
 
-      // Basic functions .....
+  Egm2008AoiGrid(const std::string& gridFname);  // new 5/30/2013
 
-      Egm2008AoiGrid( void );
+  Egm2008AoiGrid(const Egm2008AoiGrid& oldGrid);
 
-      Egm2008AoiGrid( const std::string  &gridFname );  // new 5/30/2013
- 
-      Egm2008AoiGrid( const Egm2008AoiGrid& oldGrid );
+  ~Egm2008AoiGrid(void);
 
-      ~Egm2008AoiGrid( void );
+  Egm2008AoiGrid& operator=(const Egm2008AoiGrid& oldGrid);
 
-      Egm2008AoiGrid&
-      operator = ( const Egm2008AoiGrid& oldGrid );
+  // User functions .....
 
-      // User functions .....
- 
-      // geoidHeight:        A function that interpolates
-      //                     local geoid height (meters) from
-      //                     a reformatted EGM 2008 geoid height grid;
-      //                     this function uses bi-cubic spline interpolation.
+  // geoidHeight:        A function that interpolates
+  //                     local geoid height (meters) from
+  //                     a reformatted EGM 2008 geoid height grid;
+  //                     this function uses bi-cubic spline interpolation.
 
-      virtual int
-      geoidHeight(
-         int     wSize,                     // input
-         double  latitude,                  // input
-         double  longitude,                 // input
-         double& gHeight );                 // output
+  virtual int geoidHeight(int wSize,         // input
+                          double latitude,   // input
+                          double longitude,  // input
+                          double& gHeight);  // output
 
-      protected:
- 
-      // geoidHeight:        A function that interpolates
-      //                     local geoid height (meters) from
-      //                     a reformatted EGM 2008 geoid height grid;
-      //                     this function uses bilinear interpolation.
+ protected:
+  // geoidHeight:        A function that interpolates
+  //                     local geoid height (meters) from
+  //                     a reformatted EGM 2008 geoid height grid;
+  //                     this function uses bilinear interpolation.
 
-      virtual int
-      geoidHeight(
-         double  latitude,                  // input
-         double  longitude,                 // input
-         double& gHeight );                 // output
+  virtual int geoidHeight(double latitude,   // input
+                          double longitude,  // input
+                          double& gHeight);  // output
 
-      // loadAoiParms:       A function that loads an AOI grid's
-      //                     parameters relative to an input worldwide grid.
+  // loadAoiParms:       A function that loads an AOI grid's
+  //                     parameters relative to an input worldwide grid.
 
-      int
-      loadAoiParms( 
-         int i0, int j0 );
+  int loadAoiParms(int i0, int j0);
 
-      // loadGrid:           A function that loads an AOI grid from
-      //                     a reformatted EGM 2008 worldwide geoid height grid.
+  // loadGrid:           A function that loads an AOI grid from
+  //                     a reformatted EGM 2008 worldwide geoid height grid.
 
-      int
-      loadGrid( void );
+  int loadGrid(void);
 
-      // loadGridMetadata:   A function that loads worldwide EGM 2008
-      //                     grid metadata from a reformatted worldwide grid file. 
+  // loadGridMetadata:   A function that loads worldwide EGM 2008
+  //                     grid metadata from a reformatted worldwide grid file.
 
-      int
-      loadGridMetadata( void );
+  int loadGridMetadata(void);
 
-   }; // End of Egm2008AoiGrid class declaration
+};  // End of Egm2008AoiGrid class declaration
 
-}  // End of namespace block
+}  // namespace MSP
 
 #endif
 
 // CLASSIFICATION: UNCLASSIFIED
-
