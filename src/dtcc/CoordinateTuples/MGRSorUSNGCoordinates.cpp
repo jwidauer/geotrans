@@ -2,7 +2,7 @@
 
 #include <string.h>
 #include "MGRSorUSNGCoordinates.h"
-#include "Precision.h"
+#include "geotrans/dtcc/Enumerations/Precision.h"
 
 
 using namespace MSP::CCS;

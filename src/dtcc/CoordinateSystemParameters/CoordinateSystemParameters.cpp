@@ -1,7 +1,6 @@
 // CLASSIFICATION: UNCLASSIFIED
 
 #include "CoordinateSystemParameters.h"
-#include "CoordinateType.h"
 
 
 using namespace MSP::CCS;

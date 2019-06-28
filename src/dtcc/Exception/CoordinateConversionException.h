@@ -13,7 +13,7 @@
  */
 
 #include <string.h>
-#include "DtccApi.h"
+#include "geotrans/dtcc/DtccApi.h"
 
 /**
  * Handles exceptions thrown by the ccs. 

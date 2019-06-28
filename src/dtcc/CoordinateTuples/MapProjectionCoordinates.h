@@ -3,8 +3,8 @@
 #ifndef MapProjectionCoordinates_H
 #define MapProjectionCoordinates_H
 
-#include "CoordinateTuple.h"
-#include "DtccApi.h"
+#include "geotrans/dtcc/CoordinateTuples/CoordinateTuple.h"
+#include "geotrans/dtcc/DtccApi.h"
 
 
 

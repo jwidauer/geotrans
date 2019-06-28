@@ -43,7 +43,7 @@
 // that interpolates EGM 2008 geoid heights from a
 // reformatted version of NGA's worldwide geoid height grids.
 
-#include "DtccApi.h"
+#include "geotrans/dtcc/DtccApi.h"
 #include "egm2008_geoid_grid.h"
 
 namespace MSP

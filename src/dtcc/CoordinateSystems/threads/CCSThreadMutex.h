@@ -7,7 +7,7 @@
 #   include <pthread.h>
 #endif
 
-#include "DtccApi.h"
+#include "geotrans/dtcc/DtccApi.h"
 
 namespace MSP
 {

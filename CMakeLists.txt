@@ -17,10 +17,8 @@ LIST(REMOVE_DUPLICATES dir_list)
 
 target_include_directories(geotrans
   PUBLIC
+      include
       ${dir_list}
 )
-
-# get_target_property(include_dirs geotrans INCLUDE_DIRECTORIES)
-# message(STATUS "include dirs: " ${include_dirs})
 
 target_compile_features(geotrans PRIVATE cxx_std_98)

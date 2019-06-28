@@ -3,9 +3,9 @@
 #ifndef GEOREFCoordinates_H
 #define GEOREFCoordinates_H
 
-#include "CoordinateTuple.h"
-#include "Precision.h"
-#include "DtccApi.h"
+#include "geotrans/dtcc/CoordinateTuples/CoordinateTuple.h"
+#include "geotrans/dtcc/Enumerations/Precision.h"
+#include "geotrans/dtcc/DtccApi.h"
 
 
 

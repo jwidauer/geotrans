@@ -89,10 +89,10 @@
  */
 
 #include <stdio.h>
-#include "CoordinateConversionService.h"
+#include "geotrans/CoordinateConversion/CoordinateConversionService.h"
 #include "CoordinateSystemParameters.h"
-#include "CoordinateTuple.h"
-#include "CoordinateType.h"
+#include "geotrans/dtcc/CoordinateTuples/CoordinateTuple.h"
+#include "geotrans/dtcc/Enumerations/CoordinateType.h"
 #include "EllipsoidLibrary.h"
 #include "EllipsoidLibraryImplementation.h"
 #include "DatumLibrary.h"

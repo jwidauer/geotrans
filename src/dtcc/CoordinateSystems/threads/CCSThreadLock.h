@@ -3,7 +3,7 @@
 #ifndef MSP_CCSTHREADLOCK_H
 #define MSP_CCSTHREADLOCK_H
 
-#include "DtccApi.h"
+#include "geotrans/dtcc/DtccApi.h"
 
 namespace MSP
 {

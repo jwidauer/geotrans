@@ -3,7 +3,7 @@
 #ifndef EllipsoidParameters_H
 #define EllipsoidParameters_H
 
-#include "DtccApi.h"
+#include "geotrans/dtcc/DtccApi.h"
 
 
 namespace MSP

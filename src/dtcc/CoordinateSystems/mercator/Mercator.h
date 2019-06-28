@@ -80,7 +80,7 @@
 
 
 #include "CoordinateSystem.h"
-#include "CoordinateType.h"
+#include "geotrans/dtcc/Enumerations/CoordinateType.h"
 
 
 namespace MSP

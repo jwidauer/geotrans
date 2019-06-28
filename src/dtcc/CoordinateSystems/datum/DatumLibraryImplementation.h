@@ -125,8 +125,8 @@
 
 #include <vector>
 #include "DatumType.h"
-#include "Precision.h"
-#include "DtccApi.h"
+#include "geotrans/dtcc/Enumerations/Precision.h"
+#include "geotrans/dtcc/DtccApi.h"
 
 
 namespace MSP

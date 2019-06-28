@@ -2,8 +2,8 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "CoordinateTuple.h"
-#include "CoordinateType.h"
+#include "geotrans/dtcc/CoordinateTuples/CoordinateTuple.h"
+#include "geotrans/dtcc/Enumerations/CoordinateType.h"
 
 
 using namespace MSP::CCS;

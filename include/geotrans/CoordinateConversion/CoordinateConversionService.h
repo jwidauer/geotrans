@@ -76,10 +76,10 @@
 
 
 #include <vector>
-#include "CoordinateType.h"
-#include "Precision.h"
-#include "SourceOrTarget.h"
-#include "CoordinateTuple.h"
+#include "geotrans/dtcc/Enumerations/CoordinateType.h"
+#include "geotrans/dtcc/Enumerations/Precision.h"
+#include "geotrans/dtcc/Enumerations/SourceOrTarget.h"
+#include "geotrans/dtcc/CoordinateTuples/CoordinateTuple.h"
 
 
 #ifdef WIN32

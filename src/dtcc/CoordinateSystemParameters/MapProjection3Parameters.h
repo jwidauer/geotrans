@@ -4,7 +4,7 @@
 #define MapProjection3Parameters_H
 
 #include "CoordinateSystemParameters.h"
-#include "DtccApi.h"
+#include "geotrans/dtcc/DtccApi.h"
 
 
 

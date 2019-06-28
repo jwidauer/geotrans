@@ -72,7 +72,7 @@
 
 #include "egm2008_geoid_grid.h"
 
-#include "DtccApi.h"
+#include "geotrans/dtcc/DtccApi.h"
 
 namespace MSP
 {

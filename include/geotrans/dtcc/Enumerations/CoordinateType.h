@@ -3,7 +3,7 @@
 #ifndef CoordinateType_H
 #define CoordinateType_H
 
-#include "DtccApi.h"
+#include "geotrans/dtcc/DtccApi.h"
 
 namespace MSP
 {

@@ -3,9 +3,9 @@
 #ifndef CoordinateTuple_H
 #define CoordinateTuple_H
 
-#include "CoordinateType.h"
-#include "Precision.h"
-#include "DtccApi.h"
+#include "geotrans/dtcc/Enumerations/CoordinateType.h"
+#include "geotrans/dtcc/Enumerations/Precision.h"
+#include "geotrans/dtcc/DtccApi.h"
 
 
 namespace MSP

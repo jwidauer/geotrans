@@ -3,9 +3,9 @@
 #ifndef UTMCoordinates_H
 #define UTMCoordinates_H
 
-#include "CoordinateTuple.h"
+#include "geotrans/dtcc/CoordinateTuples/CoordinateTuple.h"
 
-#include "DtccApi.h"
+#include "geotrans/dtcc/DtccApi.h"
 
 
 namespace MSP

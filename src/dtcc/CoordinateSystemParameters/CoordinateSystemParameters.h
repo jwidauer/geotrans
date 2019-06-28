@@ -3,8 +3,8 @@
 #ifndef CoordinateSystemParameters_H
 #define CoordinateSystemParameters_H
 
-#include "CoordinateType.h"
-#include "DtccApi.h"
+#include "geotrans/dtcc/Enumerations/CoordinateType.h"
+#include "geotrans/dtcc/DtccApi.h"
 
 
 

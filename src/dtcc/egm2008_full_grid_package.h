@@ -40,7 +40,7 @@
 // THIS DERIVED CLASS IMPLEMENTS COMPUTATIONAL
 // DETAILS SPECIFIC TO THE EGM 2008 FULL-GRID ALGORITHM.
 
-#include "DtccApi.h"
+#include "geotrans/dtcc/DtccApi.h"
 #include "egm2008_geoid_grid.h"
 
 namespace MSP

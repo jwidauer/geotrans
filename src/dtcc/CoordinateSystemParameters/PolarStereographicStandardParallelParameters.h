@@ -4,7 +4,7 @@
 #define PolarStereographicStandardParallelParameters_H
 
 #include "CoordinateSystemParameters.h"
-#include "DtccApi.h"
+#include "geotrans/dtcc/DtccApi.h"
 
 namespace MSP
 {
