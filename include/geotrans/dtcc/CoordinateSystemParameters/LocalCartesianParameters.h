@@ -3,7 +3,7 @@
 #ifndef LocalCartesianParameters_H
 #define LocalCartesianParameters_H
 
-#include "CoordinateSystemParameters.h"
+#include "geotrans/dtcc/CoordinateSystemParameters/CoordinateSystemParameters.h"
 #include "geotrans/dtcc/DtccApi.h"
 
 namespace MSP {

@@ -83,10 +83,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "CoordinateConversionException.h"
+#include "geotrans/dtcc/Exception/CoordinateConversionException.h"
 #include "ErrorMessages.h"
 #include "GEOREFCoordinates.h"
-#include "GeodeticCoordinates.h"
+#include "geotrans/dtcc/CoordinateTuples/GeodeticCoordinates.h"
 #include "MapProjectionCoordinates.h"
 
 /*

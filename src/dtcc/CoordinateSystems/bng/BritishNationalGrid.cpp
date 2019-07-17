@@ -88,10 +88,10 @@
 #include <stdio.h>
 #include <string.h>
 #include "BNGCoordinates.h"
-#include "CoordinateConversionException.h"
+#include "geotrans/dtcc/Exception/CoordinateConversionException.h"
 #include "EllipsoidParameters.h"
 #include "ErrorMessages.h"
-#include "GeodeticCoordinates.h"
+#include "geotrans/dtcc/CoordinateTuples/GeodeticCoordinates.h"
 #include "MapProjectionCoordinates.h"
 #include "TransverseMercator.h"
 #include "BritishNationalGrid.h"

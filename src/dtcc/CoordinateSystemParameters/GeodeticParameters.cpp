@@ -1,6 +1,6 @@
 // CLASSIFICATION: UNCLASSIFIED
 
-#include "GeodeticParameters.h"
+#include "geotrans/dtcc/CoordinateSystemParameters/GeodeticParameters.h"
 #include "stdio.h"
 
 using namespace MSP::CCS;

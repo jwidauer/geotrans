@@ -1,6 +1,6 @@
 // CLASSIFICATION: UNCLASSIFIED
 
-#include "CartesianCoordinates.h"
+#include "geotrans/dtcc/CoordinateTuples/CartesianCoordinates.h"
 #include <string.h>
 
 using namespace MSP::CCS;

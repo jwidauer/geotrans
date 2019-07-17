@@ -49,7 +49,7 @@
 #endif
 
 #include "CCSThreadLock.h"
-#include "CoordinateConversionException.h"
+#include "geotrans/dtcc/Exception/CoordinateConversionException.h"
 
 #include "egm2008_aoi_grid_package.h"
 

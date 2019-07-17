@@ -93,9 +93,9 @@
 
 #include "ObliqueMercator.h"
 #include <math.h>
-#include "CoordinateConversionException.h"
+#include "geotrans/dtcc/Exception/CoordinateConversionException.h"
 #include "ErrorMessages.h"
-#include "GeodeticCoordinates.h"
+#include "geotrans/dtcc/CoordinateTuples/GeodeticCoordinates.h"
 #include "MapProjectionCoordinates.h"
 #include "ObliqueMercatorParameters.h"
 #include "WarningMessages.h"

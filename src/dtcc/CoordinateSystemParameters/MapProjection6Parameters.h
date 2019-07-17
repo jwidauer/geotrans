@@ -3,7 +3,7 @@
 #ifndef MapProjection6Parameters_H
 #define MapProjection6Parameters_H
 
-#include "CoordinateSystemParameters.h"
+#include "geotrans/dtcc/CoordinateSystemParameters/CoordinateSystemParameters.h"
 #include "geotrans/dtcc/DtccApi.h"
 
 namespace MSP {

@@ -91,10 +91,10 @@
 #include <string.h>
 #include <sstream>
 #include <string>
-#include "CoordinateConversionException.h"
+#include "geotrans/dtcc/Exception/CoordinateConversionException.h"
 #include "EllipsoidParameters.h"
 #include "ErrorMessages.h"
-#include "GeodeticCoordinates.h"
+#include "geotrans/dtcc/CoordinateTuples/GeodeticCoordinates.h"
 #include "MGRSorUSNGCoordinates.h"
 #include "UPS.h"
 #include "UPSCoordinates.h"

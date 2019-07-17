@@ -21,14 +21,14 @@
 #include <iostream>
 #include <string>
 
-#include "Accuracy.h"
-#include "CartesianCoordinates.h"
-#include "CoordinateConversionException.h"
+#include "geotrans/dtcc/CoordinateTuples/Accuracy.h"
+#include "geotrans/dtcc/CoordinateTuples/CartesianCoordinates.h"
+#include "geotrans/dtcc/Exception/CoordinateConversionException.h"
 #include "CoordinateConversionService.h"
-#include "CoordinateSystemParameters.h"
-#include "GeodeticCoordinates.h"
-#include "GeodeticParameters.h"
-#include "HeightType.h"
+#include "geotrans/dtcc/CoordinateSystemParameters/CoordinateSystemParameters.h"
+#include "geotrans/dtcc/CoordinateTuples/GeodeticCoordinates.h"
+#include "geotrans/dtcc/CoordinateSystemParameters/GeodeticParameters.h"
+#include "geotrans/dtcc/Enumerations/HeightType.h"
 #include "MGRSorUSNGCoordinates.h"
 #include "UTMCoordinates.h"
 #include "UTMParameters.h"

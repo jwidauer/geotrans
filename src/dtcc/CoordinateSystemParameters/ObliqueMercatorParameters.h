@@ -3,7 +3,7 @@
 #ifndef ObliqueMercatorParameters_H
 #define ObliqueMercatorParameters_H
 
-#include "CoordinateSystemParameters.h"
+#include "geotrans/dtcc/CoordinateSystemParameters/CoordinateSystemParameters.h"
 #include "geotrans/dtcc/DtccApi.h"
 
 namespace MSP {

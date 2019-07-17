@@ -79,10 +79,10 @@
 #include <float.h>
 #include <math.h>
 #include <stdlib.h>
-#include "CartesianCoordinates.h"
-#include "CoordinateConversionException.h"
+#include "geotrans/dtcc/CoordinateTuples/CartesianCoordinates.h"
+#include "geotrans/dtcc/Exception/CoordinateConversionException.h"
 #include "ErrorMessages.h"
-#include "GeodeticCoordinates.h"
+#include "geotrans/dtcc/CoordinateTuples/GeodeticCoordinates.h"
 
 /*
  *    math.h     - is needed for calls to sin, cos, tan and sqrt.

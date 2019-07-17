@@ -3,8 +3,8 @@
 #ifndef GeodeticParameters_H
 #define GeodeticParameters_H
 
-#include "CoordinateSystemParameters.h"
-#include "HeightType.h"
+#include "geotrans/dtcc/CoordinateSystemParameters/CoordinateSystemParameters.h"
+#include "geotrans/dtcc/Enumerations/HeightType.h"
 #include "geotrans/dtcc/DtccApi.h"
 
 namespace MSP {

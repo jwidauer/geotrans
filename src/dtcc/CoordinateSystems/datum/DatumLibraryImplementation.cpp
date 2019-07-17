@@ -137,17 +137,17 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "Accuracy.h"
+#include "geotrans/dtcc/CoordinateTuples/Accuracy.h"
 #include "CCSThreadLock.h"
 #include "CCSThreadMutex.h"
-#include "CartesianCoordinates.h"
-#include "CoordinateConversionException.h"
+#include "geotrans/dtcc/CoordinateTuples/CartesianCoordinates.h"
+#include "geotrans/dtcc/Exception/CoordinateConversionException.h"
 #include "Datum.h"
 #include "EllipsoidLibraryImplementation.h"
 #include "EllipsoidParameters.h"
 #include "ErrorMessages.h"
 #include "Geocentric.h"
-#include "GeodeticCoordinates.h"
+#include "geotrans/dtcc/CoordinateTuples/GeodeticCoordinates.h"
 #include "SevenParameterDatum.h"
 #include "ThreeParameterDatum.h"
 

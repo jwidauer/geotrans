@@ -3,7 +3,7 @@
 #ifndef UTMParameters_H
 #define UTMParameters_H
 
-#include "CoordinateSystemParameters.h"
+#include "geotrans/dtcc/CoordinateSystemParameters/CoordinateSystemParameters.h"
 #include "geotrans/dtcc/DtccApi.h"
 
 namespace MSP {

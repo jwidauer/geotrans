@@ -3,7 +3,7 @@
 #ifndef MercatorScaleFactorParameters_H
 #define MercatorScaleFactorParameters_H
 
-#include "CoordinateSystemParameters.h"
+#include "geotrans/dtcc/CoordinateSystemParameters/CoordinateSystemParameters.h"
 #include "geotrans/dtcc/DtccApi.h"
 
 namespace MSP {

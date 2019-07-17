@@ -95,9 +95,9 @@
 #include "PolarStereographic.h"
 #include <math.h>
 #include <stdio.h>
-#include "CoordinateConversionException.h"
+#include "geotrans/dtcc/Exception/CoordinateConversionException.h"
 #include "ErrorMessages.h"
-#include "GeodeticCoordinates.h"
+#include "geotrans/dtcc/CoordinateTuples/GeodeticCoordinates.h"
 #include "MapProjectionCoordinates.h"
 #include "PolarStereographicScaleFactorParameters.h"
 #include "PolarStereographicStandardParallelParameters.h"

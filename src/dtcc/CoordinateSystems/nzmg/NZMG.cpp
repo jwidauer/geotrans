@@ -79,10 +79,10 @@
 #include "NZMG.h"
 #include <math.h>
 #include <string.h>
-#include "CoordinateConversionException.h"
+#include "geotrans/dtcc/Exception/CoordinateConversionException.h"
 #include "EllipsoidParameters.h"
 #include "ErrorMessages.h"
-#include "GeodeticCoordinates.h"
+#include "geotrans/dtcc/CoordinateTuples/GeodeticCoordinates.h"
 #include "MapProjectionCoordinates.h"
 
 /*

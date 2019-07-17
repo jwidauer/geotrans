@@ -68,7 +68,7 @@ using std::setw;
 
 END DEBUG */
 
-#include "CoordinateConversionException.h"
+#include "geotrans/dtcc/Exception/CoordinateConversionException.h"
 
 #include "egm2008_geoid_grid.h"
 

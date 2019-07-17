@@ -1,6 +1,6 @@
 // CLASSIFICATION: UNCLASSIFIED
 
-#include "GeodeticCoordinates.h"
+#include "geotrans/dtcc/CoordinateTuples/GeodeticCoordinates.h"
 #include <string.h>
 
 using namespace MSP::CCS;

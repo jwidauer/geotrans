@@ -81,14 +81,14 @@
  *                               INCLUDES
  */
 
-#include "CartesianCoordinates.h"
-#include "GeodeticCoordinates.h"
+#include "geotrans/dtcc/CoordinateTuples/CartesianCoordinates.h"
+#include "geotrans/dtcc/CoordinateTuples/GeodeticCoordinates.h"
 #include "LocalCartesian.h"
 #include <math.h>
-#include "CoordinateConversionException.h"
+#include "geotrans/dtcc/Exception/CoordinateConversionException.h"
 #include "ErrorMessages.h"
 #include "Geocentric.h"
-#include "LocalCartesianParameters.h"
+#include "geotrans/dtcc/CoordinateSystemParameters/LocalCartesianParameters.h"
 
 /*
  *    math.h    - Standard C math library

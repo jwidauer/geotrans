@@ -120,7 +120,7 @@
 #include <string.h>
 #include "CCSThreadLock.h"
 #include "CCSThreadMutex.h"
-#include "CoordinateConversionException.h"
+#include "geotrans/dtcc/Exception/CoordinateConversionException.h"
 #include "ErrorMessages.h"
 
 #include "egm2008_aoi_grid_package.h"

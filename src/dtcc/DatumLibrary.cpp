@@ -123,7 +123,7 @@
  */
 
 #include "DatumLibrary.h"
-#include "CoordinateConversionException.h"
+#include "geotrans/dtcc/Exception/CoordinateConversionException.h"
 #include "DatumLibraryImplementation.h"
 #include "ErrorMessages.h"
 

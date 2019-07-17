@@ -92,9 +92,9 @@
 
 #include "Stereographic.h"
 #include <math.h>
-#include "CoordinateConversionException.h"
+#include "geotrans/dtcc/Exception/CoordinateConversionException.h"
 #include "ErrorMessages.h"
-#include "GeodeticCoordinates.h"
+#include "geotrans/dtcc/CoordinateTuples/GeodeticCoordinates.h"
 #include "MapProjection4Parameters.h"
 #include "MapProjectionCoordinates.h"
 

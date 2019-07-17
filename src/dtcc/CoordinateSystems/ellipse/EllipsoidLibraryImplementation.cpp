@@ -106,7 +106,7 @@
 #include <string.h>
 #include "CCSThreadLock.h"
 #include "CCSThreadMutex.h"
-#include "CoordinateConversionException.h"
+#include "geotrans/dtcc/Exception/CoordinateConversionException.h"
 #include "DatumLibraryImplementation.h"
 #include "Ellipsoid.h"
 #include "ErrorMessages.h"
