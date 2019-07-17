@@ -1,5 +1,5 @@
-#ifndef GEOTRANS_H
-#define GEOTRANS_H
+#ifndef GEOTRANS_GEOTRANS_H_
+#define GEOTRANS_GEOTRANS_H_
 
 #include "geotrans/CoordinateConversion/CoordinateConversionService.h"
 #include "geotrans/dtcc/CoordinateSystemParameters/CoordinateSystemParameters.h"
@@ -11,4 +11,4 @@
 #include "geotrans/dtcc/Enumerations/HeightType.h"
 #include "geotrans/dtcc/Exception/CoordinateConversionException.h"
 
-#endif
+#endif  // GEOTRANS_GEOTRANS_H_
