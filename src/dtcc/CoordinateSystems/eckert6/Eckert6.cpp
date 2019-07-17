@@ -187,9 +187,7 @@ Eckert6::Eckert6(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
   }
 }
 
-Eckert6::Eckert6(const Eckert6& e) {
-  semiMajorAxis = e.semiMajorAxis;
-  flattening = e.flattening;
+Eckert6::Eckert6(const Eckert6& e) : CoordinateSystem(e) {
   es2 = e.es2;
   es4 = e.es4;
   es6 = e.es6;

@@ -12,11 +12,11 @@ class MSP_DTCC_API MercatorScaleFactorParameters
     : public CoordinateSystemParameters {
  public:
   MercatorScaleFactorParameters();
-  MercatorScaleFactorParameters(CoordinateType::Enum _coordinateType);
+  explicit MercatorScaleFactorParameters(CoordinateType::Enum _coordinateType);
   MercatorScaleFactorParameters(CoordinateType::Enum _coordinateType,
                                 double __centralMeridian, double __scaleFactor,
                                 double __falseEasting, double __falseNorthing);
-  MercatorScaleFactorParameters(const MercatorScaleFactorParameters& p);
+  MercatorScaleFactorParameters(const MercatorScaleFactorParameters& p) = default;
 
   ~MercatorScaleFactorParameters();
 

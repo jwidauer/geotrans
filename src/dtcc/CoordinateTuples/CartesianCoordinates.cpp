@@ -24,24 +24,6 @@ CartesianCoordinates::CartesianCoordinates(CoordinateType::Enum _coordinateType,
   _warningMessage[length] = '\0';
 }
 
-CartesianCoordinates::CartesianCoordinates(const CartesianCoordinates& c) {
-  _coordinateType = c._coordinateType;
-
-  _x = c._x;
-  _y = c._y;
-  _z = c._z;
-
-  int length = strlen(c._warningMessage);
-  strncpy(_warningMessage, c._warningMessage, length);
-  _warningMessage[length] = '\0';
-}
-
-CartesianCoordinates::~CartesianCoordinates() {
-  _x = 0;
-  _y = 0;
-  _z = 0;
-}
-
 CartesianCoordinates& CartesianCoordinates::operator=(
     const CartesianCoordinates& c) {
   if (this != &c) {

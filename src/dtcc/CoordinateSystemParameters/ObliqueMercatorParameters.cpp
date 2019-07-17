@@ -42,20 +42,6 @@ ObliqueMercatorParameters::ObliqueMercatorParameters(
       _falseNorthing(__falseNorthing),
       _scaleFactor(__scaleFactor) {}
 
-ObliqueMercatorParameters::ObliqueMercatorParameters(
-    const ObliqueMercatorParameters &p) {
-  _coordinateType = p._coordinateType;
-
-  _originLatitude = p._originLatitude;
-  _longitude1 = p._longitude1;
-  _latitude1 = p._latitude1;
-  _longitude2 = p._longitude2;
-  _latitude2 = p._latitude2;
-  _falseEasting = p._falseEasting;
-  _falseNorthing = p._falseNorthing;
-  _scaleFactor = p._scaleFactor;
-}
-
 ObliqueMercatorParameters::~ObliqueMercatorParameters() {
   _originLatitude = 0;
   _longitude1 = 0;

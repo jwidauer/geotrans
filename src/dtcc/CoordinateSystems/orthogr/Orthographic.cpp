@@ -128,8 +128,8 @@ Orthographic::Orthographic(double ellipsoidSemiMajorAxis,
       es4(4.4814723452405e-005),
       es6(3.0000678794350e-007),
       Ra(6371007.1810824),
-      Orth_Origin_Long(0.0),
       Orth_Origin_Lat(0.0),
+      Orth_Origin_Long(0.0),
       Orth_False_Easting(0.0),
       Orth_False_Northing(0.0),
       Sin_Orth_Origin_Lat(0.0),
@@ -185,23 +185,6 @@ Orthographic::Orthographic(double ellipsoidSemiMajorAxis,
   Orth_False_Easting = falseEasting;
   Orth_False_Northing = falseNorthing;
 }
-
-Orthographic::Orthographic(const Orthographic& o) {
-  semiMajorAxis = o.semiMajorAxis;
-  flattening = o.flattening;
-  es2 = o.es2;
-  es4 = o.es4;
-  es6 = o.es6;
-  Ra = o.Ra;
-  Orth_Origin_Long = o.Orth_Origin_Long;
-  Orth_Origin_Lat = o.Orth_Origin_Lat;
-  Orth_False_Easting = o.Orth_False_Easting;
-  Orth_False_Northing = o.Orth_False_Northing;
-  Sin_Orth_Origin_Lat = o.Sin_Orth_Origin_Lat;
-  Cos_Orth_Origin_Lat = o.Cos_Orth_Origin_Lat;
-}
-
-Orthographic::~Orthographic() {}
 
 Orthographic& Orthographic::operator=(const Orthographic& o) {
   if (this != &o) {

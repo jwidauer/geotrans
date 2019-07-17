@@ -485,7 +485,7 @@ void EllipsoidLibraryImplementation::ellipsoidIndex(const char *code,
   }
 }
 
-void EllipsoidLibraryImplementation::ellipsoidCode(const long index,
+void EllipsoidLibraryImplementation::ellipsoidCode(const size_t index,
                                                    char *code) {
   /*
    *  The Function ellipsoidCode returns the 2-letter code for the
@@ -499,13 +499,13 @@ void EllipsoidLibraryImplementation::ellipsoidCode(const long index,
 
   strcpy(code, "");
 
-  if ((index < 0) || (index >= ellipsoidList.size()))
+  if (index >= ellipsoidList.size())
     throw CoordinateConversionException(ErrorMessages::invalidIndex);
   else
     strcpy(code, ellipsoidList[index]->code());
 }
 
-void EllipsoidLibraryImplementation::ellipsoidName(const long index,
+void EllipsoidLibraryImplementation::ellipsoidName(const size_t index,
                                                    char *name) {
   /*
    *  The function ellipsoidName returns the name of the ellipsoid in
@@ -520,13 +520,13 @@ void EllipsoidLibraryImplementation::ellipsoidName(const long index,
 
   strcpy(name, "");
 
-  if ((index < 0) || (index >= ellipsoidList.size()))
+  if (index >= ellipsoidList.size())
     throw CoordinateConversionException(ErrorMessages::invalidIndex);
   else
     strcpy(name, ellipsoidList[index]->name());
 }
 
-void EllipsoidLibraryImplementation::ellipsoidParameters(const long index,
+void EllipsoidLibraryImplementation::ellipsoidParameters(const size_t index,
                                                          double *a, double *f) {
   /*
    *  The function ellipsoidParameters returns the semi-major axis and
@@ -542,7 +542,7 @@ void EllipsoidLibraryImplementation::ellipsoidParameters(const long index,
   *a = 0;
   *f = 0;
 
-  if ((index < 0) || (index >= ellipsoidList.size()))
+  if (index >= ellipsoidList.size())
     throw CoordinateConversionException(ErrorMessages::invalidIndex);
   else {
     Ellipsoid *ellipsoid = ellipsoidList[index];
@@ -552,7 +552,7 @@ void EllipsoidLibraryImplementation::ellipsoidParameters(const long index,
 }
 
 void EllipsoidLibraryImplementation::ellipsoidEccentricity2(
-    const long index, double *eccentricitySquared) {
+    const size_t index, double *eccentricitySquared) {
   /*
    *  The function ellipsoidEccentricity2 returns the square of the
    *  eccentricity for the ellipsoid with the specified index.  If index is
@@ -565,13 +565,13 @@ void EllipsoidLibraryImplementation::ellipsoidEccentricity2(
 
   *eccentricitySquared = 0;
 
-  if ((index < 0) || (index >= ellipsoidList.size()))
+  if (index >= ellipsoidList.size())
     throw CoordinateConversionException(ErrorMessages::invalidIndex);
   else
     *eccentricitySquared = ellipsoidList[index]->eccentricitySquared();
 }
 
-void EllipsoidLibraryImplementation::ellipsoidUserDefined(const long index,
+void EllipsoidLibraryImplementation::ellipsoidUserDefined(const size_t index,
                                                           long *result) {
   /*
    *  The function ellipsoidUserDefined returns 1 if the ellipsoid is user
@@ -586,7 +586,7 @@ void EllipsoidLibraryImplementation::ellipsoidUserDefined(const long index,
 
   *result = false;
 
-  if ((index < 0) || (index >= ellipsoidList.size()))
+  if (index >= ellipsoidList.size())
     throw CoordinateConversionException(ErrorMessages::invalidIndex);
   else
     *result = ellipsoidList[index]->userDefined();

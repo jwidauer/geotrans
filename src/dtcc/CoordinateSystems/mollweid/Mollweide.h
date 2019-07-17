@@ -111,9 +111,9 @@ class Mollweide : public CoordinateSystem {
   Mollweide(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
             double centralMeridian, double falseEasting, double falseNorthing);
 
-  Mollweide(const Mollweide& m);
+  Mollweide(const Mollweide& m) = default;
 
-  ~Mollweide(void);
+  ~Mollweide() = default;
 
   Mollweide& operator=(const Mollweide& m);
 

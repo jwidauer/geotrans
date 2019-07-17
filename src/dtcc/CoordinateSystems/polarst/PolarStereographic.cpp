@@ -146,13 +146,13 @@ PolarStereographic::PolarStereographic(double ellipsoidSemiMajorAxis,
       Polar_k90(1.0033565552493),
       Polar_a_mc(6378137.0),
       two_Polar_a(12756274.0),
-      Polar_Central_Meridian(0.0),
       Polar_Standard_Parallel(((PI * 90) / 180)),
+      Polar_Central_Meridian(0.0),
       Polar_False_Easting(0.0),
       Polar_False_Northing(0.0),
-      Polar_Scale_Factor(1.0),
       Polar_Delta_Easting(12713601.0),
-      Polar_Delta_Northing(12713601.0) {
+      Polar_Delta_Northing(12713601.0),
+      Polar_Scale_Factor(1.0) {
   /*
    * The constructor receives the ellipsoid
    * parameters and Polar Stereograpic (Standard Parallel) projection parameters
@@ -271,13 +271,13 @@ PolarStereographic::PolarStereographic(double ellipsoidSemiMajorAxis,
       Polar_k90(1.0033565552493),
       Polar_a_mc(6378137.0),
       two_Polar_a(12756274.0),
-      Polar_Central_Meridian(0.0),
       Polar_Standard_Parallel(((PI * 90) / 180)),
+      Polar_Central_Meridian(0.0),
       Polar_False_Easting(0.0),
       Polar_False_Northing(0.0),
-      Polar_Scale_Factor(1.0),
       Polar_Delta_Easting(12713601.0),
-      Polar_Delta_Northing(12713601.0) {
+      Polar_Delta_Northing(12713601.0),
+      Polar_Scale_Factor(1.0) {
   /*
    * The constructor receives the ellipsoid
    * parameters and Polar Stereograpic (Scale Factor) projection parameters
@@ -399,28 +399,6 @@ PolarStereographic::PolarStereographic(double ellipsoidSemiMajorAxis,
 
   Polar_Delta_Easting = Polar_Delta_Northing;
 }
-
-PolarStereographic::PolarStereographic(const PolarStereographic& ps) {
-  coordinateType = ps.coordinateType;
-  semiMajorAxis = ps.semiMajorAxis;
-  flattening = ps.flattening;
-  es = ps.es;
-  es_OVER_2 = ps.es_OVER_2;
-  Southern_Hemisphere = ps.Southern_Hemisphere;
-  Polar_tc = ps.Polar_tc;
-  Polar_k90 = ps.Polar_k90;
-  Polar_a_mc = ps.Polar_a_mc;
-  two_Polar_a = ps.two_Polar_a;
-  Polar_Central_Meridian = ps.Polar_Central_Meridian;
-  Polar_Standard_Parallel = ps.Polar_Standard_Parallel;
-  Polar_False_Easting = ps.Polar_False_Easting;
-  Polar_False_Northing = ps.Polar_False_Northing;
-  Polar_Scale_Factor = ps.Polar_Scale_Factor;
-  Polar_Delta_Easting = ps.Polar_Delta_Easting;
-  Polar_Delta_Northing = ps.Polar_Delta_Northing;
-}
-
-PolarStereographic::~PolarStereographic() {}
 
 PolarStereographic& PolarStereographic::operator=(
     const PolarStereographic& ps) {

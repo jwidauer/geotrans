@@ -148,9 +148,9 @@ class PolarStereographic : public CoordinateSystem {
                      char hemisphere, double falseEasting,
                      double falseNorthing);
 
-  PolarStereographic(const PolarStereographic& ps);
+  PolarStereographic(const PolarStereographic& ps) = default;
 
-  ~PolarStereographic(void);
+  ~PolarStereographic() = default;
 
   PolarStereographic& operator=(const PolarStereographic& ps);
 

@@ -112,9 +112,9 @@ class MillerCylindrical : public CoordinateSystem {
                     double centralMeridian, double falseEasting,
                     double falseNorthing);
 
-  MillerCylindrical(const MillerCylindrical& mc);
+  MillerCylindrical(const MillerCylindrical& mc) = default;
 
-  ~MillerCylindrical(void);
+  ~MillerCylindrical() = default;
 
   MillerCylindrical& operator=(const MillerCylindrical& mc);
 

@@ -168,15 +168,13 @@ UPS::UPS(double ellipsoidSemiMajorAxis, double ellipsoidFlattening)
   /// -UPS_Origin_Latitude, UPS_False_Easting, UPS_False_Northing);
 }
 
-UPS::UPS(const UPS& u) {
+UPS::UPS(const UPS& u) : CoordinateSystem(u) {
   std::map<char, PolarStereographic*> tempPolarStereographicMap =
       u.polarStereographicMap;
   polarStereographicMap['N'] =
       new PolarStereographic(*tempPolarStereographicMap['N']);
   polarStereographicMap['S'] =
       new PolarStereographic(*tempPolarStereographicMap['S']);
-  semiMajorAxis = u.semiMajorAxis;
-  flattening = u.flattening;
   UPS_Origin_Latitude = u.UPS_Origin_Latitude;
 }
 

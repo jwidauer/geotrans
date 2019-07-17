@@ -183,23 +183,6 @@ MillerCylindrical::MillerCylindrical(double ellipsoidSemiMajorAxis,
   }
 }
 
-MillerCylindrical::MillerCylindrical(const MillerCylindrical& mc) {
-  semiMajorAxis = mc.semiMajorAxis;
-  flattening = mc.flattening;
-  es2 = mc.es2;
-  es4 = mc.es4;
-  es6 = mc.es6;
-  Ra = mc.Ra;
-  Mill_Origin_Long = mc.Mill_Origin_Long;
-  Mill_False_Easting = mc.Mill_False_Easting;
-  Mill_False_Northing = mc.Mill_False_Northing;
-  Mill_Delta_Northing = mc.Mill_Delta_Northing;
-  Mill_Max_Easting = mc.Mill_Max_Easting;
-  Mill_Min_Easting = mc.Mill_Min_Easting;
-}
-
-MillerCylindrical::~MillerCylindrical() {}
-
 MillerCylindrical& MillerCylindrical::operator=(const MillerCylindrical& mc) {
   if (this != &mc) {
     semiMajorAxis = mc.semiMajorAxis;

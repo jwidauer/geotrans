@@ -138,14 +138,14 @@ LambertConformalConic::LambertConformalConic(
       Lambert_1_rho0(6388838.2901212),
       Lambert_1_rho_olat(6388838.2901211),
       Lambert_1_t0(0.41618115138974),
-      Lambert_Origin_Long(0.0),
       Lambert_Origin_Latitude((45.0 * PI / 180.0)),
-      Lambert_False_Easting(0.0),
+      Lambert_Origin_Long(0.0),
       Lambert_False_Northing(0.0),
+      Lambert_False_Easting(0.0),
       Lambert_Scale_Factor(1.0),
-      Lambert_2_Origin_Lat((45 * PI / 180)),
       Lambert_2_Std_Parallel_1((40 * PI / 180)),
       Lambert_2_Std_Parallel_2((50 * PI / 180)),
+      Lambert_2_Origin_Lat((45 * PI / 180)),
       Lambert_Delta_Easting(400000000.0),
       Lambert_Delta_Northing(400000000.0) {
   /*
@@ -206,7 +206,6 @@ LambertConformalConic::LambertConformalConic(
   Lambert_2_Origin_Lat = parameters->_lambertOriginLatitude;
 
   double sinOlat = sin(Lambert_Origin_Latitude);
-  double esSinOlat = es * sinOlat;  // Math.sin(lambertOriginLat);
   double w0 = sqrt(1 - es2 * sinOlat * sinOlat);
   double f0 =
       cos(Lambert_Origin_Latitude) / (w0 * pow(Lambert_1_t0, Lambert_1_n));
@@ -238,14 +237,14 @@ LambertConformalConic::LambertConformalConic(
       Lambert_1_rho0(6388838.2901212),
       Lambert_1_rho_olat(6388838.2901211),
       Lambert_1_t0(0.41618115138974),
-      Lambert_Origin_Long(0.0),
       Lambert_Origin_Latitude((45 * PI / 180)),
-      Lambert_False_Easting(0.0),
+      Lambert_Origin_Long(0.0),
       Lambert_False_Northing(0.0),
+      Lambert_False_Easting(0.0),
       Lambert_Scale_Factor(1.0),
-      Lambert_2_Origin_Lat((45 * PI / 180)),
       Lambert_2_Std_Parallel_1((40 * PI / 180)),
       Lambert_2_Std_Parallel_2((50 * PI / 180)),
+      Lambert_2_Origin_Lat((45 * PI / 180)),
       Lambert_Delta_Easting(400000000.0),
       Lambert_Delta_Northing(400000000.0) {
   /*
@@ -277,7 +276,6 @@ LambertConformalConic::LambertConformalConic(
   double m0;
   double m1;
   double m2;
-  double m_olat;
   double n; /* Ratio of angle between meridians */
   double const_value;
   double Lambert_lat0;
@@ -339,7 +337,6 @@ LambertConformalConic::LambertConformalConic(
 
   if (fabs(Lambert_2_Std_Parallel_1 - Lambert_2_Std_Parallel_2) > 1.0e-10) {
     es_sin = esSin(sin(originLatitude));
-    m_olat = lambertM(cos(originLatitude), es_sin);
     t_olat = lambertT(originLatitude, es_sin);
 
     es_sin = esSin(sin(Lambert_2_Std_Parallel_1));
@@ -384,30 +381,6 @@ LambertConformalConic::LambertConformalConic(
   delete parameters;
   parameters = 0;
 }
-
-LambertConformalConic::LambertConformalConic(const LambertConformalConic& lcc) {
-  coordinateType = lcc.coordinateType;
-  semiMajorAxis = lcc.semiMajorAxis;
-  flattening = lcc.flattening;
-  es = lcc.es;
-  es_OVER_2 = lcc.es_OVER_2;
-  Lambert_1_n = lcc.Lambert_1_n;
-  Lambert_1_rho0 = lcc.Lambert_1_rho0;
-  Lambert_1_rho_olat = lcc.Lambert_1_rho_olat;
-  Lambert_1_t0 = lcc.Lambert_1_t0;
-  Lambert_Origin_Long = lcc.Lambert_Origin_Long;
-  Lambert_Origin_Latitude = lcc.Lambert_Origin_Latitude;
-  Lambert_False_Easting = lcc.Lambert_False_Easting;
-  Lambert_False_Northing = lcc.Lambert_False_Northing;
-  Lambert_Scale_Factor = lcc.Lambert_Scale_Factor;
-  Lambert_2_Origin_Lat = lcc.Lambert_2_Origin_Lat;
-  Lambert_2_Std_Parallel_1 = lcc.Lambert_2_Std_Parallel_1;
-  Lambert_2_Std_Parallel_2 = lcc.Lambert_2_Std_Parallel_2;
-  Lambert_Delta_Easting = lcc.Lambert_Delta_Easting;
-  Lambert_Delta_Northing = lcc.Lambert_Delta_Northing;
-}
-
-LambertConformalConic::~LambertConformalConic() {}
 
 LambertConformalConic& LambertConformalConic::operator=(
     const LambertConformalConic& lcc) {
@@ -668,8 +641,8 @@ LambertConformalConic::setCommonLambert1StandardParallelParameters(
   double m0;
 
   if (((originLatitude < -MAX_LAT) || (originLatitude > MAX_LAT)) ||
-      (originLatitude > -ONE_SECOND) &&
-          (originLatitude < ONE_SECOND)) { /* Origin Latitude out of range */
+      ((originLatitude > -ONE_SECOND) &&
+          (originLatitude < ONE_SECOND))) { /* Origin Latitude out of range */
     throw CoordinateConversionException(ErrorMessages::originLatitude);
   }
   if (scaleFactor < MIN_SCALE_FACTOR) {

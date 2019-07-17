@@ -74,6 +74,7 @@
  *   07-20-10    NGL BAEts27152 Updated getServiceVersion to return an int
  */
 
+#include <stdexcept>
 #include <vector>
 #include "geotrans/dtcc/CoordinateTuples/CoordinateTuple.h"
 #include "geotrans/dtcc/Enumerations/CoordinateType.h"

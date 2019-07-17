@@ -45,21 +45,6 @@ MGRSorUSNGCoordinates::MGRSorUSNGCoordinates(
   _warningMessage[length] = '\0';
 }
 
-MGRSorUSNGCoordinates::MGRSorUSNGCoordinates(const MGRSorUSNGCoordinates& c) {
-  _coordinateType = c._coordinateType;
-
-  strncpy(_MGRSString, c._MGRSString, 20);
-  _MGRSString[20] = '\0';
-
-  _precision = c._precision;
-
-  int length = strlen(c._warningMessage);
-  strncpy(_warningMessage, c._warningMessage, length);
-  _warningMessage[length] = '\0';
-}
-
-MGRSorUSNGCoordinates::~MGRSorUSNGCoordinates() {}
-
 MGRSorUSNGCoordinates& MGRSorUSNGCoordinates::operator=(
     const MGRSorUSNGCoordinates& c) {
   if (this != &c) {

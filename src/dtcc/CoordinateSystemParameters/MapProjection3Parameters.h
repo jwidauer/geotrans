@@ -12,11 +12,11 @@ class MSP_DTCC_API MapProjection3Parameters
     : public CoordinateSystemParameters {
  public:
   MapProjection3Parameters();
-  MapProjection3Parameters(CoordinateType::Enum _coordinateType);
+  explicit MapProjection3Parameters(CoordinateType::Enum _coordinateType);
   MapProjection3Parameters(CoordinateType::Enum _coordinateType,
                            double __centralMeridian, double __falseEasting,
                            double __falseNorthing);
-  MapProjection3Parameters(const MapProjection3Parameters& p);
+  MapProjection3Parameters(const MapProjection3Parameters& p) = default;
 
   ~MapProjection3Parameters();
 

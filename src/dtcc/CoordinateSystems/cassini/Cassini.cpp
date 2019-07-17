@@ -139,10 +139,10 @@ Cassini::Cassini(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
       a1(3.7009490356205e-006),
       a2(7.4478137675038e-009),
       a3(1.7035993238596e-011),
-      Cass_Origin_Long(0.0),
       Cass_Origin_Lat(0.0),
-      Cass_False_Easting(0.0),
+      Cass_Origin_Long(0.0),
       Cass_False_Northing(0.0),
+      Cass_False_Easting(0.0),
       Cass_Min_Easting(-20037508.4),
       Cass_Max_Easting(20037508.4),
       Cass_Min_Northing(-56575846.0),
@@ -270,34 +270,6 @@ Cassini::Cassini(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
     Cass_Max_Northing -= Cass_False_Northing;
   }
 }
-
-Cassini::Cassini(const Cassini& c) {
-  semiMajorAxis = c.semiMajorAxis;
-  flattening = c.flattening;
-  es2 = c.es2;
-  es4 = c.es4;
-  es6 = c.es6;
-  M0 = c.M0;
-  c0 = c.c0;
-  c1 = c.c1;
-  c2 = c.c2;
-  c3 = c.c3;
-  One_Minus_es2 = c.One_Minus_es2;
-  a0 = c.a0;
-  a1 = c.a1;
-  a2 = c.a2;
-  a3 = c.a3;
-  Cass_Origin_Long = c.Cass_Origin_Long;
-  Cass_Origin_Lat = c.Cass_Origin_Lat;
-  Cass_False_Easting = c.Cass_False_Easting;
-  Cass_False_Northing = c.Cass_False_Northing;
-  Cass_Min_Easting = c.Cass_Min_Easting;
-  Cass_Max_Easting = c.Cass_Max_Easting;
-  Cass_Min_Northing = c.Cass_Min_Northing;
-  Cass_Max_Northing = c.Cass_Max_Northing;
-}
-
-Cassini::~Cassini() {}
 
 Cassini& Cassini::operator=(const Cassini& c) {
   if (this != &c) {

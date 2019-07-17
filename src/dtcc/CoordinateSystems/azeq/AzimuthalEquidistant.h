@@ -120,9 +120,9 @@ class AzimuthalEquidistant : public CoordinateSystem {
                        double originLatitude, double falseEasting,
                        double falseNorthing);
 
-  AzimuthalEquidistant(const AzimuthalEquidistant& ae);
+  AzimuthalEquidistant(const AzimuthalEquidistant& ae) = default;
 
-  ~AzimuthalEquidistant(void);
+  ~AzimuthalEquidistant() = default;
 
   AzimuthalEquidistant& operator=(const AzimuthalEquidistant& ae);
 

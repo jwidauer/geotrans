@@ -255,7 +255,7 @@ class MSP_DTCC_API DatumLibraryImplementation {
    *  code    : The datum Code of the datum referenced by Index.      (output)
    */
 
-  void datumCode(const long index, char *code);
+  void datumCode(const size_t index, char *code);
 
   /*
    *  The function datumName returns the name of the datum referenced by
@@ -265,7 +265,7 @@ class MSP_DTCC_API DatumLibraryImplementation {
    *  name    : The datum Name of the datum referenced by Index.      (output)
    */
 
-  void datumName(const long index, char *name);
+  void datumName(const size_t index, char *name);
 
   /*
    *  The function datumEllipsoidCode returns the 2-letter ellipsoid code
@@ -276,7 +276,7 @@ class MSP_DTCC_API DatumLibraryImplementation {
    *               the datum referenced by index.
    */
 
-  void datumEllipsoidCode(const long index, char *code);
+  void datumEllipsoidCode(const size_t index, char *code);
 
   /*
    *   The function datumStandardErrors returns the standard errors in X,Y, & Z
@@ -288,7 +288,7 @@ class MSP_DTCC_API DatumLibraryImplementation {
    *    sigma_Z    : Standard error in Z in meters                   (output)
    */
 
-  void datumStandardErrors(const long index, double *sigmaX, double *sigmaY,
+  void datumStandardErrors(const size_t index, double *sigmaX, double *sigmaY,
                            double *sigmaZ);
 
   /*
@@ -303,7 +303,7 @@ class MSP_DTCC_API DatumLibraryImplementation {
    *    scaleFactor : Scale factor                                   (output)
    */
 
-  void datumSevenParameters(const long index, double *rotationX,
+  void datumSevenParameters(const size_t index, double *rotationX,
                             double *rotationY, double *rotationZ,
                             double *scaleFactor);
 
@@ -317,7 +317,7 @@ class MSP_DTCC_API DatumLibraryImplementation {
    *    deltaZ      : Z translation in meters                       (output)
    */
 
-  void datumTranslationValues(const long index, double *deltaX, double *deltaY,
+  void datumTranslationValues(const size_t index, double *deltaX, double *deltaY,
                               double *deltaZ);
 
   /*
@@ -350,7 +350,7 @@ class MSP_DTCC_API DatumLibraryImplementation {
    *               or not (0)                                (output)
    */
 
-  void datumUserDefined(const long index, long *result);
+  void datumUserDefined(const size_t index, long *result);
 
   /*
    *  The function datumUsesEllipsoid returns 1 if the ellipsoid is in use by a
@@ -373,7 +373,7 @@ class MSP_DTCC_API DatumLibraryImplementation {
    *
    */
 
-  void datumValidRectangle(const long index, double *westLongitude,
+  void datumValidRectangle(const size_t index, double *westLongitude,
                            double *eastLongitude, double *southLatitude,
                            double *northLatitude);
 
@@ -473,7 +473,7 @@ class MSP_DTCC_API DatumLibraryImplementation {
    */
 
   GeodeticCoordinates *geodeticShiftFromWGS84(
-      const GeodeticCoordinates *sourceCoordinates, const long targetIndex);
+      const GeodeticCoordinates *sourceCoordinates, const size_t targetIndex);
 
   /*
    *  The function geodeticShiftToWGS84 shifts geodetic coordinates relative to
@@ -490,7 +490,7 @@ class MSP_DTCC_API DatumLibraryImplementation {
    */
 
   GeodeticCoordinates *geodeticShiftToWGS84(
-      const long sourceIndex, const GeodeticCoordinates *sourceCoordinates);
+      const size_t sourceIndex, const GeodeticCoordinates *sourceCoordinates);
 
   /*
    *  The function retrieveDatumType returns the type of the datum referenced by
@@ -501,7 +501,7 @@ class MSP_DTCC_API DatumLibraryImplementation {
    *
    */
 
-  void retrieveDatumType(const long index, DatumType::Enum *datumType);
+  void retrieveDatumType(const size_t index, DatumType::Enum *datumType);
 
   /*
    *  The function validDatum checks whether or not the specified location is
@@ -516,7 +516,7 @@ class MSP_DTCC_API DatumLibraryImplementation {
    *               of the validity rectangle of the specified datum   (output)
    */
 
-  void validDatum(const long index, double longitude, double latitude,
+  void validDatum(const size_t index, double longitude, double latitude,
                   long *result);
 
   /*

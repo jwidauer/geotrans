@@ -152,13 +152,13 @@ ObliqueMercator::ObliqueMercator(double ellipsoidSemiMajorAxis,
       B_over_A(1.5678647849335e-7),
       OMerc_u(5632885.2272051),
       OMerc_Origin_Lat(((45.0 * PI) / 180.0)),
-      OMerc_Lon_1(((-5.0 * PI) / 180.0)),
       OMerc_Lat_1(((40.0 * PI) / 180.0)),
-      OMerc_Lon_2(((5.0 * PI) / 180.0)),
+      OMerc_Lon_1(((-5.0 * PI) / 180.0)),
       OMerc_Lat_2(((50.0 * PI) / 180.0)),
-      OMerc_False_Easting(0.0),
-      OMerc_False_Northing(0.0),
+      OMerc_Lon_2(((5.0 * PI) / 180.0)),
       OMerc_Scale_Factor(1.0),
+      OMerc_False_Northing(0.0),
+      OMerc_False_Easting(0.0),
       OMerc_Delta_Northing(40000000.0),
       OMerc_Delta_Easting(40000000.0) {
   /*
@@ -325,38 +325,6 @@ ObliqueMercator::ObliqueMercator(double ellipsoidSemiMajorAxis,
   else
     OMerc_u = -A_over_B * atan(sqrt_D2_MINUS_1 / cos_azimuth);
 }
-
-ObliqueMercator::ObliqueMercator(const ObliqueMercator& om) {
-  semiMajorAxis = om.semiMajorAxis;
-  flattening = om.flattening;
-  es = om.es;
-  es_OVER_2 = om.es_OVER_2;
-  OMerc_A = om.OMerc_A;
-  OMerc_B = om.OMerc_B;
-  OMerc_E = om.OMerc_E;
-  OMerc_gamma = om.OMerc_gamma;
-  OMerc_azimuth = om.OMerc_azimuth;
-  OMerc_Origin_Long = om.OMerc_Origin_Long;
-  cos_gamma = om.cos_gamma;
-  sin_gamma = om.sin_gamma;
-  sin_azimuth = om.sin_azimuth;
-  cos_azimuth = om.cos_azimuth;
-  A_over_B = om.A_over_B;
-  B_over_A = om.B_over_A;
-  OMerc_u = om.OMerc_u;
-  OMerc_Origin_Lat = om.OMerc_Origin_Lat;
-  OMerc_Lon_1 = om.OMerc_Lon_1;
-  OMerc_Lat_1 = om.OMerc_Lat_1;
-  OMerc_Lon_2 = om.OMerc_Lon_2;
-  OMerc_Lat_2 = om.OMerc_Lat_2;
-  OMerc_False_Easting = om.OMerc_False_Easting;
-  OMerc_False_Northing = om.OMerc_False_Northing;
-  OMerc_Scale_Factor = om.OMerc_Scale_Factor;
-  OMerc_Delta_Northing = om.OMerc_Delta_Northing;
-  OMerc_Delta_Easting = om.OMerc_Delta_Easting;
-}
-
-ObliqueMercator::~ObliqueMercator() {}
 
 ObliqueMercator& ObliqueMercator::operator=(const ObliqueMercator& om) {
   if (this != &om) {

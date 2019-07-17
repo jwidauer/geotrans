@@ -12,7 +12,7 @@ class MSP_DTCC_API MercatorStandardParallelParameters
     : public CoordinateSystemParameters {
  public:
   MercatorStandardParallelParameters();
-  MercatorStandardParallelParameters(CoordinateType::Enum _coordinateType);
+  explicit MercatorStandardParallelParameters(CoordinateType::Enum _coordinateType);
   MercatorStandardParallelParameters(CoordinateType::Enum _coordinateType,
                                      double __centralMeridian,
                                      double __standardParallel,
@@ -20,7 +20,7 @@ class MSP_DTCC_API MercatorStandardParallelParameters
                                      double __falseEasting,
                                      double __falseNorthing);
   MercatorStandardParallelParameters(
-      const MercatorStandardParallelParameters& p);
+      const MercatorStandardParallelParameters& p) = default;
 
   ~MercatorStandardParallelParameters();
 

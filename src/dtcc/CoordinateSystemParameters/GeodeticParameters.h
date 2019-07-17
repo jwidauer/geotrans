@@ -12,10 +12,10 @@ namespace CCS {
 class MSP_DTCC_API GeodeticParameters : public CoordinateSystemParameters {
  public:
   GeodeticParameters();
-  GeodeticParameters(CoordinateType::Enum _coordinateType);
+  explicit GeodeticParameters(CoordinateType::Enum _coordinateType);
   GeodeticParameters(CoordinateType::Enum _coordinateType,
                      HeightType::Enum __heightType);
-  GeodeticParameters(const GeodeticParameters& gp);
+  GeodeticParameters(const GeodeticParameters& gp) = default;
 
   ~GeodeticParameters();
 

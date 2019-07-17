@@ -183,7 +183,7 @@ long roundBNG(double value) {
 }
 
 void makeBNGString(char ltrnum[4], long easting, long northing, char* BNGString,
-                   long precision)
+                   int precision)
 /* Construct a BNG string from its component parts */
 {
   double divisor;
@@ -403,7 +403,8 @@ BritishNationalGrid::BritishNationalGrid(char* ellipsoidCode)
       BNG_Ellipsoid_Code);
 }
 
-BritishNationalGrid::BritishNationalGrid(const BritishNationalGrid& bng) {
+BritishNationalGrid::BritishNationalGrid(const BritishNationalGrid& bng)
+    : CoordinateSystem(bng) {
   transverseMercator = new TransverseMercator(*(bng.transverseMercator));
   semiMajorAxis = bng.semiMajorAxis;
   flattening = bng.flattening;

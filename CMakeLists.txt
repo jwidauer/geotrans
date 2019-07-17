@@ -5,11 +5,12 @@ file(GLOB_RECURSE sources ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 
 add_library(geotrans ${sources})
 
-# target_compile_options(geotrans
-#                        PRIVATE -Wall
-#                                -Wextra
-#                                -pedantic
-#                                -Werror)
+target_compile_features(geotrans PUBLIC cxx_std_17)
+target_compile_options(geotrans
+                       PRIVATE -Wall
+                               -Wextra
+                               -pedantic
+                               -Werror)
 
 file(GLOB_RECURSE new_list ${CMAKE_CURRENT_SOURCE_DIR}/src/*.h)
 set(dir_list "")

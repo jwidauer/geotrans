@@ -134,7 +134,6 @@ UTM::UTM() {
   strcpy(ellipsCode, "WE");
   double ellipsoidSemiMajorAxis = 6378137.0;
   double ellipsoidFlattening = 1 / 298.257223563;
-  double inv_f = 1 / ellipsoidFlattening;
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -210,7 +209,7 @@ UTM::UTM(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
   }
 }
 
-UTM::UTM(const UTM& u) {
+UTM::UTM(const UTM& u) : CoordinateSystem(u) {
   int zone = 1;
   std::map<int, TransverseMercator*> tempTransverseMercatorMap =
       u.transverseMercatorMap;
@@ -221,8 +220,6 @@ UTM::UTM(const UTM& u) {
     zone++;
   }
 
-  semiMajorAxis = u.semiMajorAxis;
-  flattening = u.flattening;
   UTM_Override = u.UTM_Override;
 }
 

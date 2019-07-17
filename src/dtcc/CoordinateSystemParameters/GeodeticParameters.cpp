@@ -17,12 +17,6 @@ GeodeticParameters::GeodeticParameters(CoordinateType::Enum _coordinateType,
                                        HeightType::Enum __heightType)
     : CoordinateSystemParameters(_coordinateType), _heightType(__heightType) {}
 
-GeodeticParameters::GeodeticParameters(const GeodeticParameters &gp) {
-  _coordinateType = gp._coordinateType;
-
-  _heightType = gp._heightType;
-}
-
 GeodeticParameters::~GeodeticParameters() {}
 
 GeodeticParameters &GeodeticParameters::operator=(

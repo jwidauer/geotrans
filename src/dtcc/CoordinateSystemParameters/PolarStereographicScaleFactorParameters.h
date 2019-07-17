@@ -12,7 +12,7 @@ class MSP_DTCC_API PolarStereographicScaleFactorParameters
     : public CoordinateSystemParameters {
  public:
   PolarStereographicScaleFactorParameters();
-  PolarStereographicScaleFactorParameters(CoordinateType::Enum _coordinateType);
+  explicit PolarStereographicScaleFactorParameters(CoordinateType::Enum _coordinateType);
   PolarStereographicScaleFactorParameters(CoordinateType::Enum _coordinateType,
                                           double __longitudeDownFromPole,
                                           double __scaleFactor,
@@ -20,7 +20,7 @@ class MSP_DTCC_API PolarStereographicScaleFactorParameters
                                           double __falseEasting,
                                           double __falseNorthing);
   PolarStereographicScaleFactorParameters(
-      const PolarStereographicScaleFactorParameters& p);
+      const PolarStereographicScaleFactorParameters& p) = default;
 
   ~PolarStereographicScaleFactorParameters();
 

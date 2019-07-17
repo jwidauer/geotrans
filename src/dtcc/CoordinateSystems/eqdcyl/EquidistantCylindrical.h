@@ -121,9 +121,9 @@ class EquidistantCylindrical : public CoordinateSystem {
                          double standardParallel, double falseEasting,
                          double falseNorthing);
 
-  EquidistantCylindrical(const EquidistantCylindrical& ec);
+  EquidistantCylindrical(const EquidistantCylindrical& ec) = default;
 
-  ~EquidistantCylindrical(void);
+  ~EquidistantCylindrical() = default;
 
   EquidistantCylindrical& operator=(const EquidistantCylindrical& ec);
 

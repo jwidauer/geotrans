@@ -38,24 +38,6 @@ GeodeticCoordinates::GeodeticCoordinates(CoordinateType::Enum _coordinateType,
   _warningMessage[length] = '\0';
 }
 
-GeodeticCoordinates::GeodeticCoordinates(const GeodeticCoordinates& gc) {
-  _coordinateType = gc._coordinateType;
-
-  _longitude = gc._longitude;
-  _latitude = gc._latitude;
-  _height = gc._height;
-
-  int length = strlen(gc._warningMessage);
-  strncpy(_warningMessage, gc._warningMessage, length);
-  _warningMessage[length] = '\0';
-}
-
-GeodeticCoordinates::~GeodeticCoordinates() {
-  _longitude = 0;
-  _latitude = 0;
-  _height = 0;
-}
-
 GeodeticCoordinates& GeodeticCoordinates::operator=(
     const GeodeticCoordinates& gc) {
   if (this != &gc) {

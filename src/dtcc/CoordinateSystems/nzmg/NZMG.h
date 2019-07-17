@@ -99,9 +99,9 @@ class NZMG : public CoordinateSystem {
 
   NZMG(char* ellipsoidCode);
 
-  NZMG(const NZMG& n);
+  NZMG(const NZMG& n) = default;
 
-  ~NZMG(void);
+  ~NZMG() = default;
 
   NZMG& operator=(const NZMG& n);
 

@@ -25,15 +25,6 @@ MapProjection3Parameters::MapProjection3Parameters(
       _falseEasting(__falseEasting),
       _falseNorthing(__falseNorthing) {}
 
-MapProjection3Parameters::MapProjection3Parameters(
-    const MapProjection3Parameters &p) {
-  _coordinateType = p._coordinateType;
-
-  _centralMeridian = p._centralMeridian;
-  _falseEasting = p._falseEasting;
-  _falseNorthing = p._falseNorthing;
-}
-
 MapProjection3Parameters::~MapProjection3Parameters() {
   _centralMeridian = 0;
   _falseEasting = 0;

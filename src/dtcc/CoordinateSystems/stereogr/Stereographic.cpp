@@ -132,8 +132,8 @@ Stereographic::Stereographic(double ellipsoidSemiMajorAxis,
     : Stereo_Ra(6371007.1810824),
       Two_Stereo_Ra(12742014.3621648),
       Stereo_At_Pole(0),
-      Stereo_Origin_Long(0.0),
       Stereo_Origin_Lat(0.0),
+      Stereo_Origin_Long(0.0),
       Stereo_False_Easting(0.0),
       Stereo_False_Northing(0.0),
       Sin_Stereo_Origin_Lat(0.0),
@@ -156,7 +156,6 @@ Stereographic::Stereographic(double ellipsoidSemiMajorAxis,
    */
 
   double es2, es4, es6;
-  double temp = 0;
   double inv_f = 1 / ellipsoidFlattening;
 
   if (ellipsoidSemiMajorAxis <=
@@ -219,24 +218,6 @@ Stereographic::Stereographic(double ellipsoidSemiMajorAxis,
     if (Stereo_Delta_Easting < 0) Stereo_Delta_Easting = -Stereo_Delta_Easting;
   }
 }
-
-Stereographic::Stereographic(const Stereographic& s) {
-  semiMajorAxis = s.semiMajorAxis;
-  flattening = s.flattening;
-  Stereo_Ra = s.Stereo_Ra;
-  Two_Stereo_Ra = s.Two_Stereo_Ra;
-  Stereo_At_Pole = s.Stereo_At_Pole;
-  Stereo_Origin_Long = s.Stereo_Origin_Long;
-  Stereo_Origin_Lat = s.Stereo_Origin_Lat;
-  Stereo_False_Easting = s.Stereo_False_Easting;
-  Stereo_False_Northing = s.Stereo_False_Northing;
-  Sin_Stereo_Origin_Lat = s.Sin_Stereo_Origin_Lat;
-  Cos_Stereo_Origin_Lat = s.Cos_Stereo_Origin_Lat;
-  Stereo_Delta_Easting = s.Stereo_Delta_Easting;
-  Stereo_Delta_Northing = s.Stereo_Delta_Northing;
-}
-
-Stereographic::~Stereographic() {}
 
 Stereographic& Stereographic::operator=(const Stereographic& s) {
   if (this != &s) {

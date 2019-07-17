@@ -200,13 +200,6 @@ NZMG::NZMG(char* ellipsoidCode) : CoordinateSystem(6378388.0, 1 / 297.0) {
   strcpy(NZMGEllipsoidCode, ellipsoidCode);
 }
 
-NZMG::NZMG(const NZMG& n) {
-  semiMajorAxis = n.semiMajorAxis;
-  flattening = n.flattening;
-}
-
-NZMG::~NZMG() {}
-
 NZMG& NZMG::operator=(const NZMG& n) {
   if (this != &n) {
     semiMajorAxis = n.semiMajorAxis;

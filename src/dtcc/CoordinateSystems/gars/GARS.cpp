@@ -145,13 +145,6 @@ const char _9 = '9';
 
 GARS::GARS() : CoordinateSystem(0, 0) {}
 
-GARS::GARS(const GARS& g) {
-  semiMajorAxis = g.semiMajorAxis;
-  flattening = g.flattening;
-}
-
-GARS::~GARS() {}
-
 GARS& GARS::operator=(const GARS& g) {
   if (this != &g) {
     semiMajorAxis = g.semiMajorAxis;
@@ -177,13 +170,13 @@ MSP::CCS::GARSCoordinates* GARS::convertFromGeodetic(
    *
    */
 
-  long ew_value;
+  int ew_value;
   long letter_index[GARS_LETTERS + 1]; /* GARS letters                 */
   char _15_minute_value_str[2] = "";
   char _5_minute_value_str[2] = "";
   double round_error = 5.0e-11;
-  char* _15_minute_array[2][2] = {{"3", "1"}, {"4", "2"}};
-  char* _5_minute_array[3][3] = {
+  char _15_minute_array[2][2][2] = {{"3", "1"}, {"4", "2"}};
+  char _5_minute_array[3][3][2] = {
       {"7", "4", "1"}, {"8", "5", "2"}, {"9", "6", "3"}};
   double long_minutes, lat_minutes;
   double long_remainder, lat_remainder;
@@ -214,7 +207,7 @@ MSP::CCS::GARSCoordinates* GARS::convertFromGeodetic(
   /* now we have a positive number of minutes */
 
   /* Find 30-min cell indices 0-719 and 0-359 */
-  horiz_index_30 = (long)(long_minutes / 30.0);
+  horiz_index_30 = (int)(long_minutes / 30.0);
   vert_index_30 = (long)(lat_minutes / 30.0);
 
   /* Compute remainders 0 <= x < 30.0 */

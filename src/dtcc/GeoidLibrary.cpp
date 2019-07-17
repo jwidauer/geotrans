@@ -883,12 +883,9 @@ void GeoidLibrary::initializeEGM96Geoid() {
    * returned, otherwise GEOID_NO_ERROR is returned.
    */
 
-  int items_read = 0;
   char *file_name = 0;
   char *path_name = NULL;
-  long elevations_read = 0;
   long items_discarded = 0;
-  long num = 0;
   FILE *geoid_height_file;
 
   CCSThreadLock lock(&mutex);
@@ -956,8 +953,6 @@ void GeoidLibrary::initializeEGM96Geoid() {
 
   /*  Extract elements from the file: */
   egm96GeoidList = new float[EGM96_ELEVATIONS];
-  elevations_read =
-      readBinary(egm96GeoidList, 4, EGM96_ELEVATIONS, geoid_height_file);
 
   fclose(geoid_height_file);
   geoid_height_file = 0;
@@ -976,11 +971,8 @@ void GeoidLibrary::initializeEGM84Geoid() {
    * returned, otherwise GEOID_NO_ERROR is returned.
    */
 
-  int items_read = 0;
   char *file_name = 0;
   char *path_name = NULL;
-  long elevations_read = 0;
-  long num = 0;
   FILE *geoid_height_file;
 
   CCSThreadLock lock(&mutex);
@@ -1024,8 +1016,6 @@ void GeoidLibrary::initializeEGM84Geoid() {
 
   /*  Extract elements from the file:                     */
   egm84GeoidList = new float[EGM84_ELEVATIONS];
-  elevations_read =
-      readBinary(egm84GeoidList, 4, EGM84_ELEVATIONS, geoid_height_file);
 
   fclose(geoid_height_file);
 
@@ -1043,11 +1033,8 @@ void GeoidLibrary::initializeEGM84ThirtyMinGeoid() {
    * returned, otherwise GEOID_NO_ERROR is returned.
    */
 
-  int items_read = 0;
   char *file_name = 0;
   char *path_name = NULL;
-  long elevations_read = 0;
-  long num = 0;
   FILE *geoid_height_file;
 
   CCSThreadLock lock(&mutex);
@@ -1092,8 +1079,6 @@ void GeoidLibrary::initializeEGM84ThirtyMinGeoid() {
   /*  Extract elements from the file: */
 
   egm84ThirtyMinGeoidList = new double[EGM84_30_MIN_ELEVATIONS];
-  elevations_read = readBinary(egm84ThirtyMinGeoidList, 8,
-                               EGM84_30_MIN_ELEVATIONS, geoid_height_file);
 
   fclose(geoid_height_file);
 
@@ -1118,9 +1103,6 @@ void GeoidLibrary::initializeEGM2008Geoid(void) {
   // Based on an environment variable, the following
   // logic instantiates the appropriate grid interpolator)
 
-  //#ifdef NDK_BUILD
-  //#else
-  char message[256] = "";
   char *gridUsage = NULL;
 
   gridUsage = getenv("EGM2008_GRID_USAGE");

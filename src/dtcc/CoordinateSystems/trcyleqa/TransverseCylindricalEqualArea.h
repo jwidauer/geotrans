@@ -126,9 +126,9 @@ class TransverseCylindricalEqualArea : public CoordinateSystem {
                                  double falseEasting, double falseNorthing,
                                  double scaleFactor);
 
-  TransverseCylindricalEqualArea(const TransverseCylindricalEqualArea& tcea);
+  TransverseCylindricalEqualArea(const TransverseCylindricalEqualArea& tcea) = default;
 
-  ~TransverseCylindricalEqualArea(void);
+  ~TransverseCylindricalEqualArea() = default;
 
   TransverseCylindricalEqualArea& operator=(
       const TransverseCylindricalEqualArea& tcea);

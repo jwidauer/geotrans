@@ -24,13 +24,6 @@ UTMParameters::UTMParameters(CoordinateType::Enum _coordinateType, long __zone,
       _zone(__zone),
       _override(__override) {}
 
-UTMParameters::UTMParameters(const UTMParameters &p) {
-  _coordinateType = p._coordinateType;
-
-  _zone = p._zone;
-  _override = p._override;
-}
-
 UTMParameters::~UTMParameters() {
   _zone = 0;
   _override = 0;

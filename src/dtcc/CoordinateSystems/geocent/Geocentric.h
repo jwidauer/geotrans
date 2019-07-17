@@ -101,9 +101,9 @@ class MSP_DTCC_API Geocentric : public CoordinateSystem {
 
   Geocentric(double ellipsoidSemiMajorAxis, double ellipsoidFlattening);
 
-  Geocentric(const Geocentric& g);
+  Geocentric(const Geocentric& g) = default;
 
-  ~Geocentric(void);
+  ~Geocentric() = default;
 
   Geocentric& operator=(const Geocentric& g);
 

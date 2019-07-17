@@ -12,13 +12,13 @@ class MSP_DTCC_API MapProjection6Parameters
     : public CoordinateSystemParameters {
  public:
   MapProjection6Parameters();
-  MapProjection6Parameters(CoordinateType::Enum _coordinateType);
+  explicit MapProjection6Parameters(CoordinateType::Enum _coordinateType);
   MapProjection6Parameters(CoordinateType::Enum _coordinateType,
                            double __centralMeridian, double __originLatitude,
                            double __standardParallel1,
                            double __standardParallel2, double __falseEasting,
                            double __falseNorthing);
-  MapProjection6Parameters(const MapProjection6Parameters& p);
+  MapProjection6Parameters(const MapProjection6Parameters& p) = default;
 
   ~MapProjection6Parameters();
 

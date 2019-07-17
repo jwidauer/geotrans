@@ -29,7 +29,8 @@ EquidistantCylindricalParameters::EquidistantCylindricalParameters(
       _falseNorthing(__falseNorthing) {}
 
 EquidistantCylindricalParameters::EquidistantCylindricalParameters(
-    const EquidistantCylindricalParameters &ecp) {
+    const EquidistantCylindricalParameters &ecp)
+    : CoordinateSystemParameters(ecp) {
   _coordinateType = ecp._coordinateType;
 
   _centralMeridian = ecp._centralMeridian;

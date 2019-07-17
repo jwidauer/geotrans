@@ -122,13 +122,13 @@ LocalCartesian::LocalCartesian(double ellipsoidSemiMajorAxis,
                                double originLongitude, double originLatitude,
                                double originHeight, double orientation)
     : CoordinateSystem(),
-      geocentric(0),
+      geocentric(nullptr),
       es2(0.0066943799901413800),
       u0(6378137.0),
       v0(0.0),
       w0(0.0),
-      LocalCart_Origin_Long(0.0),
       LocalCart_Origin_Lat(0.0),
+      LocalCart_Origin_Long(0.0),
       LocalCart_Origin_Height(0.0),
       LocalCart_Orientation(0.0),
       Sin_LocalCart_Origin_Lat(0.0),
@@ -210,10 +210,9 @@ LocalCartesian::LocalCartesian(double ellipsoidSemiMajorAxis,
   geocentric = new Geocentric(semiMajorAxis, flattening);
 }
 
-LocalCartesian::LocalCartesian(const LocalCartesian& lc) {
+LocalCartesian::LocalCartesian(const LocalCartesian& lc)
+    : CoordinateSystem(lc) {
   geocentric = new Geocentric(*(lc.geocentric));
-  semiMajorAxis = lc.semiMajorAxis;
-  flattening = lc.flattening;
   es2 = lc.es2;
   u0 = lc.u0;
   v0 = lc.v0;
@@ -300,7 +299,6 @@ MSP::CCS::CartesianCoordinates* LocalCartesian::convertFromGeodetic(
 
   double longitude = geodeticCoordinates->longitude();
   double latitude = geodeticCoordinates->latitude();
-  double height = geodeticCoordinates->height();
 
   if ((latitude < -PI_OVER_2) ||
       (latitude > PI_OVER_2)) { /* geodetic latitude out of range */

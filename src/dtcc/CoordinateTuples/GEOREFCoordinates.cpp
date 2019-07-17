@@ -44,21 +44,6 @@ GEOREFCoordinates::GEOREFCoordinates(CoordinateType::Enum _coordinateType,
   _warningMessage[length] = '\0';
 }
 
-GEOREFCoordinates::GEOREFCoordinates(const GEOREFCoordinates& c) {
-  _coordinateType = c._coordinateType;
-
-  strncpy(_GEOREFString, c._GEOREFString, 20);
-  _GEOREFString[20] = '\0';
-
-  _precision = c._precision;
-
-  int length = strlen(c._warningMessage);
-  strncpy(_warningMessage, c._warningMessage, length);
-  _warningMessage[length] = '\0';
-}
-
-GEOREFCoordinates::~GEOREFCoordinates() {}
-
 GEOREFCoordinates& GEOREFCoordinates::operator=(const GEOREFCoordinates& c) {
   if (this != &c) {
     _coordinateType = c._coordinateType;

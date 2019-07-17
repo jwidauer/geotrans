@@ -113,9 +113,9 @@ class VanDerGrinten : public CoordinateSystem {
                 double centralMeridian, double falseEasting,
                 double falseNorthing);
 
-  VanDerGrinten(const VanDerGrinten& v);
+  VanDerGrinten(const VanDerGrinten& v) = default;
 
-  ~VanDerGrinten(void);
+  ~VanDerGrinten() = default;
 
   VanDerGrinten& operator=(const VanDerGrinten& v);
 

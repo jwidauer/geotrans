@@ -90,9 +90,9 @@ class GARS : public CoordinateSystem {
  public:
   GARS();
 
-  GARS(const GARS& g);
+  GARS(const GARS& g) = default;
 
-  ~GARS(void);
+  ~GARS() = default;
 
   GARS& operator=(const GARS& g);
 

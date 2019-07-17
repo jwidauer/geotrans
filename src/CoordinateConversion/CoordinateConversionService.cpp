@@ -2959,6 +2959,10 @@ GeodeticCoordinates* CoordinateConversionService::convertSourceToGeodetic(
         return ((WebMercator*)(source->coordinateSystem))
             ->convertToGeodetic(coordinates);
       }
+      default: {
+        throw std::invalid_argument(
+            "Unknown type for coordinate type provided.");
+      }
     }
   } catch (CoordinateConversionException e) {
     throw CoordinateConversionException(

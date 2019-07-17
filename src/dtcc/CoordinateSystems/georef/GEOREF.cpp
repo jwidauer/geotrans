@@ -244,7 +244,7 @@ void convertMinutesToString(double minutes, long precision, char *str) {
   if (minutes == 60.0) minutes = 59.999;
   minutes = minutes * 1000;
   min = roundGEOREF(minutes / divisor);
-  sprintf(str, "%*.*ld", precision, precision, min);
+  sprintf(str, "%*.*ld", (int)precision, (int)precision, min);
   if (precision == 1) strcat(str, "0");
 }
 
@@ -254,13 +254,6 @@ void convertMinutesToString(double minutes, long precision, char *str) {
  */
 
 GEOREF::GEOREF() : CoordinateSystem(0, 0) {}
-
-GEOREF::GEOREF(const GEOREF &g) {
-  semiMajorAxis = g.semiMajorAxis;
-  flattening = g.flattening;
-}
-
-GEOREF::~GEOREF() {}
 
 GEOREF &GEOREF::operator=(const GEOREF &g) {
   if (this != &g) {

@@ -20,9 +20,9 @@ class MSP_DTCC_API MGRSorUSNGCoordinates : public CoordinateTuple {
   MGRSorUSNGCoordinates(CoordinateType::Enum _coordinateType,
                         const char* __warningMessage, const char* __MGRSString,
                         Precision::Enum __precision);
-  MGRSorUSNGCoordinates(const MGRSorUSNGCoordinates& c);
+  MGRSorUSNGCoordinates(const MGRSorUSNGCoordinates& c) = default;
 
-  ~MGRSorUSNGCoordinates();
+  ~MGRSorUSNGCoordinates() = default;
 
   MGRSorUSNGCoordinates& operator=(const MGRSorUSNGCoordinates& c);
 

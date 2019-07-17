@@ -17,17 +17,17 @@ using namespace MSP::CCS;
 
 Datum::Datum()
     : _index(0),
+      _code(0),
+      _ellipsoidCode(0),
+      _name(0),
       _datumType(DatumType::threeParamDatum),
       _deltaX(0.0),
       _deltaY(0.0),
       _deltaZ(0.0),
-      _eastLongitude(0.0),
       _westLongitude(0.0),
-      _northLatitude(0.0),
+      _eastLongitude(0.0),
       _southLatitude(0.0),
-      _code(0),
-      _ellipsoidCode(0),
-      _name(0),
+      _northLatitude(0.0),
       _userDefined(0) {}
 
 Datum::Datum(long __index, const char* __code, const char* __ellipsoidCode,

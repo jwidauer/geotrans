@@ -79,12 +79,12 @@ class MSP_DTCC_API TransverseMercator : public CoordinateSystem {
   /**
    * Copy Constructor
    */
-  TransverseMercator(const TransverseMercator &tm);
+  TransverseMercator(const TransverseMercator &tm) = default;
 
   /**
    * Destructor
    */
-  ~TransverseMercator(void);
+  ~TransverseMercator() = default;
 
   /**
    * Equals operator

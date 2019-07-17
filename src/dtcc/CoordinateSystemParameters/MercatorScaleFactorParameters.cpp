@@ -28,16 +28,6 @@ MercatorScaleFactorParameters::MercatorScaleFactorParameters(
       _falseEasting(__falseEasting),
       _falseNorthing(__falseNorthing) {}
 
-MercatorScaleFactorParameters::MercatorScaleFactorParameters(
-    const MercatorScaleFactorParameters &p) {
-  _coordinateType = p._coordinateType;
-
-  _centralMeridian = p._centralMeridian;
-  _scaleFactor = p._scaleFactor;
-  _falseEasting = p._falseEasting;
-  _falseNorthing = p._falseNorthing;
-}
-
 MercatorScaleFactorParameters::~MercatorScaleFactorParameters() {
   _centralMeridian = 0;
   _scaleFactor = 0;

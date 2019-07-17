@@ -147,10 +147,10 @@ TransverseCylindricalEqualArea::TransverseCylindricalEqualArea(
       c1(.0025146070605187),
       c2(2.6390465943377e-006),
       c3(3.4180460865959e-009),
-      Tcea_Origin_Long(0.0),
       Tcea_Origin_Lat(0.0),
-      Tcea_False_Easting(0.0),
+      Tcea_Origin_Long(0.0),
       Tcea_False_Northing(0.0),
+      Tcea_False_Easting(0.0),
       Tcea_Scale_Factor(1.0),
       Tcea_Min_Easting(-6398628.0),
       Tcea_Max_Easting(6398628.0),
@@ -181,7 +181,7 @@ TransverseCylindricalEqualArea::TransverseCylindricalEqualArea(
   double Sqrt_One_MINUS_es2;
   double e1, e2, e3, e4;
   double lat, sin2lat, sin4lat, sin6lat;
-  double temp, temp_northing;
+  double temp_northing;
   double inv_f = 1 / ellipsoidFlattening;
 
   if (ellipsoidSemiMajorAxis <=
@@ -251,7 +251,6 @@ TransverseCylindricalEqualArea::TransverseCylindricalEqualArea(
 
   GeodeticCoordinates gcTemp(CoordinateType::geodetic, PI, PI_OVER_2);
   MapProjectionCoordinates* tempCoordinates = convertFromGeodetic(&gcTemp);
-  temp = tempCoordinates->easting();
   temp_northing = tempCoordinates->northing();
   delete tempCoordinates;
 
@@ -273,42 +272,6 @@ TransverseCylindricalEqualArea::TransverseCylindricalEqualArea(
     }
   }
 }
-
-TransverseCylindricalEqualArea::TransverseCylindricalEqualArea(
-    const TransverseCylindricalEqualArea& tcea) {
-  semiMajorAxis = tcea.semiMajorAxis;
-  flattening = tcea.flattening;
-  es2 = tcea.es2;
-  es4 = tcea.es4;
-  es6 = tcea.es6;
-  es = tcea.es;
-  M0 = tcea.M0;
-  qp = tcea.qp;
-  One_MINUS_es2 = tcea.One_MINUS_es2;
-  One_OVER_2es = tcea.One_OVER_2es;
-  a0 = tcea.a0;
-  a1 = tcea.a1;
-  a2 = tcea.a2;
-  b0 = tcea.b0;
-  b1 = tcea.b1;
-  b2 = tcea.b2;
-  b3 = tcea.b3;
-  c0 = tcea.c0;
-  c1 = tcea.c1;
-  c2 = tcea.c2;
-  c3 = tcea.c3;
-  Tcea_Origin_Long = tcea.Tcea_Origin_Long;
-  Tcea_Origin_Lat = tcea.Tcea_Origin_Lat;
-  Tcea_False_Easting = tcea.Tcea_False_Easting;
-  Tcea_False_Northing = tcea.Tcea_False_Northing;
-  Tcea_Scale_Factor = tcea.Tcea_Scale_Factor;
-  Tcea_Min_Easting = tcea.Tcea_Min_Easting;
-  Tcea_Max_Easting = tcea.Tcea_Max_Easting;
-  Tcea_Min_Northing = tcea.Tcea_Min_Northing;
-  Tcea_Max_Northing = tcea.Tcea_Max_Northing;
-}
-
-TransverseCylindricalEqualArea::~TransverseCylindricalEqualArea() {}
 
 TransverseCylindricalEqualArea& TransverseCylindricalEqualArea::operator=(
     const TransverseCylindricalEqualArea& tcea) {

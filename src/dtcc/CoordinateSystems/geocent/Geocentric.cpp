@@ -144,15 +144,6 @@ Geocentric::Geocentric(double ellipsoidSemiMajorAxis,
   Geocent_algorithm = UNDEFINED;
 }
 
-Geocentric::Geocentric(const Geocentric &g) {
-  semiMajorAxis = g.semiMajorAxis;
-  flattening = g.flattening;
-  Geocent_e2 = g.Geocent_e2;
-  Geocent_ep2 = g.Geocent_ep2;
-}
-
-Geocentric::~Geocentric() {}
-
 Geocentric &Geocentric::operator=(const Geocentric &g) {
   if (this != &g) {
     semiMajorAxis = g.semiMajorAxis;

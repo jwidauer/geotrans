@@ -20,9 +20,9 @@ class MSP_DTCC_API GARSCoordinates : public CoordinateTuple {
   GARSCoordinates(CoordinateType::Enum _coordinateType,
                   const char* __warningMessage, const char* __GARSString,
                   Precision::Enum __precision);
-  GARSCoordinates(const GARSCoordinates& gc);
+  GARSCoordinates(const GARSCoordinates& gc) = default;
 
-  ~GARSCoordinates();
+  ~GARSCoordinates() = default;
 
   GARSCoordinates& operator=(const GARSCoordinates& gc);
 

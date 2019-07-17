@@ -128,8 +128,8 @@ CylindricalEqualArea::CylindricalEqualArea(double ellipsoidSemiMajorAxis,
                                            double falseEasting,
                                            double falseNorthing)
     : CoordinateSystem(),
-      es(.081819190842622),
       es2(0.0066943799901413800),
+      es(.081819190842622),
       es4(4.4814723452405e-005),
       es6(3.0000678794350e-007),
       k0(1.0),
@@ -138,10 +138,10 @@ CylindricalEqualArea::CylindricalEqualArea(double ellipsoidSemiMajorAxis,
       c0(.0022392088624809),
       c1(2.8830839728915e-006),
       c2(5.0331826636906e-009),
-      Cyeq_Origin_Long(0.0),
       Cyeq_Origin_Lat(0.0),
-      Cyeq_False_Easting(0.0),
+      Cyeq_Origin_Long(0.0),
       Cyeq_False_Northing(0.0),
+      Cyeq_False_Easting(0.0),
       Cyeq_Max_Easting(20037509.0),
       Cyeq_Min_Easting(-20037509.0),
       Cyeq_Delta_Northing(6363886.0) {
@@ -254,30 +254,6 @@ CylindricalEqualArea::CylindricalEqualArea(double ellipsoidSemiMajorAxis,
     Cyeq_Max_Easting -= Cyeq_False_Easting;
   }
 }
-
-CylindricalEqualArea::CylindricalEqualArea(const CylindricalEqualArea& cea) {
-  semiMajorAxis = cea.semiMajorAxis;
-  flattening = cea.flattening;
-  es = cea.es;
-  es2 = cea.es2;
-  es4 = cea.es4;
-  es6 = cea.es6;
-  k0 = cea.k0;
-  Cyeq_a_k0 = cea.Cyeq_a_k0;
-  two_k0 = cea.two_k0;
-  c0 = cea.c0;
-  c1 = cea.c1;
-  c2 = cea.c2;
-  Cyeq_Origin_Long = cea.Cyeq_Origin_Long;
-  Cyeq_Origin_Lat = cea.Cyeq_Origin_Lat;
-  Cyeq_False_Easting = cea.Cyeq_False_Easting;
-  Cyeq_False_Northing = cea.Cyeq_False_Northing;
-  Cyeq_Max_Easting = cea.Cyeq_Max_Easting;
-  Cyeq_Min_Easting = cea.Cyeq_Min_Easting;
-  Cyeq_Delta_Northing = cea.Cyeq_Delta_Northing;
-}
-
-CylindricalEqualArea::~CylindricalEqualArea() {}
 
 CylindricalEqualArea& CylindricalEqualArea::operator=(
     const CylindricalEqualArea& cea) {

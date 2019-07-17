@@ -17,9 +17,9 @@ class MSP_DTCC_API MapProjectionCoordinates : public CoordinateTuple {
   MapProjectionCoordinates(CoordinateType::Enum _coordinateType,
                            const char* __warningMessage, double __easting,
                            double __northing);
-  MapProjectionCoordinates(const MapProjectionCoordinates& c);
+  MapProjectionCoordinates(const MapProjectionCoordinates& c) = default;
 
-  ~MapProjectionCoordinates();
+  ~MapProjectionCoordinates() = default;
 
   MapProjectionCoordinates& operator=(const MapProjectionCoordinates& c);
 

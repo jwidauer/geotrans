@@ -17,9 +17,9 @@ class MSP_DTCC_API GeodeticCoordinates : public CoordinateTuple {
   GeodeticCoordinates(CoordinateType::Enum _coordinateType,
                       const char* __warningMessage, double __longitude,
                       double __latitude, double __height = 0);
-  GeodeticCoordinates(const GeodeticCoordinates& gc);
+  GeodeticCoordinates(const GeodeticCoordinates& gc) = default;
 
-  ~GeodeticCoordinates();
+  ~GeodeticCoordinates() = default;
 
   GeodeticCoordinates& operator=(const GeodeticCoordinates& gc);
 

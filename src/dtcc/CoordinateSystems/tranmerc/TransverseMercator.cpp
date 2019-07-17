@@ -56,14 +56,13 @@ TransverseMercator::TransverseMercator(
     double centralMeridian, double latitudeOfTrueScale, double falseEasting,
     double falseNorthing, double scaleFactor, char *ellipsoidCode)
     : CoordinateSystem(ellipsoidSemiMajorAxis, ellipsoidFlattening),
-      TranMerc_Origin_Long(centralMeridian),
       TranMerc_Origin_Lat(latitudeOfTrueScale),
-      TranMerc_False_Easting(falseEasting),
+      TranMerc_Origin_Long(centralMeridian),
       TranMerc_False_Northing(falseNorthing),
+      TranMerc_False_Easting(falseEasting),
       TranMerc_Scale_Factor(scaleFactor),
       TranMerc_Delta_Easting(20000000.0),
       TranMerc_Delta_Northing(10000000.0) {
-  double TranMerc_b;  // Semi-minor axis of ellipsoid, in meters
   double invFlattening = 1.0 / ellipsoidFlattening;
 
   strcpy(ellipsCode, ellipsoidCode);
@@ -103,12 +102,6 @@ TransverseMercator::TransverseMercator(
   TranMerc_K0R4 = R4oa * TranMerc_Scale_Factor * ellipsoidSemiMajorAxis;
   TranMerc_K0R4inv = 1.0 / TranMerc_K0R4;
 }
-
-TransverseMercator::TransverseMercator(const TransverseMercator &tm) {
-  *this = tm;
-}
-
-TransverseMercator::~TransverseMercator() {}
 
 TransverseMercator &TransverseMercator::operator=(
     const TransverseMercator &tm) {

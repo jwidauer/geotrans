@@ -116,9 +116,9 @@ class Polyconic : public CoordinateSystem {
             double centralMeridian, double originLatitude, double falseEasting,
             double falseNorthing);
 
-  Polyconic(const Polyconic& p);
+  Polyconic(const Polyconic& p) = default;
 
-  ~Polyconic(void);
+  ~Polyconic() = default;
 
   Polyconic& operator=(const Polyconic& p);
 

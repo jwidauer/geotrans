@@ -343,7 +343,7 @@ void DatumLibraryImplementation::deleteInstance() {
 }
 
 DatumLibraryImplementation::DatumLibraryImplementation()
-    : _ellipsoidLibraryImplementation(0),
+    : _ellipsoidLibraryImplementation(nullptr),
       datum3ParamCount(0),
       datum7ParamCount(0) {
   loadDatums();
@@ -382,7 +382,7 @@ DatumLibraryImplementation::~DatumLibraryImplementation() {
   }
   datumList.clear();
 
-  _ellipsoidLibraryImplementation = 0;
+  _ellipsoidLibraryImplementation = nullptr;
 }
 
 DatumLibraryImplementation& DatumLibraryImplementation::operator=(
@@ -445,8 +445,6 @@ void DatumLibraryImplementation::define3ParamDatum(
   long index = 0;
   long ellipsoid_index = 0;
   long code_length = 0;
-  char* PathName = NULL;
-  FILE* fp_3param = NULL;
 
   if (!(((sigmaX > 0.0) || (sigmaX == -1.0)) &&
         ((sigmaY > 0.0) || (sigmaY == -1.0)) &&
@@ -542,8 +540,6 @@ void DatumLibraryImplementation::define7ParamDatum(
   long index = 0;
   long ellipsoid_index = 0;
   long code_length = 0;
-  char* PathName = NULL;
-  FILE* fp_7param = NULL;
 
   if ((rotationX < -60.0) || (rotationX > 60.0))
     throw CoordinateConversionException(ErrorMessages::datumRotation);
@@ -611,9 +607,6 @@ void DatumLibraryImplementation::removeDatum(const char* code) {
    *
    */
 
-  char* PathName = NULL;
-  FILE* fp_3param = NULL;
-  FILE* fp_7param = NULL;
   long index = 0;
   bool delete_3param_datum = true;
 
@@ -704,7 +697,7 @@ void DatumLibraryImplementation::datumIndex(const char* code, long* index) {
   }
 }
 
-void DatumLibraryImplementation::datumCode(const long index, char* code) {
+void DatumLibraryImplementation::datumCode(const size_t index, char* code) {
   /*
    *  The function datumCode returns the 5-letter code of the datum
    *  referenced by index.
@@ -713,13 +706,13 @@ void DatumLibraryImplementation::datumCode(const long index, char* code) {
    *  code    : The datum Code of the datum referenced by Index.      (output)
    */
 
-  if (index < 0 || index >= datumList.size())
+  if (index >= datumList.size())
     throw CoordinateConversionException(ErrorMessages::invalidIndex);
   else
     strcpy(code, datumList[index]->code());
 }
 
-void DatumLibraryImplementation::datumName(const long index, char* name) {
+void DatumLibraryImplementation::datumName(const size_t index, char* name) {
   /*
    *  The function datumName returns the name of the datum referenced by
    *  index.
@@ -728,13 +721,13 @@ void DatumLibraryImplementation::datumName(const long index, char* name) {
    *  name    : The datum Name of the datum referenced by Index.      (output)
    */
 
-  if (index < 0 || index >= datumList.size())
+  if (index >= datumList.size())
     throw CoordinateConversionException(ErrorMessages::invalidIndex);
   else
     strcpy(name, datumList[index]->name());
 }
 
-void DatumLibraryImplementation::datumEllipsoidCode(const long index,
+void DatumLibraryImplementation::datumEllipsoidCode(const size_t index,
                                                     char* code) {
   /*
    *  The function datumEllipsoidCode returns the 2-letter ellipsoid code
@@ -745,13 +738,13 @@ void DatumLibraryImplementation::datumEllipsoidCode(const long index,
    *               the datum referenced by index.
    */
 
-  if (index < 0 || index >= datumList.size())
+  if (index >= datumList.size())
     throw CoordinateConversionException(ErrorMessages::invalidIndex);
   else
     strcpy(code, datumList[index]->ellipsoidCode());
 }
 
-void DatumLibraryImplementation::datumStandardErrors(const long index,
+void DatumLibraryImplementation::datumStandardErrors(const size_t index,
                                                      double* sigmaX,
                                                      double* sigmaY,
                                                      double* sigmaZ) {
@@ -765,7 +758,7 @@ void DatumLibraryImplementation::datumStandardErrors(const long index,
    *    sigma_Z    : Standard error in Z in meters                   (output)
    */
 
-  if (index < 0 || index >= datumList.size())
+  if (index >= datumList.size())
     throw CoordinateConversionException(ErrorMessages::invalidIndex);
   else {
     Datum* datum = datumList[index];
@@ -780,7 +773,7 @@ void DatumLibraryImplementation::datumStandardErrors(const long index,
   }
 }
 
-void DatumLibraryImplementation::datumSevenParameters(const long index,
+void DatumLibraryImplementation::datumSevenParameters(const size_t index,
                                                       double* rotationX,
                                                       double* rotationY,
                                                       double* rotationZ,
@@ -797,7 +790,7 @@ void DatumLibraryImplementation::datumSevenParameters(const long index,
    *    scaleFactor : Scale factor                                   (output)
    */
 
-  if (index < 0 || index >= datumList.size())
+  if (index >= datumList.size())
     throw CoordinateConversionException(ErrorMessages::invalidIndex);
   else {
     Datum* datum = datumList[index];
@@ -814,7 +807,7 @@ void DatumLibraryImplementation::datumSevenParameters(const long index,
   }
 }
 
-void DatumLibraryImplementation::datumTranslationValues(const long index,
+void DatumLibraryImplementation::datumTranslationValues(const size_t index,
                                                         double* deltaX,
                                                         double* deltaY,
                                                         double* deltaZ) {
@@ -828,7 +821,7 @@ void DatumLibraryImplementation::datumTranslationValues(const long index,
    *    deltaZ      : Z translation in meters                        (output)
    */
 
-  if (index < 0 || index >= datumList.size())
+  if (index >= datumList.size())
     throw CoordinateConversionException(ErrorMessages::invalidIndex);
   else {
     Datum* datum = datumList[index];
@@ -1035,7 +1028,7 @@ Accuracy* DatumLibraryImplementation::datumShiftError(
   return new Accuracy(circularError90, linearError90, sphericalError90);
 }
 
-void DatumLibraryImplementation::datumUserDefined(const long index,
+void DatumLibraryImplementation::datumUserDefined(const size_t index,
                                                   long* result) {
   /*
    *  The function datumUserDefined checks whether or not the specified datum is
@@ -1050,7 +1043,7 @@ void DatumLibraryImplementation::datumUserDefined(const long index,
 
   *result = false;
 
-  if (index < 0 || index >= datumList.size())
+  if (index >= datumList.size())
     throw CoordinateConversionException(ErrorMessages::invalidIndex);
   else {
     Datum* datum = datumList[index];
@@ -1111,7 +1104,7 @@ bool DatumLibraryImplementation::datumUsesEllipsoid(const char* ellipsoidCode) {
   return ellipsoid_in_use;
 }
 
-void DatumLibraryImplementation::datumValidRectangle(const long index,
+void DatumLibraryImplementation::datumValidRectangle(const size_t index,
                                                      double* westLongitude,
                                                      double* eastLongitude,
                                                      double* southLatitude,
@@ -1128,7 +1121,7 @@ void DatumLibraryImplementation::datumValidRectangle(const long index,
    *
    */
 
-  if (index < 0 && index >= datumList.size())
+  if (index >= datumList.size())
     throw CoordinateConversionException(ErrorMessages::invalidIndex);
   else {
     *westLongitude = datumList[index]->westLongitude();
@@ -1485,7 +1478,7 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticDatumShift(
 }
 
 GeodeticCoordinates* DatumLibraryImplementation::geodeticShiftFromWGS84(
-    const GeodeticCoordinates* sourceCoordinates, const long targetIndex) {
+    const GeodeticCoordinates* sourceCoordinates, const size_t targetIndex) {
   /*
    *  The function geodeticShiftFromWGS84 shifts geodetic coordinates relative
    * to WGS84 to geodetic coordinates relative to a given local datum.
@@ -1515,7 +1508,7 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticShiftFromWGS84(
   double WGS84Latitude = sourceCoordinates->latitude();
   double WGS84Height = sourceCoordinates->height();
 
-  if ((targetIndex < 0) || (targetIndex >= datumList.size()))
+  if (targetIndex >= datumList.size())
     throw CoordinateConversionException(ErrorMessages::invalidIndex);
   if ((WGS84Latitude < (-90 * PI_OVER_180)) ||
       (WGS84Latitude > (90 * PI_OVER_180)))
@@ -1583,13 +1576,14 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticShiftFromWGS84(
         }
       }
     }
+    [[fallthrough]];
     default:
       throw CoordinateConversionException(ErrorMessages::datumType);
   }
 }
 
 GeodeticCoordinates* DatumLibraryImplementation::geodeticShiftToWGS84(
-    const long sourceIndex, const GeodeticCoordinates* sourceCoordinates) {
+    const size_t sourceIndex, const GeodeticCoordinates* sourceCoordinates) {
   /*
    *  The function geodeticShiftToWGS84 shifts geodetic coordinates relative to
    * a given source datum to geodetic coordinates relative to WGS84.
@@ -1619,7 +1613,7 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticShiftToWGS84(
   double sourceLatitude = sourceCoordinates->latitude();
   double sourceHeight = sourceCoordinates->height();
 
-  if ((sourceIndex < 0) || (sourceIndex >= datumList.size()))
+  if (sourceIndex >= datumList.size())
     throw CoordinateConversionException(ErrorMessages::invalidIndex);
   if ((sourceLatitude < (-90 * PI_OVER_180)) ||
       (sourceLatitude > (90 * PI_OVER_180)))
@@ -1692,12 +1686,13 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticShiftToWGS84(
         }
       }
     }
+    [[fallthrough]];
     default:
       throw CoordinateConversionException(ErrorMessages::datumType);
   }
 }
 
-void DatumLibraryImplementation::retrieveDatumType(const long index,
+void DatumLibraryImplementation::retrieveDatumType(const size_t index,
                                                    DatumType::Enum* datumType) {
   /*
    *  The function retrieveDatumType returns the type of the datum referenced by
@@ -1708,13 +1703,13 @@ void DatumLibraryImplementation::retrieveDatumType(const long index,
    *
    */
 
-  if (index < 0 || index >= datumList.size())
+  if (index >= datumList.size())
     throw CoordinateConversionException(ErrorMessages::invalidIndex);
   else
     *datumType = datumList[index]->datumType();
 }
 
-void DatumLibraryImplementation::validDatum(const long index, double longitude,
+void DatumLibraryImplementation::validDatum(const size_t index, double longitude,
                                             double latitude, long* result) {
   /*
    *  The function validDatum checks whether or not the specified location is
@@ -1730,7 +1725,7 @@ void DatumLibraryImplementation::validDatum(const long index, double longitude,
    */
   *result = 0;
 
-  if ((index < 0) || (index >= datumList.size()))
+  if (index >= datumList.size())
     throw CoordinateConversionException(ErrorMessages::invalidIndex);
   if ((latitude < MIN_LAT) || (latitude > MAX_LAT))
     throw CoordinateConversionException(ErrorMessages::latitude);
@@ -1801,7 +1796,7 @@ void DatumLibraryImplementation::loadDatums() {
    * in this component.
    */
 
-  long index = 0, i = 0;
+  long index = 0;
   char* PathName = NULL;
   char* FileName7 = 0;
   FILE* fp_7param = NULL;

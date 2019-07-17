@@ -130,13 +130,13 @@ Neys::Neys(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
            double centralMeridian, double originLatitude,
            double standardParallel, double falseEasting, double falseNorthing)
     : CoordinateSystem(),
-      lambertConformalConic2(0),
+      lambertConformalConic2(nullptr),
       Neys_Std_Parallel_1(SEVENTY_ONE),
       Neys_Std_Parallel_2(MAX_LAT),
-      Neys_Origin_Long(0.0),
       Neys_Origin_Lat(80.0 * PI_OVER_180),
-      Neys_False_Easting(0.0),
+      Neys_Origin_Long(0.0),
       Neys_False_Northing(0.0),
+      Neys_False_Easting(0.0),
       Neys_Delta_Easting(400000000.0),
       Neys_Delta_Northing(400000000.0) {
   /*
@@ -202,11 +202,9 @@ Neys::Neys(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
       Neys_False_Northing);
 }
 
-Neys::Neys(const Neys& n) {
+Neys::Neys(const Neys& n) : CoordinateSystem(n) {
   lambertConformalConic2 =
       new LambertConformalConic(*(n.lambertConformalConic2));
-  semiMajorAxis = n.semiMajorAxis;
-  flattening = n.flattening;
   Neys_Std_Parallel_1 = n.Neys_Std_Parallel_1;
   Neys_Std_Parallel_2 = n.Neys_Std_Parallel_2;
   Neys_Origin_Long = n.Neys_Origin_Long;
@@ -219,7 +217,7 @@ Neys::Neys(const Neys& n) {
 
 Neys::~Neys() {
   delete lambertConformalConic2;
-  lambertConformalConic2 = 0;
+  lambertConformalConic2 = nullptr;
 }
 
 Neys& Neys::operator=(const Neys& n) {

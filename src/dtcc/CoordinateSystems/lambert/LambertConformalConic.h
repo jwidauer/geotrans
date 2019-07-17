@@ -148,9 +148,9 @@ class LambertConformalConic : public CoordinateSystem {
                         double standardParallel2, double falseEasting,
                         double falseNorthing);
 
-  LambertConformalConic(const LambertConformalConic& lcc1);
+  LambertConformalConic(const LambertConformalConic& lcc1) = default;
 
-  ~LambertConformalConic(void);
+  ~LambertConformalConic() = default;
 
   LambertConformalConic& operator=(const LambertConformalConic& lcc1);
 

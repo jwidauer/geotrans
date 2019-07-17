@@ -131,10 +131,10 @@ AzimuthalEquidistant::AzimuthalEquidistant(double ellipsoidSemiMajorAxis,
       Ra(6371007.1810824),
       Sin_Azeq_Origin_Lat(0.0),
       Cos_Azeq_Origin_Lat(1.0),
-      Azeq_Origin_Long(0.0),
       Azeq_Origin_Lat(0.0),
-      Azeq_False_Easting(0.0),
+      Azeq_Origin_Long(0.0),
       Azeq_False_Northing(0.0),
+      Azeq_False_Easting(0.0),
       abs_Azeq_Origin_Lat(0.0),
       Azeq_Delta_Northing(19903915.0),
       Azeq_Delta_Easting(19903915.0) {
@@ -221,23 +221,6 @@ AzimuthalEquidistant::AzimuthalEquidistant(double ellipsoidSemiMajorAxis,
     Azeq_Delta_Easting = 19903915.0;
   }
 }
-
-AzimuthalEquidistant::AzimuthalEquidistant(const AzimuthalEquidistant& ae) {
-  semiMajorAxis = ae.semiMajorAxis;
-  flattening = ae.flattening;
-  Ra = ae.Ra;
-  Sin_Azeq_Origin_Lat = ae.Sin_Azeq_Origin_Lat;
-  Cos_Azeq_Origin_Lat = ae.Cos_Azeq_Origin_Lat;
-  Azeq_Origin_Long = ae.Azeq_Origin_Long;
-  Azeq_Origin_Lat = ae.Azeq_Origin_Lat;
-  Azeq_False_Easting = ae.Azeq_False_Easting;
-  Azeq_False_Northing = ae.Azeq_False_Northing;
-  abs_Azeq_Origin_Lat = ae.abs_Azeq_Origin_Lat;
-  Azeq_Delta_Northing = ae.Azeq_Delta_Northing;
-  Azeq_Delta_Easting = ae.Azeq_Delta_Easting;
-}
-
-AzimuthalEquidistant::~AzimuthalEquidistant() {}
 
 AzimuthalEquidistant& AzimuthalEquidistant::operator=(
     const AzimuthalEquidistant& ae) {

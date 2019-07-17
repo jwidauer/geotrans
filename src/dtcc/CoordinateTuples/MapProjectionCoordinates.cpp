@@ -32,23 +32,6 @@ MapProjectionCoordinates::MapProjectionCoordinates(
   _warningMessage[length] = '\0';
 }
 
-MapProjectionCoordinates::MapProjectionCoordinates(
-    const MapProjectionCoordinates& c) {
-  _coordinateType = c._coordinateType;
-
-  _easting = c._easting;
-  _northing = c._northing;
-
-  int length = strlen(c._warningMessage);
-  strncpy(_warningMessage, c._warningMessage, length);
-  _warningMessage[length] = '\0';
-}
-
-MapProjectionCoordinates::~MapProjectionCoordinates() {
-  _easting = 0;
-  _northing = 0;
-}
-
 MapProjectionCoordinates& MapProjectionCoordinates::operator=(
     const MapProjectionCoordinates& c) {
   if (this != &c) {

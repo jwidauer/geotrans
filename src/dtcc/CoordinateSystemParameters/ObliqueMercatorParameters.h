@@ -12,13 +12,13 @@ class MSP_DTCC_API ObliqueMercatorParameters
     : public CoordinateSystemParameters {
  public:
   ObliqueMercatorParameters();
-  ObliqueMercatorParameters(CoordinateType::Enum _coordinateType);
+  explicit ObliqueMercatorParameters(CoordinateType::Enum _coordinateType);
   ObliqueMercatorParameters(CoordinateType::Enum _coordinateType,
                             double __originLatitude, double __longitude1,
                             double __latitude1, double __longitude2,
                             double __latitude2, double __falseEasting,
                             double __falseNorthing, double __scaleFactor);
-  ObliqueMercatorParameters(const ObliqueMercatorParameters& p);
+  ObliqueMercatorParameters(const ObliqueMercatorParameters& p) = default;
 
   ~ObliqueMercatorParameters();
 

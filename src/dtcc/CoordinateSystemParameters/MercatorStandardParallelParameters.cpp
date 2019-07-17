@@ -32,17 +32,6 @@ MercatorStandardParallelParameters::MercatorStandardParallelParameters(
       _falseEasting(__falseEasting),
       _falseNorthing(__falseNorthing) {}
 
-MercatorStandardParallelParameters::MercatorStandardParallelParameters(
-    const MercatorStandardParallelParameters &p) {
-  _coordinateType = p._coordinateType;
-
-  _centralMeridian = p._centralMeridian;
-  _standardParallel = p._standardParallel;
-  _scaleFactor = p._scaleFactor;
-  _falseEasting = p._falseEasting;
-  _falseNorthing = p._falseNorthing;
-}
-
 MercatorStandardParallelParameters::~MercatorStandardParallelParameters() {
   _centralMeridian = 0;
   _standardParallel = 0;

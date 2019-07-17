@@ -118,9 +118,9 @@ class Orthographic : public CoordinateSystem {
                double centralMeridian, double originLatitude,
                double falseEasting, double falseNorthing);
 
-  Orthographic(const Orthographic& o);
+  Orthographic(const Orthographic& o) = default;
 
-  ~Orthographic(void);
+  ~Orthographic() = default;
 
   Orthographic& operator=(const Orthographic& o);
 

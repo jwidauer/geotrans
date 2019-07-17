@@ -34,17 +34,6 @@ PolarStereographicStandardParallelParameters::
       _falseNorthing(__falseNorthing) {}
 
 PolarStereographicStandardParallelParameters::
-    PolarStereographicStandardParallelParameters(
-        const PolarStereographicStandardParallelParameters &p) {
-  _coordinateType = p._coordinateType;
-
-  _centralMeridian = p._centralMeridian;
-  _standardParallel = p._standardParallel;
-  _falseEasting = p._falseEasting;
-  _falseNorthing = p._falseNorthing;
-}
-
-PolarStereographicStandardParallelParameters::
     ~PolarStereographicStandardParallelParameters() {
   _centralMeridian = 0;
   _standardParallel = 0;

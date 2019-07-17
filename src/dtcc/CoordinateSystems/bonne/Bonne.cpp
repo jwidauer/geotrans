@@ -139,10 +139,10 @@ Bonne::Bonne(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
       a1(3.7009490356205e-006),
       a2(7.4478137675038e-009),
       a3(1.7035993238596e-011),
-      Bonn_Origin_Long(0.0),
       Bonn_Origin_Lat(((45 * PI) / 180.0)),
-      Bonn_False_Easting(0.0),
+      Bonn_Origin_Long(0.0),
       Bonn_False_Northing(0.0),
+      Bonn_False_Easting(0.0),
       Sin_Bonn_Origin_Lat(.70710678118655),
       Bonn_am1sin(6388838.2901211),
       Bonn_Max_Easting(20027474.0),
@@ -253,7 +253,7 @@ Bonne::Bonne(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
   }
 }
 
-Bonne::Bonne(const Bonne& b) {
+Bonne::Bonne(const Bonne& b) : CoordinateSystem(b) {
   sinusoidal = new Sinusoidal(*(b.sinusoidal));
   semiMajorAxis = b.semiMajorAxis;
   flattening = b.flattening;

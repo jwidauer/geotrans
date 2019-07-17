@@ -130,9 +130,9 @@ EquidistantCylindrical::EquidistantCylindrical(double ellipsoidSemiMajorAxis,
       es4(4.4814723452405e-005),
       es6(3.0000678794350e-007),
       Ra(6371007.1810824),
+      Eqcy_Std_Parallel(0.0),
       Cos_Eqcy_Std_Parallel(1.0),
       Eqcy_Origin_Long(0.0),
-      Eqcy_Std_Parallel(0.0),
       Eqcy_False_Easting(0.0),
       Eqcy_False_Northing(0.0),
       Eqcy_Delta_Northing(10007555.0),
@@ -231,27 +231,6 @@ EquidistantCylindrical::EquidistantCylindrical(double ellipsoidSemiMajorAxis,
     Eqcy_Max_Easting -= Eqcy_False_Easting;
   }
 }
-
-EquidistantCylindrical::EquidistantCylindrical(
-    const EquidistantCylindrical& ec) {
-  semiMajorAxis = ec.semiMajorAxis;
-  flattening = ec.flattening;
-  es2 = ec.es2;
-  es4 = ec.es4;
-  es6 = ec.es6;
-  Ra = ec.Ra;
-  Cos_Eqcy_Std_Parallel = ec.Cos_Eqcy_Std_Parallel;
-  Eqcy_Origin_Long = ec.Eqcy_Origin_Long;
-  Eqcy_Std_Parallel = ec.Eqcy_Std_Parallel;
-  Eqcy_False_Easting = ec.Eqcy_False_Easting;
-  Eqcy_False_Northing = ec.Eqcy_False_Northing;
-  Eqcy_Delta_Northing = ec.Eqcy_Delta_Northing;
-  Eqcy_Max_Easting = ec.Eqcy_Max_Easting;
-  Eqcy_Min_Easting = ec.Eqcy_Min_Easting;
-  Ra_Cos_Eqcy_Std_Parallel = ec.Ra_Cos_Eqcy_Std_Parallel;
-}
-
-EquidistantCylindrical::~EquidistantCylindrical() {}
 
 EquidistantCylindrical& EquidistantCylindrical::operator=(
     const EquidistantCylindrical& ec) {

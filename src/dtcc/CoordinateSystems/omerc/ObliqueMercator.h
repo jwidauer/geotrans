@@ -134,9 +134,9 @@ class ObliqueMercator : public CoordinateSystem {
                   double longitude2, double latitude2, double falseEasting,
                   double falseNorthing, double scaleFactor);
 
-  ObliqueMercator(const ObliqueMercator& om);
+  ObliqueMercator(const ObliqueMercator& om) = default;
 
-  ~ObliqueMercator(void);
+  ~ObliqueMercator() = default;
 
   ObliqueMercator& operator=(const ObliqueMercator& om);
 

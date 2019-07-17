@@ -133,8 +133,8 @@ Sinusoidal::Sinusoidal(double ellipsoidSemiMajorAxis,
       a2(7.4478137675038e-009),
       a3(1.7035993238596e-011),
       Sinu_Origin_Long(0.0),
-      Sinu_False_Easting(0.0),
       Sinu_False_Northing(0.0),
+      Sinu_False_Easting(0.0),
       Sinu_Max_Easting(20037509.0),
       Sinu_Min_Easting(-20037509.0),
       Sinu_Delta_Northing(10001966.0) {
@@ -208,30 +208,6 @@ Sinusoidal::Sinusoidal(double ellipsoidSemiMajorAxis,
     Sinu_Min_Easting = -20037509.0;
   }
 }
-
-Sinusoidal::Sinusoidal(const Sinusoidal& s) {
-  semiMajorAxis = s.semiMajorAxis;
-  flattening = s.flattening;
-  es2 = s.es2;
-  es4 = s.es4;
-  es6 = s.es6;
-  c0 = s.c0;
-  c1 = s.c1;
-  c2 = s.c2;
-  c3 = s.c3;
-  a0 = s.a0;
-  a1 = s.a1;
-  a2 = s.a2;
-  a3 = s.a3;
-  Sinu_Origin_Long = s.Sinu_Origin_Long;
-  Sinu_False_Easting = s.Sinu_False_Easting;
-  Sinu_False_Northing = s.Sinu_False_Northing;
-  Sinu_Max_Easting = s.Sinu_Max_Easting;
-  Sinu_Min_Easting = s.Sinu_Min_Easting;
-  Sinu_Delta_Northing = s.Sinu_Delta_Northing;
-}
-
-Sinusoidal::~Sinusoidal() {}
 
 Sinusoidal& Sinusoidal::operator=(const Sinusoidal& s) {
   if (this != &s) {

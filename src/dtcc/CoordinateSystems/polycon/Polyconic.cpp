@@ -134,10 +134,10 @@ Polyconic::Polyconic(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
       c1(.0025146070605187),
       c2(2.6390465943377e-006),
       c3(3.4180460865959e-009),
-      Poly_Origin_Long(0.0),
       Poly_Origin_Lat(0.0),
-      Poly_False_Easting(0.0),
+      Poly_Origin_Long(0.0),
       Poly_False_Northing(0.0),
+      Poly_False_Easting(0.0),
       Poly_Max_Easting(20037509.0),
       Poly_Max_Northing(15348215.0),
       Poly_Min_Easting(-20037509.0),
@@ -255,29 +255,6 @@ Polyconic::Polyconic(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
     Poly_Min_Northing -= Poly_False_Northing;
   }
 }
-
-Polyconic::Polyconic(const Polyconic& p) {
-  semiMajorAxis = p.semiMajorAxis;
-  flattening = p.flattening;
-  es2 = p.es2;
-  es4 = p.es4;
-  es6 = p.es6;
-  M0 = p.M0;
-  c0 = p.c0;
-  c1 = p.c1;
-  c2 = p.c2;
-  c3 = p.c3;
-  Poly_Origin_Long = p.Poly_Origin_Long;
-  Poly_Origin_Lat = p.Poly_Origin_Lat;
-  Poly_False_Easting = p.Poly_False_Easting;
-  Poly_False_Northing = p.Poly_False_Northing;
-  Poly_Max_Easting = p.Poly_Max_Easting;
-  Poly_Max_Northing = p.Poly_Max_Northing;
-  Poly_Min_Easting = p.Poly_Min_Easting;
-  Poly_Min_Northing = p.Poly_Min_Northing;
-}
-
-Polyconic::~Polyconic() {}
 
 Polyconic& Polyconic::operator=(const Polyconic& p) {
   if (this != &p) {

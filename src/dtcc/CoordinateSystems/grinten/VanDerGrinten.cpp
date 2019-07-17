@@ -176,21 +176,6 @@ VanDerGrinten::VanDerGrinten(double ellipsoidSemiMajorAxis,
   Grin_False_Northing = falseNorthing;
 }
 
-VanDerGrinten::VanDerGrinten(const VanDerGrinten& v) {
-  semiMajorAxis = v.semiMajorAxis;
-  flattening = v.flattening;
-  es2 = v.es2;
-  es4 = v.es4;
-  es6 = v.es6;
-  Ra = v.Ra;
-  PI_Ra = v.PI_Ra;
-  Grin_Origin_Long = v.Grin_Origin_Long;
-  Grin_False_Easting = v.Grin_False_Easting;
-  Grin_False_Northing = v.Grin_False_Northing;
-}
-
-VanDerGrinten::~VanDerGrinten() {}
-
 VanDerGrinten& VanDerGrinten::operator=(const VanDerGrinten& v) {
   if (this != &v) {
     semiMajorAxis = v.semiMajorAxis;

@@ -116,9 +116,9 @@ class Gnomonic : public CoordinateSystem {
            double centralMeridian, double originLatitude, double falseEasting,
            double falseNorthing);
 
-  Gnomonic(const Gnomonic& g);
+  Gnomonic(const Gnomonic& g) = default;
 
-  ~Gnomonic(void);
+  ~Gnomonic() = default;
 
   Gnomonic& operator=(const Gnomonic& g);
 

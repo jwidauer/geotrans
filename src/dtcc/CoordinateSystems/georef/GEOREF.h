@@ -94,9 +94,9 @@ class GEOREF : public CoordinateSystem {
  public:
   GEOREF();
 
-  GEOREF(const GEOREF& g);
+  GEOREF(const GEOREF& g) = default;
 
-  ~GEOREF(void);
+  ~GEOREF() = default;
 
   GEOREF& operator=(const GEOREF& g);
 

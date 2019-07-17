@@ -12,7 +12,7 @@ class MSP_DTCC_API EquidistantCylindricalParameters
     : public CoordinateSystemParameters {
  public:
   EquidistantCylindricalParameters();
-  EquidistantCylindricalParameters(CoordinateType::Enum _coordinateType);
+  explicit EquidistantCylindricalParameters(CoordinateType::Enum _coordinateType);
   EquidistantCylindricalParameters(CoordinateType::Enum _coordinateType,
                                    double __centralMeridian,
                                    double __standardParallel,

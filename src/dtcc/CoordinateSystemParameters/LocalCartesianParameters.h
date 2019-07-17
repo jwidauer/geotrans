@@ -12,11 +12,11 @@ class MSP_DTCC_API LocalCartesianParameters
     : public CoordinateSystemParameters {
  public:
   LocalCartesianParameters();
-  LocalCartesianParameters(CoordinateType::Enum _coordinateType);
+  explicit LocalCartesianParameters(CoordinateType::Enum _coordinateType);
   LocalCartesianParameters(CoordinateType::Enum _coordinateType,
                            double __longitude, double __latitude,
                            double __height, double __orientation);
-  LocalCartesianParameters(const LocalCartesianParameters& lcp);
+  LocalCartesianParameters(const LocalCartesianParameters& lcp) = default;
 
   ~LocalCartesianParameters();
 

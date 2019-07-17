@@ -25,8 +25,8 @@
  *                                      (-180 to 360 degrees)
  *          ECK4_EASTING_ERROR      : Easting outside of valid range
  *                                      (False_Easting +/- ~17,000,000 m,
- *										 depending on
- *ellipsoid parameters) ECK4_NORTHING_ERROR     : Northing outside of valid
+ *										 depending
+ *on ellipsoid parameters) ECK4_NORTHING_ERROR     : Northing outside of valid
  *range (False_Northing +/- 0 to 8,000,000 m, depending on ellipsoid parameters)
  *          ECK4_CENT_MER_ERROR     : Central_Meridian outside of valid range
  *                                      (-180 to 360 degrees)
@@ -189,9 +189,7 @@ Eckert4::Eckert4(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
   }
 }
 
-Eckert4::Eckert4(const Eckert4& e) {
-  semiMajorAxis = e.semiMajorAxis;
-  flattening = e.flattening;
+Eckert4::Eckert4(const Eckert4& e) : CoordinateSystem(e) {
   es2 = e.es2;
   es4 = e.es4;
   es6 = e.es6;

@@ -118,9 +118,9 @@ class CylindricalEqualArea : public CoordinateSystem {
                        double originLatitude, double falseEasting,
                        double falseNorthing);
 
-  CylindricalEqualArea(const CylindricalEqualArea& cea);
+  CylindricalEqualArea(const CylindricalEqualArea& cea) = default;
 
-  ~CylindricalEqualArea(void);
+  ~CylindricalEqualArea() = default;
 
   CylindricalEqualArea& operator=(const CylindricalEqualArea& cea);
 

@@ -12,14 +12,14 @@ class MSP_DTCC_API PolarStereographicStandardParallelParameters
     : public CoordinateSystemParameters {
  public:
   PolarStereographicStandardParallelParameters();
-  PolarStereographicStandardParallelParameters(
+  explicit PolarStereographicStandardParallelParameters(
       CoordinateType::Enum _coordinateType);
   PolarStereographicStandardParallelParameters(
       CoordinateType::Enum _coordinateType, double __longitudeDownFromPole,
       double __latitudeOfTrueScale, double __falseEasting,
       double __falseNorthing);
   PolarStereographicStandardParallelParameters(
-      const PolarStereographicStandardParallelParameters& p);
+      const PolarStereographicStandardParallelParameters& p) = default;
 
   ~PolarStereographicStandardParallelParameters();
 

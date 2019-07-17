@@ -108,9 +108,9 @@ class Sinusoidal : public CoordinateSystem {
   Sinusoidal(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
              double centralMeridian, double falseEasting, double falseNorthing);
 
-  Sinusoidal(const Sinusoidal& s);
+  Sinusoidal(const Sinusoidal& s) = default;
 
-  ~Sinusoidal(void);
+  ~Sinusoidal() = default;
 
   Sinusoidal& operator=(const Sinusoidal& s);
 

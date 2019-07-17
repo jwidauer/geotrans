@@ -11,11 +11,11 @@ namespace CCS {
 class MSP_DTCC_API UTMParameters : public CoordinateSystemParameters {
  public:
   UTMParameters();
-  UTMParameters(CoordinateType::Enum _coordinateType);
+  explicit UTMParameters(CoordinateType::Enum _coordinateType);
   UTMParameters(CoordinateType::Enum _coordinateType, long __override);
   UTMParameters(CoordinateType::Enum _coordinateType, long __zone,
                 long __override);
-  UTMParameters(const UTMParameters& p);
+  UTMParameters(const UTMParameters& p) = default;
 
   ~UTMParameters();
 

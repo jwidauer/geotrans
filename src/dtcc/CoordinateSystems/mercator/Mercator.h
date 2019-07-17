@@ -142,9 +142,9 @@ class Mercator : public CoordinateSystem {
            double centralMeridian, double falseEasting, double falseNorthing,
            double scaleFactor);
 
-  Mercator(const Mercator& m);
+  Mercator(const Mercator& m) = default;
 
-  ~Mercator(void);
+  ~Mercator() = default;
 
   Mercator& operator=(const Mercator& m);
 

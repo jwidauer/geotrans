@@ -116,9 +116,9 @@ class Cassini : public CoordinateSystem {
           double centralMeridian, double originLatitude, double falseEasting,
           double falseNorthing);
 
-  Cassini(const Cassini& c);
+  Cassini(const Cassini& c) = default;
 
-  ~Cassini(void);
+  ~Cassini() = default;
 
   Cassini& operator=(const Cassini& c);
 

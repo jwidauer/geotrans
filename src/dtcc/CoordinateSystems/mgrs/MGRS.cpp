@@ -314,11 +314,11 @@ void makeMGRSString(char* MGRSString, long zone, int letters[MGRS_LETTERS],
   easting = fmod(easting, 100000.0);
   if (easting >= 99999.5) easting = 99999.0;
   east = (long)((easting + EPSILON2) / divisor);
-  i += sprintf(MGRSString + i, "%*.*ld", precision, precision, east);
+  i += sprintf(MGRSString + i, "%*.*ld", (int)precision, (int)precision, east);
   northing = fmod(northing, 100000.0);
   if (northing >= 99999.5) northing = 99999.0;
   north = (long)((northing + EPSILON2) / divisor);
-  i += sprintf(MGRSString + i, "%*.*ld", precision, precision, north);
+  i += sprintf(MGRSString + i, "%*.*ld", (int)precision, (int)precision, north);
 }
 
 void breakMGRSString(char* MGRSString, long* zone, long letters[MGRS_LETTERS],
@@ -463,21 +463,19 @@ MGRS::MGRS(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
   utm = new UTM(semiMajorAxis, flattening, MGRSEllipsoidCode, 0);
 }
 
-MGRS::MGRS(const MGRS& m) {
+MGRS::MGRS(const MGRS& m) : CoordinateSystem(m) {
   ups = new UPS(*(m.ups));
   utm = new UTM(*(m.utm));
 
-  semiMajorAxis = m.semiMajorAxis;
-  flattening = m.flattening;
   strcpy(MGRSEllipsoidCode, m.MGRSEllipsoidCode);
 }
 
 MGRS::~MGRS() {
   delete ups;
-  ups = 0;
+  ups = nullptr;
 
   delete utm;
-  utm = 0;
+  utm = nullptr;
 }
 
 MGRS& MGRS::operator=(const MGRS& m) {
@@ -747,9 +745,6 @@ MSP::CCS::MGRSorUSNGCoordinates* MGRS::convertFromUPS(
    *    precision     : Precision level of MGRS string   (input)
    *    MGRSString    : MGRS coordinate string           (output)
    */
-
-  int index = 0;
-
   char hemisphere = upsCoordinates->hemisphere();
   double easting = upsCoordinates->easting();
   double northing = upsCoordinates->northing();
@@ -815,7 +810,6 @@ MSP::CCS::UPSCoordinates* MGRS::convertToUPS(
   long precision;
   double mgrs_easting;
   double mgrs_northing;
-  int index = 0;
   UPSCoordinates* upsCoordinates = 0;
   GeodeticCoordinates* geodeticCoordinates = 0;
   UTMCoordinates* utmCoordinates = 0;
@@ -879,7 +873,6 @@ MSP::CCS::MGRSorUSNGCoordinates* MGRS::fromUTM(
   long natural_zone;
 
   long zone = utmCoordinates->zone();
-  char hemisphere = utmCoordinates->hemisphere();
   double easting = utmCoordinates->easting();
   double northing = utmCoordinates->northing();
 
@@ -904,7 +897,6 @@ MSP::CCS::MGRSorUSNGCoordinates* MGRS::fromUTM(
         utmOverride.convertFromGeodetic(&geodeticCoordinates);
 
     zone = utmCoordinatesOverride->zone();
-    hemisphere = utmCoordinatesOverride->hemisphere();
     easting = utmCoordinatesOverride->easting();
     northing = utmCoordinatesOverride->northing();
 
@@ -944,7 +936,6 @@ MSP::CCS::MGRSorUSNGCoordinates* MGRS::fromUTM(
         utmOverride.convertFromGeodetic(&geodeticCoordinates);
 
     zone = utmCoordinatesOverride->zone();
-    hemisphere = utmCoordinatesOverride->hemisphere();
     easting = utmCoordinatesOverride->easting();
     northing = utmCoordinatesOverride->northing();
 
@@ -1012,10 +1003,6 @@ MSP::CCS::UTMCoordinates* MGRS::toUTM(long zone, long letters[MGRS_LETTERS],
   double pattern_offset;
   double grid_easting;  /* Easting for 100,000 meter grid square      */
   double grid_northing; /* Northing for 100,000 meter grid square     */
-  double temp_grid_northing = 0.0;
-  double fabs_grid_northing = 0.0;
-  double latitude = 0.0;
-  double longitude = 0.0;
   double divisor = 1.0;
   UTMCoordinates* utmCoordinates = 0;
 

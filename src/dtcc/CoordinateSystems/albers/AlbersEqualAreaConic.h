@@ -129,9 +129,9 @@ class MSP_DTCC_API AlbersEqualAreaConic : public CoordinateSystem {
                        double standardParallel2, double falseEasting,
                        double falseNorthing);
 
-  AlbersEqualAreaConic(const AlbersEqualAreaConic& aeac);
+  AlbersEqualAreaConic(const AlbersEqualAreaConic& aeac) = default;
 
-  ~AlbersEqualAreaConic(void);
+  ~AlbersEqualAreaConic() = default;
 
   AlbersEqualAreaConic& operator=(const AlbersEqualAreaConic& aeac);
 

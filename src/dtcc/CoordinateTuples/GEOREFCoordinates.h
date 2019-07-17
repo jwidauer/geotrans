@@ -20,9 +20,9 @@ class MSP_DTCC_API GEOREFCoordinates : public CoordinateTuple {
   GEOREFCoordinates(CoordinateType::Enum _coordinateType,
                     const char* __warningMessage, const char* __GEOREFString,
                     Precision::Enum __precision);
-  GEOREFCoordinates(const GEOREFCoordinates& gc);
+  GEOREFCoordinates(const GEOREFCoordinates& gc) = default;
 
-  ~GEOREFCoordinates();
+  ~GEOREFCoordinates() = default;
 
   GEOREFCoordinates& operator=(const GEOREFCoordinates& gc);
 

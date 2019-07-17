@@ -42,21 +42,6 @@ UTMCoordinates::UTMCoordinates(CoordinateType::Enum _coordinateType,
   _warningMessage[length] = '\0';
 }
 
-UTMCoordinates::UTMCoordinates(const UTMCoordinates& c) {
-  _coordinateType = c._coordinateType;
-
-  _zone = c._zone;
-  _hemisphere = c._hemisphere;
-  _easting = c._easting;
-  _northing = c._northing;
-
-  int length = strlen(c._warningMessage);
-  strncpy(_warningMessage, c._warningMessage, length);
-  _warningMessage[length] = '\0';
-}
-
-UTMCoordinates::~UTMCoordinates() {}
-
 UTMCoordinates& UTMCoordinates::operator=(const UTMCoordinates& c) {
   if (this != &c) {
     _coordinateType = c._coordinateType;

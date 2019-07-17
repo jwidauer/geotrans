@@ -122,9 +122,9 @@ class Stereographic : public CoordinateSystem {
                 double centralMeridian, double originLatitude,
                 double falseEasting, double falseNorthing);
 
-  Stereographic(const Stereographic& s);
+  Stereographic(const Stereographic& s) = default;
 
-  ~Stereographic(void);
+  ~Stereographic() = default;
 
   Stereographic& operator=(const Stereographic& s);
 

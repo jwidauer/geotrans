@@ -32,16 +32,6 @@ NeysParameters::NeysParameters(CoordinateType::Enum _coordinateType,
       _falseEasting(__falseEasting),
       _falseNorthing(__falseNorthing) {}
 
-NeysParameters::NeysParameters(const NeysParameters &p) {
-  _coordinateType = p._coordinateType;
-
-  _centralMeridian = p._centralMeridian;
-  _originLatitude = p._originLatitude;
-  _standardParallel1 = p._standardParallel1;
-  _falseEasting = p._falseEasting;
-  _falseNorthing = p._falseNorthing;
-}
-
 NeysParameters::~NeysParameters() {
   _centralMeridian = 0;
   _originLatitude = 0;

@@ -32,17 +32,6 @@ MapProjection5Parameters::MapProjection5Parameters(
       _falseEasting(__falseEasting),
       _falseNorthing(__falseNorthing) {}
 
-MapProjection5Parameters::MapProjection5Parameters(
-    const MapProjection5Parameters &p) {
-  _coordinateType = p._coordinateType;
-
-  _centralMeridian = p._centralMeridian;
-  _originLatitude = p._originLatitude;
-  _scaleFactor = p._scaleFactor;
-  _falseEasting = p._falseEasting;
-  _falseNorthing = p._falseNorthing;
-}
-
 MapProjection5Parameters::~MapProjection5Parameters() {
   _centralMeridian = 0;
   _originLatitude = 0;

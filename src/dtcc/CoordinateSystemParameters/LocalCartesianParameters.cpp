@@ -28,16 +28,6 @@ LocalCartesianParameters::LocalCartesianParameters(
       _height(__height),
       _orientation(__orientation) {}
 
-LocalCartesianParameters::LocalCartesianParameters(
-    const LocalCartesianParameters &lcp) {
-  _coordinateType = lcp._coordinateType;
-
-  _longitude = lcp._longitude;
-  _latitude = lcp._latitude;
-  _height = lcp._height;
-  _orientation = lcp._orientation;
-}
-
 LocalCartesianParameters::~LocalCartesianParameters() {
   _longitude = 0;
   _latitude = 0;

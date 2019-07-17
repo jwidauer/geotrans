@@ -189,24 +189,6 @@ Mollweide::Mollweide(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
   }
 }
 
-Mollweide::Mollweide(const Mollweide& m) {
-  semiMajorAxis = m.semiMajorAxis;
-  flattening = m.flattening;
-  es2 = m.es2;
-  es4 = m.es4;
-  es6 = m.es6;
-  Sqrt2_Ra = m.Sqrt2_Ra;
-  Sqrt8_Ra = m.Sqrt8_Ra;
-  Moll_Origin_Long = m.Moll_Origin_Long;
-  Moll_False_Easting = m.Moll_False_Easting;
-  Moll_False_Northing = m.Moll_False_Northing;
-  Moll_Delta_Northing = m.Moll_Delta_Northing;
-  Moll_Max_Easting = m.Moll_Max_Easting;
-  Moll_Min_Easting = m.Moll_Min_Easting;
-}
-
-Mollweide::~Mollweide() {}
-
 Mollweide& Mollweide::operator=(const Mollweide& m) {
   if (this != &m) {
     semiMajorAxis = m.semiMajorAxis;

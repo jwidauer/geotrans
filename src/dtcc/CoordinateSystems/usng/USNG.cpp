@@ -257,11 +257,11 @@ void makeUSNGString(char* USNGString, long zone, int letters[USNG_LETTERS],
   easting = fmod(easting, 100000.0);
   if (easting >= 99999.5) easting = 99999.0;
   east = (long)(easting / divisor);
-  i += sprintf(USNGString + i, "%*.*ld", precision, precision, east);
+  i += sprintf(USNGString + i, "%*.*ld", (int)precision, (int)precision, east);
   northing = fmod(northing, 100000.0);
   if (northing >= 99999.5) northing = 99999.0;
   north = (long)(northing / divisor);
-  i += sprintf(USNGString + i, "%*.*ld", precision, precision, north);
+  i += sprintf(USNGString + i, "%*.*ld", (int)precision, (int)precision, north);
 }
 
 void breakUSNGString(char* USNGString, long* zone, long letters[USNG_LETTERS],
@@ -389,21 +389,19 @@ USNG::USNG(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
   utm = new UTM(semiMajorAxis, flattening, USNGEllipsoidCode, 0);
 }
 
-USNG::USNG(const USNG& u) {
+USNG::USNG(const USNG& u) : CoordinateSystem(u) {
   ups = new UPS(*(u.ups));
   utm = new UTM(*(u.utm));
 
-  semiMajorAxis = u.semiMajorAxis;
-  flattening = u.flattening;
   strcpy(USNGEllipsoidCode, u.USNGEllipsoidCode);
 }
 
 USNG::~USNG() {
   delete ups;
-  ups = 0;
+  ups = nullptr;
 
   delete utm;
-  utm = 0;
+  utm = nullptr;
 }
 
 USNG& USNG::operator=(const USNG& u) {
@@ -667,9 +665,6 @@ MSP::CCS::MGRSorUSNGCoordinates* USNG::convertFromUPS(
    *    precision     : Precision level of USNG string   (input)
    *    USNGString    : USNG coordinate string           (output)
    */
-
-  int index = 0;
-
   char hemisphere = upsCoordinates->hemisphere();
   double easting = upsCoordinates->easting();
   double northing = upsCoordinates->northing();
@@ -734,7 +729,6 @@ MSP::CCS::UPSCoordinates* USNG::convertToUPS(
   long precision;
   double usng_easting;
   double usng_northing;
-  int index = 0;
   UPSCoordinates* upsCoordinates = 0;
   GeodeticCoordinates* geodeticCoordinates = 0;
   UTMCoordinates* utmCoordinates = 0;
@@ -790,7 +784,6 @@ MSP::CCS::MGRSorUSNGCoordinates* USNG::fromUTM(
   long natural_zone;
 
   long zone = utmCoordinates->zone();
-  char hemisphere = utmCoordinates->hemisphere();
   double easting = utmCoordinates->easting();
   double northing = utmCoordinates->northing();
 
@@ -813,7 +806,6 @@ MSP::CCS::MGRSorUSNGCoordinates* USNG::fromUTM(
         utmOverride.convertFromGeodetic(&geodeticCoordinates);
 
     zone = utmCoordinatesOverride->zone();
-    hemisphere = utmCoordinatesOverride->hemisphere();
     easting = utmCoordinatesOverride->easting();
     northing = utmCoordinatesOverride->northing();
 
@@ -852,7 +844,6 @@ MSP::CCS::MGRSorUSNGCoordinates* USNG::fromUTM(
         utmOverride.convertFromGeodetic(&geodeticCoordinates);
 
     zone = utmCoordinatesOverride->zone();
-    hemisphere = utmCoordinatesOverride->hemisphere();
     easting = utmCoordinatesOverride->easting();
     northing = utmCoordinatesOverride->northing();
 
@@ -920,10 +911,6 @@ MSP::CCS::UTMCoordinates* USNG::toUTM(long zone, long letters[USNG_LETTERS],
   double lower_lat_limit; /* South latitude limits based on 1st letter  */
   double grid_easting;    /* Easting for 100,000 meter grid square      */
   double grid_northing;   /* Northing for 100,000 meter grid square     */
-  double temp_grid_northing = 0.0;
-  double fabs_grid_northing = 0.0;
-  double latitude = 0.0;
-  double longitude = 0.0;
   double divisor = 1.0;
   UTMCoordinates* utmCoordinates = 0;
 

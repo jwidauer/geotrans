@@ -19,9 +19,9 @@ class MSP_DTCC_API BNGCoordinates : public CoordinateTuple {
   BNGCoordinates(CoordinateType::Enum _coordinateType,
                  const char* __warningMessage, const char* __BNGString,
                  Precision::Enum __precision);
-  BNGCoordinates(const BNGCoordinates& b);
+  BNGCoordinates(const BNGCoordinates& b) = default;
 
-  ~BNGCoordinates();
+  ~BNGCoordinates() = default;
 
   BNGCoordinates& operator=(const BNGCoordinates& b);
 

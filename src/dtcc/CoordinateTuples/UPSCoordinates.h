@@ -17,9 +17,9 @@ class MSP_DTCC_API UPSCoordinates : public CoordinateTuple {
   UPSCoordinates(CoordinateType::Enum _coordinateType,
                  const char* __warningMessage, char __hemisphere,
                  double __easting, double __northing);
-  UPSCoordinates(const UPSCoordinates& c);
+  UPSCoordinates(const UPSCoordinates& c) = default;
 
-  ~UPSCoordinates();
+  ~UPSCoordinates() = default;
 
   UPSCoordinates& operator=(const UPSCoordinates& c);
 

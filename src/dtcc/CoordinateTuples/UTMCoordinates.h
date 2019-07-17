@@ -18,9 +18,9 @@ class MSP_DTCC_API UTMCoordinates : public CoordinateTuple {
   UTMCoordinates(CoordinateType::Enum _coordinateType,
                  const char* __warningMessage, long __zone, char __hemisphere,
                  double __easting, double __northing);
-  UTMCoordinates(const UTMCoordinates& c);
+  UTMCoordinates(const UTMCoordinates& c) = default;
 
-  ~UTMCoordinates();
+  ~UTMCoordinates() = default;
 
   UTMCoordinates& operator=(const UTMCoordinates& c);
 

@@ -872,9 +872,6 @@ int Egm2008AoiGrid::loadGrid(void) {
     int i;
     int index0;
     int index1;
-    int index2;
-    int kount;
-    int startCol;
     int startRow;
 
     std::ifstream fin;

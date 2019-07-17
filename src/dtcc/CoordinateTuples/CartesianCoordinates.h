@@ -17,9 +17,9 @@ class MSP_DTCC_API CartesianCoordinates : public CoordinateTuple {
   CartesianCoordinates(CoordinateType::Enum _coordinateType,
                        const char* __warningMessage, double __x, double __y,
                        double __z);
-  CartesianCoordinates(const CartesianCoordinates& cc);
+  CartesianCoordinates(const CartesianCoordinates& cc) = default;
 
-  ~CartesianCoordinates();
+  ~CartesianCoordinates() = default;
 
   CartesianCoordinates& operator=(const CartesianCoordinates& cc);
 

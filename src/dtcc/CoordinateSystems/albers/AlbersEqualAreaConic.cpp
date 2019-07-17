@@ -141,8 +141,8 @@ AlbersEqualAreaConic::AlbersEqualAreaConic(
       Albers_a_OVER_n(9054194.9882824),
       one_MINUS_es2(.99330562000986),
       two_es(.16363838168524),
-      Albers_Origin_Long(0.0),
       Albers_Origin_Lat((45 * PI / 180)),
+      Albers_Origin_Long(0.0),
       Albers_Std_Parallel_1(40 * PI / 180),
       Albers_Std_Parallel_2(50 * PI / 180),
       Albers_False_Easting(0.0),
@@ -260,29 +260,6 @@ AlbersEqualAreaConic::AlbersEqualAreaConic(
     rho0 = Albers_a_OVER_n * sqrt(C - nq0);
 }
 
-AlbersEqualAreaConic::AlbersEqualAreaConic(const AlbersEqualAreaConic& aeac) {
-  semiMajorAxis = aeac.semiMajorAxis;
-  flattening = aeac.flattening;
-  es = aeac.es;
-  es2 = aeac.es2;
-  C = aeac.C;
-  rho0 = aeac.rho0;
-  n = aeac.n;
-  Albers_a_OVER_n = aeac.Albers_a_OVER_n;
-  one_MINUS_es2 = aeac.one_MINUS_es2;
-  two_es = aeac.two_es;
-  Albers_Origin_Long = aeac.Albers_Origin_Long;
-  Albers_Origin_Lat = aeac.Albers_Origin_Lat;
-  Albers_Std_Parallel_1 = aeac.Albers_Std_Parallel_1;
-  Albers_Std_Parallel_2 = aeac.Albers_Std_Parallel_2;
-  Albers_False_Easting = aeac.Albers_False_Easting;
-  Albers_False_Northing = aeac.Albers_False_Northing;
-  Albers_Delta_Northing = aeac.Albers_Delta_Northing;
-  Albers_Delta_Easting = aeac.Albers_Delta_Easting;
-}
-
-AlbersEqualAreaConic::~AlbersEqualAreaConic() {}
-
 AlbersEqualAreaConic& AlbersEqualAreaConic::operator=(
     const AlbersEqualAreaConic& aeac) {
   if (this != &aeac) {
@@ -348,7 +325,7 @@ MSP::CCS::MapProjectionCoordinates* AlbersEqualAreaConic::convertFromGeodetic(
    */
 
   double dlam; /* Longitude - Central Meridan */
-  double sin_lat, cos_lat;
+  double sin_lat;
   double es_sin, one_MINUS_SQRes_sin;
   double q;
   double rho;
@@ -374,7 +351,6 @@ MSP::CCS::MapProjectionCoordinates* AlbersEqualAreaConic::convertFromGeodetic(
     dlam += TWO_PI;
   }
   sin_lat = sin(latitude);
-  cos_lat = cos(latitude);
   es_sin = esSine(sin_lat);
   one_MINUS_SQRes_sin = oneMinusSqr(es_sin);
   q = albersQ(sin_lat, one_MINUS_SQRes_sin, es_sin);

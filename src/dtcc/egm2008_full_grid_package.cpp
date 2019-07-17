@@ -630,11 +630,6 @@ int Egm2008FullGrid::loadGrid(void) {
     int endRow;
     int i;
     int index0;
-    int index1;
-    int index2;
-    int j;
-    int k;
-    int kount;
     int startRow;
 
     std::ifstream fin;

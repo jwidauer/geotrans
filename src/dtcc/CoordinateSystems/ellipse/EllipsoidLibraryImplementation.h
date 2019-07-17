@@ -189,7 +189,7 @@ class EllipsoidLibraryImplementation {
    *
    */
 
-  void ellipsoidCode(const long index, char* code);
+  void ellipsoidCode(const size_t index, char* code);
 
   /*
    *  The Function ellipsoidName returns the name of the ellipsoid in
@@ -202,7 +202,7 @@ class EllipsoidLibraryImplementation {
    *
    */
 
-  void ellipsoidName(const long index, char* name);
+  void ellipsoidName(const size_t index, char* name);
 
   /*
    *  The function ellipsoidParameters returns the semi-major axis and
@@ -215,7 +215,7 @@ class EllipsoidLibraryImplementation {
    *
    */
 
-  void ellipsoidParameters(const long index, double* a, double* f);
+  void ellipsoidParameters(const size_t index, double* a, double* f);
 
   /*
    *  The function ellipsoidEccentricity2 returns the square of the
@@ -227,7 +227,7 @@ class EllipsoidLibraryImplementation {
    *
    */
 
-  void ellipsoidEccentricity2(const long index, double* eccentricitySquared);
+  void ellipsoidEccentricity2(const size_t index, double* eccentricitySquared);
 
   /*
    *  The function ellipsoidUserDefined returns 1 if the ellipsoid is user
@@ -240,7 +240,7 @@ class EllipsoidLibraryImplementation {
    *
    */
 
-  void ellipsoidUserDefined(const long index, long* result);
+  void ellipsoidUserDefined(const size_t index, long* result);
 
   /*
    *  The function setDatumLibraryImplementation sets the datum library

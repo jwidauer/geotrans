@@ -37,20 +37,6 @@ UPSCoordinates::UPSCoordinates(CoordinateType::Enum _coordinateType,
   _warningMessage[length] = '\0';
 }
 
-UPSCoordinates::UPSCoordinates(const UPSCoordinates& c) {
-  _coordinateType = c._coordinateType;
-
-  _hemisphere = c._hemisphere;
-  _easting = c._easting;
-  _northing = c._northing;
-
-  int length = strlen(c._warningMessage);
-  strncpy(_warningMessage, c._warningMessage, length);
-  _warningMessage[length] = '\0';
-}
-
-UPSCoordinates::~UPSCoordinates() {}
-
 UPSCoordinates& UPSCoordinates::operator=(const UPSCoordinates& c) {
   if (this != &c) {
     _coordinateType = c._coordinateType;

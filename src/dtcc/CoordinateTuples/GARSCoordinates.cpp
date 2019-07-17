@@ -45,21 +45,6 @@ GARSCoordinates::GARSCoordinates(CoordinateType::Enum _coordinateType,
   _warningMessage[length] = '\0';
 }
 
-GARSCoordinates::GARSCoordinates(const GARSCoordinates& c) {
-  _coordinateType = c._coordinateType;
-
-  strncpy(_GARSString, c._GARSString, 7);
-  _GARSString[7] = '\0';
-
-  _precision = c._precision;
-
-  int length = strlen(c._warningMessage);
-  strncpy(_warningMessage, c._warningMessage, length);
-  _warningMessage[length] = '\0';
-}
-
-GARSCoordinates::~GARSCoordinates() {}
-
 GARSCoordinates& GARSCoordinates::operator=(const GARSCoordinates& c) {
   if (this != &c) {
     _coordinateType = c._coordinateType;

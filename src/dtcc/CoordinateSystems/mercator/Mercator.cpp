@@ -128,10 +128,10 @@ Mercator::Mercator(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
       coordinateType(CoordinateType::mercatorStandardParallel),
       Merc_e(0.08181919084262188000),
       Merc_es(0.0066943799901413800),
-      Merc_Cent_Mer(0.0),
       Merc_Standard_Parallel(0.0),
-      Merc_False_Easting(0.0),
+      Merc_Cent_Mer(0.0),
       Merc_False_Northing(0.0),
+      Merc_False_Easting(0.0),
       Merc_Scale_Factor(1.0),
       Merc_ab(0.00335655146887969400),
       Merc_bb(0.00000657187271079536),
@@ -236,10 +236,10 @@ Mercator::Mercator(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
       coordinateType(CoordinateType::mercatorScaleFactor),
       Merc_e(0.08181919084262188000),
       Merc_es(0.0066943799901413800),
-      Merc_Cent_Mer(0.0),
       Merc_Standard_Parallel(0.0),
-      Merc_False_Easting(0.0),
+      Merc_Cent_Mer(0.0),
       Merc_False_Northing(0.0),
+      Merc_False_Easting(0.0),
       Merc_Scale_Factor(1.0),
       Merc_ab(0.00335655146887969400),
       Merc_bb(0.00000657187271079536),
@@ -339,27 +339,6 @@ Mercator::Mercator(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
   if (Merc_Delta_Northing < 0) Merc_Delta_Northing = -Merc_Delta_Northing;
   Merc_Delta_Northing *= 1.01;
 }
-
-Mercator::Mercator(const Mercator& m) {
-  coordinateType = m.coordinateType;
-  semiMajorAxis = m.semiMajorAxis;
-  flattening = m.flattening;
-  Merc_e = m.Merc_e;
-  Merc_es = m.Merc_es;
-  Merc_Cent_Mer = m.Merc_Cent_Mer;
-  Merc_Standard_Parallel = m.Merc_Standard_Parallel;
-  Merc_False_Easting = m.Merc_False_Easting;
-  Merc_False_Northing = m.Merc_False_Northing;
-  Merc_Scale_Factor = m.Merc_Scale_Factor;
-  Merc_ab = m.Merc_ab;
-  Merc_bb = m.Merc_bb;
-  Merc_cb = m.Merc_cb;
-  Merc_db = m.Merc_db;
-  Merc_Delta_Easting = m.Merc_Delta_Easting;
-  Merc_Delta_Northing = m.Merc_Delta_Northing;
-}
-
-Mercator::~Mercator() {}
 
 Mercator& Mercator::operator=(const Mercator& m) {
   if (this != &m) {

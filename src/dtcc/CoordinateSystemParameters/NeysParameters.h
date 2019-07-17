@@ -11,11 +11,11 @@ namespace CCS {
 class MSP_DTCC_API NeysParameters : public CoordinateSystemParameters {
  public:
   NeysParameters();
-  NeysParameters(CoordinateType::Enum _coordinateType);
+  explicit NeysParameters(CoordinateType::Enum _coordinateType);
   NeysParameters(CoordinateType::Enum _coordinateType, double __centralMeridian,
                  double __originLatitude, double __standardParallel1,
                  double __falseEasting, double __falseNorthing);
-  NeysParameters(const NeysParameters& p);
+  NeysParameters(const NeysParameters& p) = default;
 
   ~NeysParameters();
 

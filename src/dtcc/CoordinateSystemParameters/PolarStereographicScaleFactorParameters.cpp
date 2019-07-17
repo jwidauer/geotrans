@@ -36,18 +36,6 @@ PolarStereographicScaleFactorParameters::
       _falseNorthing(__falseNorthing) {}
 
 PolarStereographicScaleFactorParameters::
-    PolarStereographicScaleFactorParameters(
-        const PolarStereographicScaleFactorParameters &p) {
-  _coordinateType = p._coordinateType;
-
-  _centralMeridian = p._centralMeridian;
-  _scaleFactor = p._scaleFactor;
-  _hemisphere = p._hemisphere;
-  _falseEasting = p._falseEasting;
-  _falseNorthing = p._falseNorthing;
-}
-
-PolarStereographicScaleFactorParameters::
     ~PolarStereographicScaleFactorParameters() {
   _centralMeridian = 0;
   _scaleFactor = 0;

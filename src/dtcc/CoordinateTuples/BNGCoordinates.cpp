@@ -44,21 +44,6 @@ BNGCoordinates::BNGCoordinates(CoordinateType::Enum _coordinateType,
   _warningMessage[length] = '\0';
 }
 
-BNGCoordinates::BNGCoordinates(const BNGCoordinates& c) {
-  _coordinateType = c._coordinateType;
-
-  strncpy(_BNGString, c._BNGString, 20);
-  _BNGString[20] = '\0';
-
-  _precision = c._precision;
-
-  int length = strlen(c._warningMessage);
-  strncpy(_warningMessage, c._warningMessage, length);
-  _warningMessage[length] = '\0';
-}
-
-BNGCoordinates::~BNGCoordinates() {}
-
 BNGCoordinates& BNGCoordinates::operator=(const BNGCoordinates& c) {
   if (this != &c) {
     _coordinateType = c._coordinateType;

@@ -17,13 +17,13 @@ using namespace MSP::CCS;
 
 Ellipsoid::Ellipsoid()
     : _index(0),
+      _code(0),
+      _name(0),
       _semiMajorAxis(6378137.0),
       _semiMinorAxis(6356752.3142),
       _flattening(1 / 298.257223563),
       _eccentricitySquared(0.0066943799901413800),
-      _userDefined(0),
-      _code(0),
-      _name(0)
+      _userDefined(0)
 
 {}
 

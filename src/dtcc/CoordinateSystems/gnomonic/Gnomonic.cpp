@@ -124,10 +124,10 @@ Gnomonic::Gnomonic(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
       Ra(6371007.1810824),
       Sin_Gnom_Origin_Lat(0.0),
       Cos_Gnom_Origin_Lat(1.0),
-      Gnom_Origin_Long(0.0),
       Gnom_Origin_Lat(0.0),
-      Gnom_False_Easting(0.0),
+      Gnom_Origin_Long(0.0),
       Gnom_False_Northing(0.0),
+      Gnom_False_Easting(0.0),
       abs_Gnom_Origin_Lat(0.0),
       Gnom_Delta_Northing(40000000),
       Gnom_Delta_Easting(40000000) {
@@ -185,23 +185,6 @@ Gnomonic::Gnomonic(double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
   Gnom_False_Northing = falseNorthing;
   Gnom_False_Easting = falseEasting;
 }
-
-Gnomonic::Gnomonic(const Gnomonic& g) {
-  semiMajorAxis = g.semiMajorAxis;
-  flattening = g.flattening;
-  Ra = g.Ra;
-  Sin_Gnom_Origin_Lat = g.Sin_Gnom_Origin_Lat;
-  Cos_Gnom_Origin_Lat = g.Cos_Gnom_Origin_Lat;
-  Gnom_Origin_Long = g.Gnom_Origin_Long;
-  Gnom_Origin_Lat = g.Gnom_Origin_Lat;
-  Gnom_False_Easting = g.Gnom_False_Easting;
-  Gnom_False_Northing = g.Gnom_False_Northing;
-  abs_Gnom_Origin_Lat = g.abs_Gnom_Origin_Lat;
-  Gnom_Delta_Northing = g.Gnom_Delta_Northing;
-  Gnom_Delta_Easting = g.Gnom_Delta_Easting;
-}
-
-Gnomonic::~Gnomonic() {}
 
 Gnomonic& Gnomonic::operator=(const Gnomonic& g) {
   if (this != &g) {
